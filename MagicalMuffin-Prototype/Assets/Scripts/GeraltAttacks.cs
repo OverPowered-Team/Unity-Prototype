@@ -14,20 +14,25 @@ public class GeraltAttacks : MonoBehaviour
     private AuxButton yButton;
 
     private float lastInputTime = 0f;
-    private float inputBlockTime = 0f;//TODO: Define if this should be individual for each attack or the same for all attacks
+    private float inputBlockTime = 0f;//In seconds. TODO: Define if this should be individual for each attack or the same for all attacks
+    private float extraInputWindow = 0.2f;//In seconds.
     private Attack currAttack;
 
     private Attack entryPoint;//This is not really an attack, it's the idle that goes to x and y
 
+    private Animator anim;
+
     private void Start()
     {
+        anim = GetComponent<Animator>();
+
         xButton = new AuxButton();
         xButton.name = "x";
         yButton = new AuxButton();
         yButton.name = "y";
 
         entryPoint = attacks.attacks.Find(attack => attack.name == "_");
-        currAttack = entryPoint;
+        CurrAttack = entryPoint;
     }
 
     private void Update()
@@ -38,7 +43,16 @@ public class GeraltAttacks : MonoBehaviour
 
         RegisterNewInput(xButton);
         RegisterNewInput(yButton);
-        //TODO: Reset combo window input time passes (just a little bit after the animation finishes)
+        ComboTimeout();
+    }
+
+    //INFO: Reset combo window input time passes (just a little bit (extraInputWindow) after the animation finishes)
+    private void ComboTimeout()
+    {
+        if (Time.time - lastInputTime > anim.GetCurrentAnimatorStateInfo(0).length + extraInputWindow)
+        {
+            CurrAttack = attacks.attacks.Find(attack => attack.name == "_");
+        }
     }
 
     private void RegisterNewInput(AuxButton button)
@@ -52,12 +66,16 @@ public class GeraltAttacks : MonoBehaviour
                 if (nextAttack != null)
                 {
                     lastInputTime = Time.time;
-                    currAttack = nextAttack;
+                    CurrAttack = nextAttack;
                 }
                 else
                 {
-                    currAttack = attacks.attacks.Find(attack => attack.name == "_" + button.name);
+                    CurrAttack = attacks.attacks.Find(attack => attack.name == "_" + button.name);
                 }
+                //TODO: Wait until the previous attack finishes to start playig this animation
+                //TODO: Keep the last attack, and if the player presses another button in the time limit, change the combo (test if this helps the player or is frustrating)
+
+                //TODO: Keep the current attack before switching to the next animation
                 Debug.Log("CURRENT ATTACK: " + currAttack.name);
             }
         }
@@ -68,5 +86,18 @@ public class GeraltAttacks : MonoBehaviour
     {
         //INFO: If we decide that the names of the attacks aren't the combination of their buttons, this should go through all the "currAttack.nextAttack" list and see if any of them matches our "input"
         return attacks.attacks.Find(attack => attack.name == currAttack.name + input);
+    }
+
+    public Attack CurrAttack
+    {
+        set
+        {
+            currAttack = value;
+            anim.Play(value.animation_id);
+        }
+        get
+        {
+            return currAttack;
+        }
     }
 }
