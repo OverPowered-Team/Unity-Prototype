@@ -8,9 +8,9 @@
             "endDamageTime": 1.0
         },
         {
-            "name": "attack 1",
-            "animation_id": 1,
-            "damage": 1,
+            "name": "attack 2",
+            "animation_id": 2,
+            "damage": 2,
             "startDamageTime": 0.0,
             "endDamageTime": 1.0
         }
