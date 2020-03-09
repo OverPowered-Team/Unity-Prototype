@@ -20537,23 +20537,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2014817512}
   m_PrefabAsset: {fileID: 0}
---- !u!111 &2014817514
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2014817513}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: -203655887218126122, guid: f617764d823f25140b10fc06935d0d25,
-    type: 3}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
---- !u!114 &2014817515
+--- !u!114 &2014817514
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20562,11 +20546,48 @@ MonoBehaviour:
   m_GameObject: {fileID: 2014817513}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7033daa2988e5794caed7ae2ef9b4bd5, type: 3}
+  m_Script: {fileID: 11500000, guid: c49d2f6f8f3402b4f84395b33790c2d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animClip: {fileID: -203655887218126122, guid: fa5ac299fed9da4439a5613b04e54013,
-    type: 3}
+  attacks:
+    attacks:
+    - name: x
+      animation_id: 0
+      damage: 0
+      startDamageTime: 0
+      endDamageTime: 0
+      clip: {fileID: 0}
+    - name: 
+      animation_id: 0
+      damage: 0
+      startDamageTime: 0
+      endDamageTime: 0
+      clip: {fileID: 0}
+    - name: 
+      animation_id: 0
+      damage: 0
+      startDamageTime: 0
+      endDamageTime: 0
+      clip: {fileID: 0}
+--- !u!95 &2014817515
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2014817513}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 02fda78e6f3bdff4292d4a70fa3d02e1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2024843156
 GameObject:
   m_ObjectHideFlags: 0

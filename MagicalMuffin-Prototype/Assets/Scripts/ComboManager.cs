@@ -26,7 +26,7 @@ public class ComboManager : MonoBehaviour
     {
         Attack attack = new Attack();
         attack.name = "best attack";
-        attack.animation_id = 1;
+        attack.animation_id = "x";
         attack.damage = 1;
         attack.startDamageTime = 0;
         attack.endDamageTime = 1;
@@ -43,7 +43,7 @@ public class ComboManager : MonoBehaviour
         Attack attack1 = new Attack();
         attack1.name = "attack 1";
         attack1.damage = 1;
-        attack1.animation_id = 1;
+        attack1.animation_id = "x";
         attack1.startDamageTime = 0f;
         attack1.endDamageTime = 1f;
         attackList.attacks.Add(attack1);
@@ -51,7 +51,7 @@ public class ComboManager : MonoBehaviour
         Attack attack2 = new Attack();
         attack2.name = "attack 2";
         attack2.damage = 2;
-        attack2.animation_id = 2;
+        attack2.animation_id = "xx";
         attack2.startDamageTime = 0f;
         attack2.endDamageTime = 1f;
         attackList.attacks.Add(attack2);
@@ -122,7 +122,7 @@ public class AttackList
 public class Attack
 {
     public string name;
-    public int animation_id;
+    public string animation_id;
     public int damage;
     public float startDamageTime;
     public float endDamageTime;
