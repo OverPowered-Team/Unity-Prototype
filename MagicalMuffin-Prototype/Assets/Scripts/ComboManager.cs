@@ -11,7 +11,7 @@ using UnityEditor;
 
 public class ComboManager : MonoBehaviour
 {
-    private Attack[] attacks;
+    [SerializeField] private Attack[] attacks;
     public string jsonName;
 
     private void Start()
@@ -55,7 +55,8 @@ public class ComboManager : MonoBehaviour
         attacks[i].endDamageTime = 1f;
         i++;
 
-        string json = JsonUtility.ToJson(attacks);
+        string json = JsonUtility.ToJson(this, true);
+        Debug.Log(json);
         File.WriteAllText(Application.dataPath + "/" + jsonName + ".json", json);
     }
 
@@ -81,22 +82,23 @@ public class ComboManager : MonoBehaviour
             Debug.Log("File does not exist");
         }
     }
+}
 
-
-    //An attack represents the minimum piece of a combo
-    //For example, pressing X once is an Attack of the XXXXX combo
-    [Serializable]
-    public class Attack
-    {
-        [SerializeField]
-        public string name;
-        public int animation_id;
-        public int damage;
-        public float startDamageTime;
-        public float endDamageTime;
-        //collider?
-        //collider movement / scale ?
-    }
-
-
+//An attack represents the minimum piece of a combo
+//For example, pressing X once is an Attack of the XXXXX combo
+[Serializable]
+public class Attack
+{
+    [SerializeField]
+    public string name;
+    [SerializeField]
+    public int animation_id;
+    [SerializeField]
+    public int damage;
+    [SerializeField]
+    public float startDamageTime;
+    [SerializeField]
+    public float endDamageTime;
+    //collider?
+    //collider movement / scale ?
 }
