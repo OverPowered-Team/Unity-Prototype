@@ -9,15 +9,17 @@ using UnityEditor;
 
 //Unity json https://www.youtube.com/watch?v=4oRVMCRCvN0
 
+[Serializable]
 public class ComboManager : MonoBehaviour
 {
-    private Attack[] attacks;
-    public string jsonName;
+    AttackList attackList;
+    [NonSerialized] string jsonName = "attacks";
 
     private void Start()
     {
         //ReadAttacks(Application.dataPath + "/" + jsonName + ".json");
         WriteTestAttacks();
+        //ReadAttacks(Application.dataPath + "/" + jsonName + ".json");
     }
 
     private void WriteTestAttack()
@@ -35,31 +37,31 @@ public class ComboManager : MonoBehaviour
 
     private void WriteTestAttacks()
     {
-        attacks = new Attack[2];
+        attackList = new AttackList();
+        attackList.attacks = new List<Attack>();
 
-        int i = 0;
+        Attack attack1 = new Attack();
+        attack1.name = "attack 1";
+        attack1.damage = 1;
+        attack1.animation_id = 1;
+        attack1.startDamageTime = 0f;
+        attack1.endDamageTime = 1f;
+        attackList.attacks.Add(attack1);
 
-        attacks[i] = new Attack();
-        attacks[i].name = "attack 1";
-        attacks[i].damage = 1;
-        attacks[i].animation_id = 1;
-        attacks[i].startDamageTime = 0f;
-        attacks[i].endDamageTime = 1f;
-        i++;
+        Attack attack2 = new Attack();
+        attack2.name = "attack 2";
+        attack2.damage = 2;
+        attack2.animation_id = 2;
+        attack2.startDamageTime = 0f;
+        attack2.endDamageTime = 1f;
+        attackList.attacks.Add(attack2);
 
-        attacks[i] = new Attack();
-        attacks[i].name = "attack 2";
-        attacks[i].damage = 2;
-        attacks[i].animation_id = 2;
-        attacks[i].startDamageTime = 0f;
-        attacks[i].endDamageTime = 1f;
-        i++;
-
-        string json = JsonUtility.ToJson(attacks);
+        string json = JsonUtility.ToJson(attackList, true);
+        Debug.Log(json);
         File.WriteAllText(Application.dataPath + "/" + jsonName + ".json", json);
     }
 
-    private static void ReadAttacks(string path)
+    private static void ReadAttack(string path)
     {
         if (File.Exists(path))
         {
@@ -82,21 +84,48 @@ public class ComboManager : MonoBehaviour
         }
     }
 
-
-    //An attack represents the minimum piece of a combo
-    //For example, pressing X once is an Attack of the XXXXX combo
-    [Serializable]
-    public class Attack
+    private void ReadAttacks(string path)
     {
-        [SerializeField]
-        public string name;
-        public int animation_id;
-        public int damage;
-        public float startDamageTime;
-        public float endDamageTime;
-        //collider?
-        //collider movement / scale ?
+        if (File.Exists(path))
+        {
+            // Open the stream and read it back.
+            using (FileStream fs = File.OpenRead(path))
+            {
+                byte[] b = new byte[1024];
+                UTF8Encoding temp = new UTF8Encoding(true);
+
+                while (fs.Read(b, 0, b.Length) > 0)
+                {
+                    string json = temp.GetString(b);
+                    attackList = JsonUtility.FromJson<AttackList>(json);
+                    Debug.Log(attackList.attacks[1].name);
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("File does not exist");
+        }
     }
+}
 
+[Serializable]
+public class AttackList
+{
+    [SerializeField]
+    public List<Attack> attacks;
+}
 
+//An attack represents the minimum piece of a combo
+//For example, pressing X once is an Attack of the XXXXX combo
+[Serializable]
+public class Attack
+{
+    public string name;
+    public int animation_id;
+    public int damage;
+    public float startDamageTime;
+    public float endDamageTime;
+    //collider?
+    //collider movement / scale ?
 }
