@@ -17,7 +17,8 @@ public class ComboManager : MonoBehaviour
     private void Start()
     {
         //ReadAttacks(Application.dataPath + "/" + jsonName + ".json");
-        WriteTestAttacks();
+        //WriteTestAttacks();
+        ReadAttacks(Application.dataPath + "/" + jsonName + ".json");
     }
 
     private void WriteTestAttack()
@@ -60,7 +61,7 @@ public class ComboManager : MonoBehaviour
         File.WriteAllText(Application.dataPath + "/" + jsonName + ".json", json);
     }
 
-    private static void ReadAttacks(string path)
+    private static void ReadAttack(string path)
     {
         if (File.Exists(path))
         {
@@ -82,6 +83,31 @@ public class ComboManager : MonoBehaviour
             Debug.Log("File does not exist");
         }
     }
+
+    private void ReadAttacks(string path)
+    {
+        if (File.Exists(path))
+        {
+            // Open the stream and read it back.
+            using (FileStream fs = File.OpenRead(path))
+            {
+                byte[] b = new byte[1024];
+                UTF8Encoding temp = new UTF8Encoding(true);
+
+                while (fs.Read(b, 0, b.Length) > 0)
+                {
+                    attacks = new Attack[2];
+                    string json = temp.GetString(b);
+                    attacks = JsonUtility.FromJson<Attack[]>(json);
+                    Debug.Log(attacks[0].damage);
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("File does not exist");
+        }
+    }
 }
 
 //An attack represents the minimum piece of a combo
@@ -89,15 +115,10 @@ public class ComboManager : MonoBehaviour
 [Serializable]
 public class Attack
 {
-    [SerializeField]
     public string name;
-    [SerializeField]
     public int animation_id;
-    [SerializeField]
     public int damage;
-    [SerializeField]
     public float startDamageTime;
-    [SerializeField]
     public float endDamageTime;
     //collider?
     //collider movement / scale ?
