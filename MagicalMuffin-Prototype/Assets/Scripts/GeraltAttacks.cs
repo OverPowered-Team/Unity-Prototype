@@ -14,13 +14,14 @@ public class GeraltAttacks : MonoBehaviour
     private AuxButton yButton;
 
     private float lastInputTime = 0f;
-    private float inputBlockTime = 0f;//In seconds. TODO: Define if this should be individual for each attack or the same for all attacks
     private float extraInputWindow = 0.2f;//In seconds.
     private Attack currAttack;
 
     private Attack entryPoint;//This is not really an attack, it's the idle that goes to x and y
 
     private Animator anim;
+
+    private string nextInput = "";
 
     private void Start()
     {
@@ -43,7 +44,38 @@ public class GeraltAttacks : MonoBehaviour
 
         RegisterNewInput(xButton);
         RegisterNewInput(yButton);
+        PlayNextCombo();
         ComboTimeout();
+    }
+
+    //TODO: Idle should be the exception, it shouldnt' wait to start the next attack
+    private void PlayNextCombo()
+    {
+        //If the combo has finished
+        if (Time.time - lastInputTime > anim.GetCurrentAnimatorStateInfo(0).length)
+        {
+            if (nextInput == "")
+            {
+                CurrAttack = attacks.attacks.Find(attack => attack.name == "_");
+            }
+            else
+            {
+                //INFO: Check if the input given matches any of the inputs of the next attacks
+                Attack nextAttack = FindNextAttack(currAttack, nextInput);
+                if (nextAttack != null)
+                {
+                    lastInputTime = Time.time;
+                    CurrAttack = nextAttack;
+                }
+                else
+                {
+                    CurrAttack = attacks.attacks.Find(attack => attack.name == "_" + nextInput);
+                }
+                nextInput = "";
+                Debug.Log("CURRENT ATTACK: " + currAttack.name);
+            }
+
+        }
     }
 
     //INFO: Reset combo window input time passes (just a little bit (extraInputWindow) after the animation finishes)
@@ -59,29 +91,11 @@ public class GeraltAttacks : MonoBehaviour
     {
         if (button.state == KEY_STATE.KEY_DOWN)
         {
-            if (lastInputTime + inputBlockTime < Time.time)
-            {
-                //Check if the input given matches any of the inputs of the next attacks
-                Attack nextAttack = FindNextAttack(currAttack, button.name);
-                if (nextAttack != null)
-                {
-                    lastInputTime = Time.time;
-                    CurrAttack = nextAttack;
-                }
-                else
-                {
-                    CurrAttack = attacks.attacks.Find(attack => attack.name == "_" + button.name);
-                }
-                //TODO: Wait until the previous attack finishes to start playig this animation
-                //TODO: Keep the last attack, and if the player presses another button in the time limit, change the combo (test if this helps the player or is frustrating)
-
-                //TODO: Keep the current attack before switching to the next animation
-                Debug.Log("CURRENT ATTACK: " + currAttack.name);
-            }
+            nextInput = button.name;
         }
     }
 
-    //Returns null if there isn't an attack that follows with the given input
+    //INFO: Returns null if there isn't an attack that follows with the given input
     private Attack FindNextAttack(Attack currAttack, string input)
     {
         //INFO: If we decide that the names of the attacks aren't the combination of their buttons, this should go through all the "currAttack.nextAttack" list and see if any of them matches our "input"
