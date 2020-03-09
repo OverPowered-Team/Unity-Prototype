@@ -9,10 +9,11 @@ using UnityEditor;
 
 //Unity json https://www.youtube.com/watch?v=4oRVMCRCvN0
 
+[Serializable]
 public class ComboManager : MonoBehaviour
 {
-    [SerializeField] private Attack[] attacks;
-    public string jsonName;
+    AttackList attackList;
+    [NonSerialized] string jsonName = "attacks";
 
     private void Start()
     {
@@ -36,27 +37,28 @@ public class ComboManager : MonoBehaviour
 
     private void WriteTestAttacks()
     {
-        attacks = new Attack[2];
+        attackList = new AttackList();
+        attackList.attacks = new Attack[2];
 
         int i = 0;
 
-        attacks[i] = new Attack();
-        attacks[i].name = "attack 1";
-        attacks[i].damage = 1;
-        attacks[i].animation_id = 1;
-        attacks[i].startDamageTime = 0f;
-        attacks[i].endDamageTime = 1f;
+        attackList.attacks[i] = new Attack();
+        attackList.attacks[i].name = "attack 1";
+        attackList.attacks[i].damage = 1;
+        attackList.attacks[i].animation_id = 1;
+        attackList.attacks[i].startDamageTime = 0f;
+        attackList.attacks[i].endDamageTime = 1f;
         i++;
 
-        attacks[i] = new Attack();
-        attacks[i].name = "attack 2";
-        attacks[i].damage = 2;
-        attacks[i].animation_id = 2;
-        attacks[i].startDamageTime = 0f;
-        attacks[i].endDamageTime = 1f;
+        attackList.attacks[i] = new Attack();
+        attackList.attacks[i].name = "attack 2";
+        attackList.attacks[i].damage = 2;
+        attackList.attacks[i].animation_id = 2;
+        attackList.attacks[i].startDamageTime = 0f;
+        attackList.attacks[i].endDamageTime = 1f;
         i++;
 
-        string json = JsonUtility.ToJson(this, true);
+        string json = JsonUtility.ToJson(attackList, true);
         Debug.Log(json);
         File.WriteAllText(Application.dataPath + "/" + jsonName + ".json", json);
     }
@@ -96,10 +98,9 @@ public class ComboManager : MonoBehaviour
 
                 while (fs.Read(b, 0, b.Length) > 0)
                 {
-                    attacks = new Attack[2];
                     string json = temp.GetString(b);
-                    attacks = JsonUtility.FromJson<Attack[]>(json);
-                    Debug.Log(attacks[0].damage);
+                    attackList = JsonUtility.FromJson<AttackList>(json);
+                    Debug.Log(attackList.attacks[1]);
                 }
             }
         }
@@ -108,6 +109,13 @@ public class ComboManager : MonoBehaviour
             Debug.Log("File does not exist");
         }
     }
+}
+
+[Serializable]
+public class AttackList
+{
+    [SerializeField]
+    public Attack[] attacks;
 }
 
 //An attack represents the minimum piece of a combo
