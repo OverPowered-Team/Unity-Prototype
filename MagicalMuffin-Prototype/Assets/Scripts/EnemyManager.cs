@@ -11,7 +11,7 @@ public class EnemyManager : MonoBehaviour
     public GameObject Spawner4;
 
     public GameObject EnemyGhoul;
-    //public GameObject EnemyRange;
+    public GameObject EnemyRange;
     //public GameObject EnemyMiniBoss;
 
     public GameObject EnemyFolder;
@@ -75,7 +75,10 @@ public class EnemyManager : MonoBehaviour
 
     void SpawnRange(GameObject spawnPosition)
     {
-        //Instantiate(EnemyRange, spawnPosition.transform.position, Quaternion.identity, EnemyFolder.transform);
+        Instantiate(EnemyRange, spawnPosition.transform.position, Quaternion.identity, EnemyFolder.transform);
+        EnemiesAlive.Add(EnemyRange);
+        EnemyRange.SetActive(true);
+
     }
 
     void SpawnMiniBoss(GameObject spawnPosition)
@@ -105,15 +108,51 @@ public class EnemyManager : MonoBehaviour
             SpawnGhoul(Spawner1);
             SpawnGhoul(Spawner4);
         }
-        for (int i = 0; i <= 2; ++i)
-        {
-            yield return new WaitForSeconds(0.75f);
-            SpawnGhoul(Spawner2);
-            SpawnGhoul(Spawner3);
-        }
+
+        yield return new WaitForSeconds(0.75f);
+        SpawnRange(Spawner2);
+        SpawnRange(Spawner3);
+        
 
         StopCoroutine("Round3");
         round_finished = true;
 
     }
+
+    IEnumerator Round4()
+    {
+        for (int i = 0; i <= 2; ++i)
+        {
+            yield return new WaitForSeconds(1.75f);
+            SpawnRange(Spawner1);
+            SpawnRange(Spawner4);
+        }
+
+        for (int i = 0; i <= 2; ++i)
+        {
+            yield return new WaitForSeconds(0.5f);
+            SpawnGhoul(Spawner1);
+            SpawnGhoul(Spawner4);
+        }
+
+
+        StopCoroutine("Round3");
+        round_finished = true;
+
+    }
+
+    IEnumerator Round5()
+    {
+        for (int i = 0; i <= 5; ++i)
+        {
+            yield return new WaitForSeconds(0.75f);
+            SpawnGhoul(Spawner1);
+            SpawnGhoul(Spawner4);
+        }
+        
+        StopCoroutine("Round3");
+        round_finished = true;
+
+    }
+
 }

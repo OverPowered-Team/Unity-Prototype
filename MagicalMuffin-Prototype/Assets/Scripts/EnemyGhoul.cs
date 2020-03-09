@@ -5,8 +5,8 @@ using UnityEngine;
 public class EnemyGhoul : MonoBehaviour
 {
 
-    public GameObject player1;
-    public GameObject player2;
+    GameObject player1;
+    GameObject player2;
     bool attack_player1 = false;
     bool attack_player2 = false;
     public float speed = 10;
@@ -23,13 +23,11 @@ public class EnemyGhoul : MonoBehaviour
         {
             attack_player1 = true;
             attack_player2 = false;
-            Debug.Log("Goes fot P1");
         }
         else
         {
             attack_player2 = true;
             attack_player1 = false;
-            Debug.Log("Goes fot P2");
         }
         constraintY = transform.position.y;
 
