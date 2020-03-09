@@ -20120,8 +20120,15 @@ MonoBehaviour:
       endDamageTime: 0
       input: 
       nextAttacks:
-      - x
-      - y
+      - _x
+      - _y
+    - name: _y
+      animation_id: _y
+      damage: 7
+      startDamageTime: 0
+      endDamageTime: 1
+      input: y
+      nextAttacks: []
 --- !u!95 &2014817515
 Animator:
   serializedVersion: 3
