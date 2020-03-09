@@ -18,8 +18,8 @@ public class ComboManager : MonoBehaviour
     private void Start()
     {
         //ReadAttacks(Application.dataPath + "/" + jsonName + ".json");
-        //WriteTestAttacks();
-        ReadAttacks(Application.dataPath + "/" + jsonName + ".json");
+        WriteTestAttacks();
+        //ReadAttacks(Application.dataPath + "/" + jsonName + ".json");
     }
 
     private void WriteTestAttack()
@@ -38,25 +38,23 @@ public class ComboManager : MonoBehaviour
     private void WriteTestAttacks()
     {
         attackList = new AttackList();
-        attackList.attacks = new Attack[2];
+        attackList.attacks = new List<Attack>();
 
-        int i = 0;
+        Attack attack1 = new Attack();
+        attack1.name = "attack 1";
+        attack1.damage = 1;
+        attack1.animation_id = 1;
+        attack1.startDamageTime = 0f;
+        attack1.endDamageTime = 1f;
+        attackList.attacks.Add(attack1);
 
-        attackList.attacks[i] = new Attack();
-        attackList.attacks[i].name = "attack 1";
-        attackList.attacks[i].damage = 1;
-        attackList.attacks[i].animation_id = 1;
-        attackList.attacks[i].startDamageTime = 0f;
-        attackList.attacks[i].endDamageTime = 1f;
-        i++;
-
-        attackList.attacks[i] = new Attack();
-        attackList.attacks[i].name = "attack 2";
-        attackList.attacks[i].damage = 2;
-        attackList.attacks[i].animation_id = 2;
-        attackList.attacks[i].startDamageTime = 0f;
-        attackList.attacks[i].endDamageTime = 1f;
-        i++;
+        Attack attack2 = new Attack();
+        attack2.name = "attack 2";
+        attack2.damage = 2;
+        attack2.animation_id = 2;
+        attack2.startDamageTime = 0f;
+        attack2.endDamageTime = 1f;
+        attackList.attacks.Add(attack2);
 
         string json = JsonUtility.ToJson(attackList, true);
         Debug.Log(json);
@@ -100,7 +98,7 @@ public class ComboManager : MonoBehaviour
                 {
                     string json = temp.GetString(b);
                     attackList = JsonUtility.FromJson<AttackList>(json);
-                    Debug.Log(attackList.attacks[1]);
+                    Debug.Log(attackList.attacks[1].name);
                 }
             }
         }
@@ -115,7 +113,7 @@ public class ComboManager : MonoBehaviour
 public class AttackList
 {
     [SerializeField]
-    public Attack[] attacks;
+    public List<Attack> attacks;
 }
 
 //An attack represents the minimum piece of a combo
