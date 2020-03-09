@@ -5,33 +5,41 @@ using UnityEngine.InputSystem;
 public class playerController : MonoBehaviour
 {
     Vector2 dir;
-    public GameObject gameobj;
     public float speed = 0.05f;
-    // Start is called before the first frame update
+    public int gamepad_n;
+    private int id;
+    Gamepad gamepad = null;
     void Start()
     {
-        //gameobj.GetComponent<coll>
-
-        gameobj.GetComponent<Transform>();
     }
 
+   public void SetGamepad(Gamepad gp)
+    {
+
+        gamepad = gp;
+    }
     // Update is called once per frame
     void Update()
     {
-
-        var gamepad = Gamepad.current;
+        
+      
+        
         if (gamepad == null)
             return;
 
-        //Vector2 move = gamepad.leftStick.ReadValue();
-        //transform.position = new Vector3(transform.position.x + move.x * speed, transform.position.y, transform.position.z + move.y * speed);
+        id =  Gamepad.current.deviceId;
+        Debug.Log(id);
+        Vector2 move = gamepad.leftStick.ReadValue();
+        transform.position = new Vector3(transform.position.x + move.x * speed, transform.position.y, transform.position.z + move.y * speed);
         //Debug.Log(move);
-        Move();
+     //   InputSystem.GetDevice("1").;
+        //Move();
+
+        //InputSystem.GetDeviceById()
     }
 
     private void Move()
     {
-        Debug.Log(dir);
 
         transform.position = new Vector3(transform.position.x + dir.x * speed, transform.position.y, transform.position.z + dir.y * speed);
     }
