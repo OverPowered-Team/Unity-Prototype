@@ -22,6 +22,5 @@ public class movementKeys : MonoBehaviour
             transform.Translate(Vector3.left * speed * Time.deltaTime);
         if (Input.GetKey(KeyCode.RightArrow))
             transform.Translate(Vector3.right * speed * Time.deltaTime);
-
     }
 }

@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using XInputDotNetPure;
 
 //Unity json https://www.youtube.com/watch?v=4oRVMCRCvN0
 
@@ -57,7 +58,6 @@ public class ComboManager : MonoBehaviour
         attackList.attacks.Add(attack2);
 
         string json = JsonUtility.ToJson(attackList, true);
-        Debug.Log(json);
         File.WriteAllText(Application.dataPath + "/" + jsonName + ".json", json);
     }
 
@@ -126,6 +126,9 @@ public class Attack
     public int damage;
     public float startDamageTime;
     public float endDamageTime;
+    public string input;
+    [SerializeField] public List<string> nextAttacks;
+
     //collider?
     //collider movement / scale ?
 }

@@ -2,17 +2,21 @@
     "attacks": [
         {
             "name": "attack 1",
-            "animation_id": 1,
+            "animation_id": "x",
             "damage": 1,
             "startDamageTime": 0.0,
-            "endDamageTime": 1.0
+            "endDamageTime": 1.0,
+            "input": "",
+            "nextAttacks": []
         },
         {
             "name": "attack 2",
-            "animation_id": 2,
+            "animation_id": "xx",
             "damage": 2,
             "startDamageTime": 0.0,
-            "endDamageTime": 1.0
+            "endDamageTime": 1.0,
+            "input": "",
+            "nextAttacks": []
         }
     ]
 }
