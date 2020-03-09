@@ -11,16 +11,13 @@ using UnityEditor;
 
 public class ComboManager : MonoBehaviour
 {
-    private List<Attack> attacks;
+    private Attack[] attacks;
     public string jsonName;
 
     private void Start()
     {
-        attacks = new List<Attack>();
-
-        WriteTestAttack();
-
         //ReadAttacks(Application.dataPath + "/" + jsonName + ".json");
+        WriteTestAttacks();
     }
 
     private void WriteTestAttack()
@@ -36,43 +33,62 @@ public class ComboManager : MonoBehaviour
         File.WriteAllText(Application.dataPath + "/" + jsonName + ".json", json);
     }
 
+    private void WriteTestAttacks()
+    {
+        attacks = new Attack[2];
+
+        int i = 0;
+
+        attacks[i] = new Attack();
+        attacks[i].name = "attack 1";
+        attacks[i].damage = 1;
+        attacks[i].animation_id = 1;
+        attacks[i].startDamageTime = 0f;
+        attacks[i].endDamageTime = 1f;
+        i++;
+
+        attacks[i] = new Attack();
+        attacks[i].name = "attack 2";
+        attacks[i].damage = 2;
+        attacks[i].animation_id = 2;
+        attacks[i].startDamageTime = 0f;
+        attacks[i].endDamageTime = 1f;
+        i++;
+
+        string json = JsonUtility.ToJson(attacks);
+        File.WriteAllText(Application.dataPath + "/" + jsonName + ".json", json);
+    }
+
     private static void ReadAttacks(string path)
     {
-        if (!File.Exists(path))
+        if (File.Exists(path))
         {
-            // Create the file.
-            using (FileStream fs = File.Create(path))
+            // Open the stream and read it back.
+            using (FileStream fs = File.OpenRead(path))
             {
-                Byte[] info = new UTF8Encoding(true).GetBytes("This is some text in the file.");
+                byte[] b = new byte[1024];
+                UTF8Encoding temp = new UTF8Encoding(true);
 
-                // Add some information to the file.
-                fs.Write(info, 0, info.Length);
+                while (fs.Read(b, 0, b.Length) > 0)
+                {
+                    Attack attack = JsonUtility.FromJson<Attack>(temp.GetString(b));
+                    Debug.Log(attack.damage);
+                }
             }
         }
         else
         {
             Debug.Log("File does not exist");
         }
-
-        // Open the stream and read it back.
-        using (FileStream fs = File.OpenRead(path))
-        {
-            byte[] b = new byte[1024];
-            UTF8Encoding temp = new UTF8Encoding(true);
-
-            while (fs.Read(b, 0, b.Length) > 0)
-            {
-                Attack attack = JsonUtility.FromJson<Attack>(temp.GetString(b));
-                Debug.Log(attack);
-            }
-        }
     }
 
 
     //An attack represents the minimum piece of a combo
     //For example, pressing X once is an Attack of the XXXXX combo
+    [Serializable]
     public class Attack
     {
+        [SerializeField]
         public string name;
         public int animation_id;
         public int damage;
