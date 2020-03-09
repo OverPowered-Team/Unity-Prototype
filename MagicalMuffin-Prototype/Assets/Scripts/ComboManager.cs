@@ -13,7 +13,7 @@ using UnityEditor;
 public class ComboManager : MonoBehaviour
 {
     AttackList attackList;
-    [NonSerialized] string jsonName = "attacks";
+    string jsonName = "attacks";
 
     private void Start()
     {
