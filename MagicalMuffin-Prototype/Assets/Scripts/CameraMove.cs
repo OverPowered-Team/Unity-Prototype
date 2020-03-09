@@ -16,7 +16,7 @@ public class CameraMove : MonoBehaviour
     public float angle2;
 
     public bool follow = false;
-
+    public float high = 0;
     Vector3 initial_vec;
 
     Vector3 cam_pos;//gizmos
@@ -28,7 +28,7 @@ public class CameraMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        middle_point = new Vector3((player1.position.x + player2.position.x) * 0.5f, (player1.position.y + player2.position.y) * 0.5f, (player1.position.z + player2.position.z) * 0.5f);
+        middle_point = new Vector3((player1.position.x + player2.position.x) * 0.5f, high, (player1.position.z + player2.position.z) * 0.5f);
         cam = GetComponent<Camera>();
         initial_vec = Camera.main.transform.position - middle_point;
         transform.position = CameraPos(angle1, angle2, distance);
@@ -39,7 +39,7 @@ public class CameraMove : MonoBehaviour
     void Update()
     {
         
-        middle_point = new Vector3((player1.position.x + player2.position.x) * 0.5f, (player1.position.y + player2.position.y) * 0.5f, (player1.position.z + player2.position.z) * 0.5f);
+        middle_point = new Vector3((player1.position.x + player2.position.x) * 0.5f, high, (player1.position.z + player2.position.z) * 0.5f);
         transform.position = CameraPos(angle1, angle2, distance) + middle_point;
         transform.LookAt(middle_point);
         /*cam_pos = cam.transform.position;

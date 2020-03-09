@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class movementKeys : MonoBehaviour
 {
-    float speed = 2f;
+    public float speed = 2f;
     // Start is called before the first frame update
     void Start()
     {
