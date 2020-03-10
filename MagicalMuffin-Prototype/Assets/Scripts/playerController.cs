@@ -12,19 +12,23 @@ public class playerController : MonoBehaviour
    
 
     Rigidbody rb;
-
+    Collider coll;
     public float fall_mult =2.5f;
     public float jump_mult = 2f;
     private float currentDashTime;
     Gamepad gamepad = null;
-
+    private float jump_dist =-10;
+    private float count;
     void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+       // rb = GetComponent<Rigidbody>();
         Debug.Log(rb);
+        coll = GetComponentInChildren<Collider>();
+        
     }
     void Start()
     {
+        count = jump_dist;
         currentDashTime = maxDashTime;
     }
     public void SetGamepad(Gamepad gp)
@@ -40,6 +44,7 @@ public class playerController : MonoBehaviour
         if (gamepad == null)
             return;
 
+      //  if(!coll.bounds.Intersects.)
         //if(rb.velocity.y < 0)
         //{
         //    rb.velocity += Vector3.up * Physics.gravity.y * (fall_mult - 1);
@@ -50,8 +55,36 @@ public class playerController : MonoBehaviour
         //}
 
        
+      //if(coll.attachedRigidbody.velocity.y <0 && !coll.bounds.Intersects(coll.bounds))
+      //  {
+      //      Debug.Log("velocity under 0");
+      //      transform.position += Vector3.up * Physics.gravity.y * (fall_mult - 1);
+      //  }
+      //  else if (coll.attachedRigidbody.velocity.y == 0)
+      //  {
+      //      Debug.Log("velocity equal 0");
+      //  }
+      //  if (coll.attachedRigidbody.velocity.y > 0)
+      //  {
+      //      transform.position += Vector3.up * Physics.gravity.y * (fall_mult - 1);
+      //  }
 
-        
+        if(gamepad.buttonSouth.wasPressedThisFrame && jump_dist == count)
+        {
+            jump_dist = -count;
+        }
+        if (jump_dist <= -count && jump_dist > 0)
+        {
+            transform.position += Vector3.up;
+            jump_dist -= 1;
+            Debug.Log(jump_dist);
+        }
+        else if (jump_dist <= 0 && jump_dist > count)
+        {
+            transform.position -= Vector3.up;
+            jump_dist -= 1;
+            Debug.Log(jump_dist);
+        }
         Vector2 move = gamepad.leftStick.ReadValue();
         transform.position = new Vector3(transform.position.x + move.x * speed, transform.position.y, transform.position.z + move.y * speed);
 
@@ -86,29 +119,4 @@ public class playerController : MonoBehaviour
 
 }
 
-    //void OrientValue(Vector2 direction)
-    //{
-    //    Vector3 localdir = new Vector3(transform.position.x + direction.x, transform.position.y, transform.position.z + direction.y);
-    //   // Vector3 or_vec = cam.GetComponent<Transform>().rotation.eulerAngles * localdir;
-    //   // transform.position = new Vector3(transform.position.x + or_vec.x * speed, transform.position.y, transform.position.z + or_vec.y * speed);
-    //}
 
-
-//    private void Move()
-//    {
-
-//        transform.position = new Vector3(transform.position.x + dir.x * speed, transform.position.y, transform.position.z + dir.y * speed);
-//    }
-
-//    private void OnMove(InputValue value)
-//    {
-//        dir = value.Get<Vector2>();
-
-
-//    }
-//    private void OnJump()
-//    {
-//        transform.Translate(transform.up);
-//        Debug.Log("que apsa");
-//    }
-//}
