@@ -6,7 +6,7 @@ public class playerController : MonoBehaviour
 {
     public float speed = 0.05f;
     public float dashSpeed = 0.5f;
-    public float maxDashTime = 1.0f;
+    public float maxDashTime = 5.0f;
     public float dashStopSpeed = 0.2f;
    
 
@@ -90,41 +90,55 @@ public class playerController : MonoBehaviour
             transform.position = dst;
 
         }
-        if (gamepad.buttonEast.wasPressedThisFrame)
+
+
+        Dash(move);
+
+        
+        
+
+    }
+
+
+    
+    private void Dash(Vector2 direction)
+    {
+        if (gamepad.buttonEast.wasPressedThisFrame && currentDashTime >= maxDashTime)
         {
             currentDashTime = 0.0f;
+            _animator.SetBool("roll", true);
+            Debug.Log("B PRESSED");
         }
-
-   
         Vector3 move_dir;
-
         if (currentDashTime < maxDashTime)
         {
+            _animator.SetBool("roll", true);
 
-            if (move.x == 0 && move.y == 0)
+            if (direction.x == 0 && direction.y == 0)
                 move_dir = transform.forward;
 
-            else move_dir = new Vector3(move.x * dashSpeed, 0, move.y * dashSpeed);
+            else move_dir = new Vector3(direction.x * dashSpeed, 0, direction.y * dashSpeed);
             currentDashTime += dashStopSpeed;
 
         }
         else
         {
+            _animator.SetBool("roll", false);
             move_dir = Vector3.zero;
         }
 
 
         transform.position += move_dir;
     }
-
-
     private void BlendAnim(Vector2 value)
     {
         _animator.SetFloat("VelX",value.x);
         _animator.SetFloat("VelY", value.y);
-        Debug.Log(value);
+        
 
     }
+
+  
 }
 
 
