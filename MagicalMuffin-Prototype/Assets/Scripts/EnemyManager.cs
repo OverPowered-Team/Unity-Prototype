@@ -5,14 +5,12 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     static public List<GameObject> EnemiesAlive = new List<GameObject>();
-    public GameObject Spawner1;
-    public GameObject Spawner2;
-    public GameObject Spawner3;
-    public GameObject Spawner4;
+
+    public List<GameObject> Spawners = new List<GameObject>();
+    public List<GameObject> ParticleSpawners = new List<GameObject>();
 
     public GameObject EnemyGhoul;
     public GameObject EnemyRange;
-    //public GameObject EnemyMiniBoss;
 
     public GameObject EnemyFolder;
 
@@ -24,6 +22,11 @@ public class EnemyManager : MonoBehaviour
     {
         round = 1;
         next_round = true;
+
+        foreach (var particle in ParticleSpawners)
+        {
+            particle.SetActive(false);
+        }
     }
 
     void Update()
@@ -33,9 +36,7 @@ public class EnemyManager : MonoBehaviour
             switch (round)
             {
                 case 1:
-                    SpawnGhoul(Spawner2);
-                    SpawnGhoul(Spawner3);
-                    round_finished = true;
+                    StartCoroutine("Round1");
                     break;
                 case 2:
                     StartCoroutine("Round2");
@@ -86,14 +87,36 @@ public class EnemyManager : MonoBehaviour
         //Instantiate(EnemyMiniBoss, spawnPosition.transform.position, Quaternion.identity, EnemyFolder.transform);
     }
 
+    IEnumerator Round1()
+    {
+        ParticleSpawners[2].SetActive(true);
+        ParticleSpawners[1].SetActive(true);
+        for (int i = 0; i <= 2; ++i)
+        {
+            yield return new WaitForSeconds(0.75f);
+            SpawnGhoul(Spawners[2]);
+            SpawnGhoul(Spawners[1]);
+        }
+        ParticleSpawners[2].SetActive(false);
+        ParticleSpawners[1].SetActive(false);
+
+        StopCoroutine("Round1");
+        round_finished = true;
+
+    }
+
     IEnumerator Round2()
     {
+        ParticleSpawners[2].SetActive(true);
+        ParticleSpawners[1].SetActive(true);
         for (int i = 0; i <= 3; ++i)
         {
             yield return new WaitForSeconds(0.75f);
-            SpawnGhoul(Spawner3);
-            SpawnGhoul(Spawner2);
+            SpawnGhoul(Spawners[2]);
+            SpawnGhoul(Spawners[1]);
         }
+        ParticleSpawners[2].SetActive(false);
+        ParticleSpawners[1].SetActive(false);
 
         StopCoroutine("Round2");
         round_finished = true;
@@ -102,57 +125,64 @@ public class EnemyManager : MonoBehaviour
 
     IEnumerator Round3()
     {
+        ParticleSpawners[0].SetActive(true);
+        ParticleSpawners[3].SetActive(true);
         for (int i = 0; i <= 2; ++i)
         {
             yield return new WaitForSeconds(0.75f);
-            SpawnGhoul(Spawner1);
-            SpawnGhoul(Spawner4);
+            SpawnGhoul(Spawners[0]);
+            SpawnGhoul(Spawners[3]);
         }
+        ParticleSpawners[0].SetActive(false);
+        ParticleSpawners[3].SetActive(false);
 
+        ParticleSpawners[2].SetActive(true);
+        ParticleSpawners[1].SetActive(true);
         yield return new WaitForSeconds(0.75f);
-        SpawnRange(Spawner2);
-        SpawnRange(Spawner3);
+        SpawnRange(Spawners[1]);
+        SpawnRange(Spawners[2]);
+        ParticleSpawners[2].SetActive(false);
+        ParticleSpawners[1].SetActive(false);
+
+        StopCoroutine("Round3");
+        round_finished = true;
+
+    }
+
+    //IEnumerator Round4()
+    //{
+    //    for (int i = 0; i <= 2; ++i)
+    //    {
+    //        yield return new WaitForSeconds(1.75f);
+    //        SpawnRange(Spawners[0]);
+    //        SpawnRange(Spawners[3]);
+    //    }
+
+    //    for (int i = 0; i <= 2; ++i)
+    //    {
+    //        yield return new WaitForSeconds(0.5f);
+    //        SpawnGhoul(Spawners[0]);
+    //        SpawnGhoul(Spawners[3]);
+    //    }
+
+
+    //    StopCoroutine("Round4");
+    //    round_finished = true;
+
+    //}
+
+    //IEnumerator Round5()
+    //{
+    //    for (int i = 0; i <= 5; ++i)
+    //    {
+    //        yield return new WaitForSeconds(0.75f);
+    //        SpawnGhoul(Spawners[0]);
+    //        SpawnGhoul(Spawners[3]);
+    //    }
         
+    //    StopCoroutine("Round5");
+    //    round_finished = true;
 
-        StopCoroutine("Round3");
-        round_finished = true;
-
-    }
-
-    IEnumerator Round4()
-    {
-        for (int i = 0; i <= 2; ++i)
-        {
-            yield return new WaitForSeconds(1.75f);
-            SpawnRange(Spawner1);
-            SpawnRange(Spawner4);
-        }
-
-        for (int i = 0; i <= 2; ++i)
-        {
-            yield return new WaitForSeconds(0.5f);
-            SpawnGhoul(Spawner1);
-            SpawnGhoul(Spawner4);
-        }
-
-
-        StopCoroutine("Round3");
-        round_finished = true;
-
-    }
-
-    IEnumerator Round5()
-    {
-        for (int i = 0; i <= 5; ++i)
-        {
-            yield return new WaitForSeconds(0.75f);
-            SpawnGhoul(Spawner1);
-            SpawnGhoul(Spawner4);
-        }
-        
-        StopCoroutine("Round3");
-        round_finished = true;
-
-    }
+    //}
 
 }
