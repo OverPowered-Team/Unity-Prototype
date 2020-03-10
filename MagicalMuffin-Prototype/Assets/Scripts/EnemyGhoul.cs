@@ -22,12 +22,10 @@ public class EnemyGhoul : MonoBehaviour
     bool knockback = false;
 
     public ParticleSystem BloodFXParticles;
-   // public ParticleSystem SpawnFX;
     void Start()
     {
         anim = GetComponentInChildren<Animator>();
         BloodFXParticles.gameObject.SetActive(false);
-
 
         //Decide Target
         player1 = GameObject.FindGameObjectWithTag("Player");
