@@ -35,6 +35,12 @@ public class GeraltAttacks : MonoBehaviour
         CurrAttack = entryPoint;
         lastInputTime = Time.time;
         Debug.Log("HERE 1");
+        UnityEditor.Animations.AnimatorController controller = anim.runtimeAnimatorController as UnityEditor.Animations.AnimatorController;
+        foreach (UnityEditor.Animations.ChildAnimatorState state in controller.layers[0].stateMachine.states)
+        {
+            state.state.timeParameterActive = true;
+            state.state.= state.time + extraInputWindow;
+        }
     }
 
     private void Update()
@@ -123,8 +129,7 @@ public class GeraltAttacks : MonoBehaviour
         set
         {
             currAttack = value;
-            anim.StopPlayback();
-            //anim.Play(attacks.attacks.Find(attack => attack.name == "_").animation_id);//HARDCODED: Unity doesn't let us play the same animation twice (useful for some combos that can repeat without any animation in between)
+
             anim.Play(value.animation_id);
         }
         get
