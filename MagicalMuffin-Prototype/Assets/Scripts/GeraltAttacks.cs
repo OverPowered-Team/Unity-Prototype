@@ -19,7 +19,7 @@ public class GeraltAttacks : MonoBehaviour
 
     private Attack currAttack;
     private float lastInputTime = 0f;
-    private float extraInputWindow = 1f;//In seconds.
+    public float extraInputWindow = 1f;//In seconds.
     private string nextInput = "";
 
     private void Start()

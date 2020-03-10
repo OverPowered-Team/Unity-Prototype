@@ -20136,6 +20136,7 @@ MonoBehaviour:
       endDamageTime: 1
       input: x
       nextAttacks: []
+  extraInputWindow: 0.5
 --- !u!95 &2014817515
 Animator:
   serializedVersion: 3
