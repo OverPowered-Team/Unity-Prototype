@@ -34,13 +34,6 @@ public class GeraltAttacks : MonoBehaviour
         entryPoint = attacks.attacks.Find(attack => attack.name == "_");//_ is idle
         CurrAttack = entryPoint;
         lastInputTime = Time.time;
-        Debug.Log("HERE 1");
-        UnityEditor.Animations.AnimatorController controller = anim.runtimeAnimatorController as UnityEditor.Animations.AnimatorController;
-        foreach (UnityEditor.Animations.ChildAnimatorState state in controller.layers[0].stateMachine.states)
-        {
-            state.state.timeParameterActive = true;
-            state.state.= state.time + extraInputWindow;
-        }
     }
 
     private void Update()
@@ -66,7 +59,6 @@ public class GeraltAttacks : MonoBehaviour
             CurrAttack = attacks.attacks.Find(attack => attack.name == "_" + nextInput);
             lastInputTime = Time.time;
             nextInput = "";
-            Debug.Log("HERE 2");
         }
     }
 
@@ -83,14 +75,12 @@ public class GeraltAttacks : MonoBehaviour
                 {
                     CurrAttack = nextAttack;
                     lastInputTime = Time.time;
-                    Debug.Log("HERE 3");
                 }
                 else
                 {
                     CurrAttack = attacks.attacks.Find(attack => attack.name == "_" + nextInput);
                     lastInputTime = Time.time;
                     Debug.Log("Next input: " + nextInput);
-                    Debug.Log("HERE 4");
                 }
                 nextInput = "";
                 //Debug.Log("CURRENT ATTACK: " + currAttack.name);
@@ -105,7 +95,6 @@ public class GeraltAttacks : MonoBehaviour
         {
             CurrAttack = attacks.attacks.Find(attack => attack.name == "_");
             lastInputTime = Time.time;
-            Debug.Log("HERE 5");
         }
     }
 
@@ -129,7 +118,6 @@ public class GeraltAttacks : MonoBehaviour
         set
         {
             currAttack = value;
-
             anim.Play(value.animation_id);
         }
         get
@@ -137,4 +125,9 @@ public class GeraltAttacks : MonoBehaviour
             return currAttack;
         }
     }
+
+    //INFO: Repeatable 1 attack combos
+    //- Unity doesn't let us play the same animation after one has finished
+    //- If for example, _x didn't have a combo, and we were to press x after the animation has ended and it's in the inputWindowTime, it wouldn't play it again
+    //- To work around this, you can add a transition from that single repetable combo to the idle state
 }
