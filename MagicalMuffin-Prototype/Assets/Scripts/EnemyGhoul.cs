@@ -35,12 +35,15 @@ public class EnemyGhoul : MonoBehaviour
 
     void Update()
     {
+        
         if(attack_player1)
         {
+            transform.LookAt(player1.transform);
             transform.position = Vector3.MoveTowards(transform.position, player1.transform.position, speed * Time.deltaTime);
         }
         if (attack_player2)
         {
+            transform.LookAt(player2.transform);
             transform.position = Vector3.MoveTowards(transform.position, player2.transform.position, speed * Time.deltaTime);
         }
         transform.position = new Vector3(transform.position.x, constraintY, transform.position.z);
