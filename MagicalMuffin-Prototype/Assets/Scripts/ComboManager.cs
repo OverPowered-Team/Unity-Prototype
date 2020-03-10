@@ -6,7 +6,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using XInputDotNetPure;
 
 //Unity json https://www.youtube.com/watch?v=4oRVMCRCvN0
 
