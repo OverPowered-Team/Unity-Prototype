@@ -67,6 +67,8 @@ public class GeraltAttacks : MonoBehaviour
         //If the combo has finished
         if (Time.time - lastInputTime >= anim.GetCurrentAnimatorStateInfo(0).length)
         {
+            //
+            //anim.CrossFade("_", extraInputWindow);
             if (nextInput != "")
             {
                 //INFO: Check if the input given matches any of the inputs of the next attacks
