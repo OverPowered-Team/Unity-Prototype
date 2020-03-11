@@ -7,6 +7,9 @@ TagManager:
   - Player2
   - Bullet
   - EnemyFolder
+  - Ghoul
+  - Yennefer
+  - Geralt
   layers:
   - Default
   - TransparentFX

@@ -10,7 +10,7 @@ public class TakeablePowerUp : MonoBehaviour {
 	}
 
 	void OnTriggerEnter (Collider collider) {
-		if(collider.tag == "Player") {
+		if(collider.tag == "Geralt") {
 			PowerUpManager.Instance.Add(customPowerUp);
 			if(customPowerUp.pickUpSound != null){
 				AudioSource.PlayClipAtPoint(customPowerUp.pickUpSound, transform.position);

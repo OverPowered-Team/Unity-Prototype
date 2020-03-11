@@ -16,12 +16,12 @@ public class Bullet : MonoBehaviour
 
         if (parentRanger.attack_player1)
         {
-            transform.LookAt(GameObject.FindGameObjectWithTag("Player").transform);
+            transform.LookAt(GameObject.FindGameObjectWithTag("Geralt").transform);
             transform.SetParent(EnemyFolder.transform);
         }
         if (parentRanger.attack_player2)
         {
-            transform.LookAt(GameObject.FindGameObjectWithTag("Player2").transform);
+            transform.LookAt(GameObject.FindGameObjectWithTag("Yennefer").transform);
             transform.SetParent(EnemyFolder.transform);
         }
     }

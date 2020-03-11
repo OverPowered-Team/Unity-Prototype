@@ -13,8 +13,8 @@ public class EnemyMutant : MonoBehaviour
 
     void Start()
     {
-        player1 = GameObject.FindGameObjectWithTag("Player");
-        player2 = GameObject.FindGameObjectWithTag("Player2");
+        player1 = GameObject.FindGameObjectWithTag("Geralt");
+        player2 = GameObject.FindGameObjectWithTag("Yennefer");
         float distance_player1 = Mathf.Sqrt(Mathf.Pow((player1.transform.position.x - transform.position.x), 2) + Mathf.Pow((player1.transform.position.z - transform.position.z), 2));
         float distance_player2 = Mathf.Sqrt(Mathf.Pow((player2.transform.position.x - transform.position.x), 2) + Mathf.Pow((player2.transform.position.z - transform.position.z), 2));
 
@@ -53,7 +53,7 @@ public class EnemyMutant : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.tag == "Player" || collision.transform.tag == "Player2")
+        if (collision.transform.tag == "Geralt" || collision.transform.tag == "Yennefer")
         {
             foreach (var item in EnemyManager.EnemiesAlive)
             {

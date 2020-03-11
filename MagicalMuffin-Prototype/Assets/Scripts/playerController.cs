@@ -89,7 +89,6 @@ public class playerController : MonoBehaviour
         }
         if (gamepad.buttonEast.wasPressedThisFrame)
         {
-            Debug.Log("enter here");
             currentDashTime = 0.0f;
         }
 
@@ -122,7 +121,6 @@ public class playerController : MonoBehaviour
     {
         _animator.SetFloat("VelX",value.x);
         _animator.SetFloat("VelY", value.y);
-        Debug.Log(value);
 
     }
 }
