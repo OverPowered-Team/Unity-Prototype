@@ -1,19 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using XInputDotNetPure;
 using UnityEngine.InputSystem;
 
 public class GeraltAttacks : MonoBehaviour
 {
-    public PlayerIndex playerIndex;
-    private GamePadState state;
-
     public AttackList attacks;
 
-    
-
-    private Attack entryPoint;//This is not really an attack, it's the idle that goes to x and y
+    private Attack entryPoint;
+    //This is not really an attack, it's the idle that goes to x and y
+    //TODO: Have a bool of "can be interrupted" with true for run and idle
 
     private Animator anim;
 
@@ -22,23 +18,20 @@ public class GeraltAttacks : MonoBehaviour
     public float extraInputWindow = 1f;//In seconds.
     private string nextInput = "";
 
-    private float hardcodedOffset = 0.2f;
-    //There seems to be some errors when comparing the animation length and the time passed in an animation.
-    //And the result is that the length is a little bit longer.
-    //So we substract this offset to avoid it getting stuck on the last frame of the animation.
+    private playerController playerMovement;
 
-    Gamepad gamepad = null;
-
-    Dictionary<UnityEngine.InputSystem.Controls.ButtonControl, string> dic = new Dictionary<UnityEngine.InputSystem.Controls.ButtonControl, string>();
+    Dictionary<UnityEngine.InputSystem.Controls.ButtonControl, string> buttonString;
 
     private void Start()
     {
         anim = GetComponent<Animator>();
-
-        dic.Add(gamepad.buttonSouth, "a");
-        dic.Add(gamepad.buttonWest, "x");
-        dic.Add(gamepad.buttonNorth, "y");
-        dic.Add(gamepad.buttonWest, "b");
+        playerMovement = GetComponent<playerController>();
+        
+        buttonString = new Dictionary<UnityEngine.InputSystem.Controls.ButtonControl, string>();
+        buttonString.Add(playerMovement.gamepad.buttonSouth, "a");
+        buttonString.Add(playerMovement.gamepad.buttonWest,  "x");
+        buttonString.Add(playerMovement.gamepad.buttonNorth, "y");
+        buttonString.Add(playerMovement.gamepad.buttonEast,  "b");
 
         entryPoint = attacks.attacks.Find(attack => attack.name == "_");//_ is idle
         CurrAttack = entryPoint;
@@ -47,14 +40,8 @@ public class GeraltAttacks : MonoBehaviour
 
     private void Update()
     {
-        state = GamePad.GetState(playerIndex);
-
-
-
-        //Debug.Log(Time.time - lastInputTime);
-
-        RegisterNewInput(gamepad.buttonWest);
-        RegisterNewInput(gamepad.buttonNorth);
+        RegisterNewInput(playerMovement.gamepad.buttonWest);
+        RegisterNewInput(playerMovement.gamepad.buttonNorth);
         InputOnIdle();
         PlayNextCombo();
         ComboTimeout();
@@ -129,7 +116,7 @@ public class GeraltAttacks : MonoBehaviour
     {
         if (button.wasPressedThisFrame)
         {
-            nextInput = dic[button];
+            nextInput = buttonString[button];
         }
     }
 
