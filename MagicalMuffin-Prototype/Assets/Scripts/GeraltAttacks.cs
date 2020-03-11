@@ -22,6 +22,11 @@ public class GeraltAttacks : MonoBehaviour
     public float extraInputWindow = 1f;//In seconds.
     private string nextInput = "";
 
+    private float hardcodedOffset = 0.2f;
+    //There seems to be some errors when comparing the animation length and the time passed in an animation.
+    //And the result is that the length is a little bit longer.
+    //So we substract this offset to avoid it getting stuck on the last frame of the animation.
+
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -65,10 +70,8 @@ public class GeraltAttacks : MonoBehaviour
     private void PlayNextCombo()
     {
         //If the combo has finished
-        if (Time.time - lastInputTime >= anim.GetCurrentAnimatorStateInfo(0).length)
+        if (Time.time - lastInputTime >= GetAnimationClip(CurrAttack.animation_id).length - hardcodedOffset)
         {
-            //
-            //anim.CrossFade("_", extraInputWindow);
             if (nextInput != "")
             {
                 //INFO: Check if the input given matches any of the inputs of the next attacks
@@ -86,6 +89,10 @@ public class GeraltAttacks : MonoBehaviour
                 }
                 nextInput = "";
                 //Debug.Log("CURRENT ATTACK: " + currAttack.name);
+            }
+            else
+            {
+                anim.CrossFade("_", extraInputWindow);
             }
         }
     }
@@ -126,6 +133,18 @@ public class GeraltAttacks : MonoBehaviour
         {
             return currAttack;
         }
+    }
+
+    private AnimationClip GetAnimationClip(string clipName)
+    {
+        foreach (AnimationClip clip in anim.runtimeAnimatorController.animationClips)
+        {
+            if (clip.name == clipName)
+            {
+                return clip;
+            }
+        }
+        return null;
     }
 
     //INFO: Repeatable 1 attack combos

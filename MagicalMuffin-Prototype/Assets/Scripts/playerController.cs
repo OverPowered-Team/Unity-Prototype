@@ -43,9 +43,6 @@ public class playerController : MonoBehaviour
     }
     void Update()
     {
-
-
-       
         if (gamepad == null || _animator == null)
             return;
 
@@ -92,6 +89,7 @@ public class playerController : MonoBehaviour
         }
         if (gamepad.buttonEast.wasPressedThisFrame)
         {
+            Debug.Log("enter here");
             currentDashTime = 0.0f;
         }
 
@@ -100,13 +98,15 @@ public class playerController : MonoBehaviour
 
         if (currentDashTime < maxDashTime)
         {
-
             if (move.x == 0 && move.y == 0)
+            {
                 move_dir = transform.forward;
-
-            else move_dir = new Vector3(move.x * dashSpeed, 0, move.y * dashSpeed);
+            }
+            else
+            {
+                move_dir = new Vector3(move.x * dashSpeed, 0, move.y * dashSpeed);
+            }
             currentDashTime += dashStopSpeed;
-
         }
         else
         {
