@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class playerController : MonoBehaviour
 {
-    public float speed = 1f;
-    public float dashSpeed = 0.5f;
+    public float speed = 7.5f;
+    public float dashSpeed = 140f;
     public float maxDashTime = 1.0f;
     public float dashStopSpeed = 0.2f;
    
@@ -21,6 +21,7 @@ public class playerController : MonoBehaviour
     private float count;
     Transform cam_tansform;
     private Animator _animator;
+    private PlayerInput _playerinput;
     float GetPosbyTime(float time) {
 
         return -0.5f * gravity * Mathf.Sqrt(time);
@@ -32,6 +33,7 @@ public class playerController : MonoBehaviour
     }
     void Start()
     {
+        _playerinput = GetComponent<PlayerInput>();
         _animator = GetComponent<Animator>();
         count = jump_dist;
         currentDashTime = maxDashTime;
@@ -45,7 +47,6 @@ public class playerController : MonoBehaviour
     {
         if (gamepad == null || _animator == null)
             return;
-
 
         if(gamepad.buttonSouth.wasPressedThisFrame && jump_dist == count)
         {
@@ -91,6 +92,8 @@ public class playerController : MonoBehaviour
         {
             Debug.Log("enter here");
             currentDashTime = 0.0f;
+            _animator.SetBool("roll", true);
+            _animator.CrossFade("_b",0.01f);
         }
 
    
@@ -100,16 +103,17 @@ public class playerController : MonoBehaviour
         {
             if (move.x == 0 && move.y == 0)
             {
-                move_dir = transform.forward;
+                move_dir = transform.forward*Time.deltaTime*dashSpeed;
             }
             else
             {
-                move_dir = new Vector3(move.x * dashSpeed, 0, move.y * dashSpeed);
+                move_dir = new Vector3(move.x * dashSpeed*Time.deltaTime, 0, move.y * dashSpeed* Time.deltaTime);
             }
             currentDashTime += dashStopSpeed;
         }
         else
         {
+            _animator.SetBool("roll", false);
             move_dir = Vector3.zero;
         }
 
