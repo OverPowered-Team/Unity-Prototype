@@ -11492,6 +11492,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8218190257962187323, guid: 0893f795c32446845966526138f2a9c0,
+        type: 3}
+      propertyPath: forceKnockBack
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 8218190257962187324, guid: 0893f795c32446845966526138f2a9c0,
         type: 3}
       propertyPath: m_LocalPosition.x

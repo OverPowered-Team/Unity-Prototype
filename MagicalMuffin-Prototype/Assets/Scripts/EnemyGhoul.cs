@@ -8,6 +8,8 @@ public class EnemyGhoul : MonoBehaviour
     //------------------------------------
     static public int ghoul_damge = 5;
     //------------------------------------
+    public int forceKnockBack = 0; //Cere, este valor es la fuerza con el que se lanza al enemigo, 1 es en el sitio y 10 es muy lejos
+
 
     GameObject Geralt;
     GameObject Yennefer;
@@ -127,7 +129,7 @@ public class EnemyGhoul : MonoBehaviour
                 //    kicked = false;
                 //}
 
-                transform.position += transform.forward * -speed * 7* Time.deltaTime;
+                transform.position += transform.forward * -speed * forceKnockBack * Time.deltaTime;
                 knockback_timer += Time.deltaTime;
             }
            

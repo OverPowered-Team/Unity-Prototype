@@ -109,6 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 287678d35ab3d3545bfc77a57283e4ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  forceKnockBack: 4
   speed: 4
   attack_distance: 2
   life: 50
@@ -1198,7 +1199,7 @@ PrefabInstance:
     - target: {fileID: 3534972736282846330, guid: f7ffa8ca25cc19848b597582481cd42c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.74
+      value: -0.609
       objectReference: {fileID: 0}
     - target: {fileID: 3534972736282846330, guid: f7ffa8ca25cc19848b597582481cd42c,
         type: 3}
