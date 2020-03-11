@@ -10462,7 +10462,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c49d2f6f8f3402b4f84395b33790c2d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerIndex: 0
   attacks:
     attacks:
     - name: _x
@@ -10571,11 +10570,11 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1018643811}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: 4b243878a57b61b4cafa2dd45bb4f636, type: 3}
   m_Controller: {fileID: 9100000, guid: 02fda78e6f3bdff4292d4a70fa3d02e1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -20414,7 +20413,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c49d2f6f8f3402b4f84395b33790c2d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerIndex: 0
   attacks:
     attacks:
     - name: _x

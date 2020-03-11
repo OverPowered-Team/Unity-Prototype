@@ -15,7 +15,8 @@ public class GeraltAttacks : MonoBehaviour
 
     private Attack currAttack;
     private float lastInputTime = 0f;
-    public float extraInputWindow = 1f;//In seconds.
+    [Tooltip("In seconds")]
+    public float extraInputWindow;
     private string nextInput = "";
 
     private playerController playerMovement;
