@@ -7,56 +7,36 @@ public class GeraltAttacks : MonoBehaviour
 {
     public AttackList attacks;
 
-    private Attack entryPoint;
-    //This is not really an attack, it's the idle that goes to x and y
-    //TODO: Have a bool of "can be interrupted" with true for run and idle
-
     private Animator anim;
+    private List<Attack> startingCombos;
 
-    private Attack currAttack;
+    private Attack currAttack = null;
     private float lastInputTime = 0f;
     [Tooltip("In seconds")]
     public float extraInputWindow;
     private string nextInput = "";
 
-    private playerController playerMovement;
+    private playerController _playerController;
+    private float lastAttackFinishTime;
 
     Dictionary<UnityEngine.InputSystem.Controls.ButtonControl, string> buttonString;
 
     private void Start()
     {
         anim = GetComponent<Animator>();
-        playerMovement = GetComponent<playerController>();
+        _playerController = GetComponent<playerController>();
         
         buttonString = new Dictionary<UnityEngine.InputSystem.Controls.ButtonControl, string>();
-        buttonString.Add(playerMovement.gamepad.buttonSouth, "a");
-        buttonString.Add(playerMovement.gamepad.buttonWest,  "x");
-        buttonString.Add(playerMovement.gamepad.buttonNorth, "y");
-        buttonString.Add(playerMovement.gamepad.buttonEast,  "b");
+        buttonString.Add(_playerController.gamepad.buttonSouth, "a");
+        buttonString.Add(_playerController.gamepad.buttonWest,  "x");
+        buttonString.Add(_playerController.gamepad.buttonNorth, "y");
+        buttonString.Add(_playerController.gamepad.buttonEast,  "b");
 
-        entryPoint = attacks.attacks.Find(attack => attack.name == "_");//_ is idle
-        CurrAttack = entryPoint;
+        startingCombos = new List<Attack>();
+        startingCombos.Add(attacks.attacks.Find(attack => attack.name == "x"));
+        startingCombos.Add(attacks.attacks.Find(attack => attack.name == "y"));
+
         lastInputTime = Time.time;
-    }
-
-    private void Update()
-    {
-        RegisterNewInput(playerMovement.gamepad.buttonWest);
-        RegisterNewInput(playerMovement.gamepad.buttonNorth);
-        InputOnIdle();
-        PlayNextCombo();
-        ComboTimeout();
-    }
-
-    //INFO: Idle is the exception among "attacks", it doesn't wait to finish its animation to start the next attack
-    private void InputOnIdle()
-    {
-        if (CurrAttack.name == "_" && nextInput != "")
-        {
-            CurrAttack = attacks.attacks.Find(attack => attack.name == "_" + nextInput);
-            lastInputTime = Time.time;
-            nextInput = "";
-        }
     }
 
     float GetAnimatorStateSpeed(string name)
@@ -73,17 +53,37 @@ public class GeraltAttacks : MonoBehaviour
         return 1f;
     }
 
-    public bool DoingAttack()
+    private bool FinishedAttack()
     {
-        return CurrAttack.name != "_";//TODO: Or run
+        if (CurrAttack != null)
+        {
+            return Time.time - lastInputTime >= GetAnimationClip(CurrAttack.animation_id).length / GetAnimatorStateSpeed(CurrAttack.name);
+        }
+        else
+        {
+            return true;
+        }
+        
     }
 
-    public bool FinishedAttack()
+    public void CancelCombo()
     {
-        return Time.time - lastInputTime >= GetAnimationClip(CurrAttack.animation_id).length / GetAnimatorStateSpeed(CurrAttack.name);
+        currAttack = null;
     }
 
-    private void PlayNextCombo()
+    public void UpdateAttack()
+    {
+        if (lastAttackFinishTime - Time.time > extraInputWindow)
+        {
+            CurrAttack = null;
+        }
+
+        RegisterNewInput(_playerController.gamepad.buttonWest);
+        RegisterNewInput(_playerController.gamepad.buttonNorth);
+        PlayNextCombo();
+    }
+
+    public void PlayNextCombo()
     {
         //If the combo has finished
         if (FinishedAttack())
@@ -99,31 +99,21 @@ public class GeraltAttacks : MonoBehaviour
                 }
                 else
                 {
-                    CurrAttack = attacks.attacks.Find(attack => attack.name == "_" + nextInput);
+                    CurrAttack = attacks.attacks.Find(attack => attack.name == nextInput);
                     lastInputTime = Time.time;
-                    Debug.Log("Next input: " + nextInput);
                 }
                 nextInput = "";
-                //Debug.Log("CURRENT ATTACK: " + currAttack.name);
             }
             else
             {
+                //TODO: Cross fade to idle or moving depending on what are you pressing
                 anim.CrossFade("_", extraInputWindow);
+                _playerController.currState = PlayerState.ATTACK_RETURN;
             }
         }
     }
 
-    //INFO: Reset combo window input time passes (just a little bit (extraInputWindow) after the animation finishes)
-    private void ComboTimeout()
-    {
-        if (Time.time - lastInputTime > anim.GetCurrentAnimatorStateInfo(0).length + extraInputWindow)
-        {
-            CurrAttack = attacks.attacks.Find(attack => attack.name == "_");
-            lastInputTime = Time.time;
-        }
-    }
-
-    private void RegisterNewInput(UnityEngine.InputSystem.Controls.ButtonControl button)
+    public void RegisterNewInput(UnityEngine.InputSystem.Controls.ButtonControl button)
     {
         if (button.wasPressedThisFrame)
         {
@@ -134,8 +124,18 @@ public class GeraltAttacks : MonoBehaviour
     //INFO: Returns null if there isn't an attack that follows with the given input
     private Attack FindNextAttack(Attack currAttack, string input)
     {
-        //INFO: If we decide that the names of the attacks aren't the combination of their buttons, this should go through all the "currAttack.nextAttack" list and see if any of them matches our "input"
-        return attacks.attacks.Find(attack => attack.name == currAttack.name + input);
+        string attackName;
+
+        if (CurrAttack == null)
+        {
+            attackName = input;
+        }
+        else
+        {
+            attackName = currAttack.name + input;
+        }
+
+        return attacks.attacks.Find(attack => attack.name == attackName);
     }
 
     public Attack CurrAttack
