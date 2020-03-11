@@ -7,7 +7,6 @@ public class GetControllers : MonoBehaviour
 {
     // Start is called before the first frame update
     Gamepad[] g_array;
-    playerController[] playercontroller;
     public GameObject player1;
     public GameObject player2;
 
