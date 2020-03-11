@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.54439956, g: 0.5070023, b: 0.5242686, a: 1}
+  m_IndirectSpecularColor: {r: 0.54441315, g: 0.50701135, b: 0.52427095, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -20423,7 +20423,7 @@ MonoBehaviour:
       endDamageTime: 1
       input: x
       nextAttacks: []
-  extraInputWindow: 0.5
+  extraInputWindow: 0.3
 --- !u!95 &2014817515
 Animator:
   serializedVersion: 3

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using XInputDotNetPure;
+using UnityEngine.InputSystem;
 
 public class GeraltAttacks : MonoBehaviour
 {
@@ -27,9 +28,15 @@ public class GeraltAttacks : MonoBehaviour
     //And the result is that the length is a little bit longer.
     //So we substract this offset to avoid it getting stuck on the last frame of the animation.
 
+    Gamepad gamepad = null;
+
     private void Start()
     {
         anim = GetComponent<Animator>();
+
+        //Dictionary<UnityEngine.InputSystem.Controls.ButtonControl, string> dic = new Dictionary<UnityEngine.InputSystem.Controls.ButtonControl, string>();
+        //dic.Add(gamepad.buttonSouth,)
+
 
         xButton = new AuxButton();
         xButton.name = "x";
@@ -67,10 +74,24 @@ public class GeraltAttacks : MonoBehaviour
         }
     }
 
+    float GetAnimatorStateSpeed(string name)
+    {
+        UnityEditor.Animations.AnimatorController ac = anim.runtimeAnimatorController as UnityEditor.Animations.AnimatorController;
+        UnityEditor.Animations.ChildAnimatorState[] states = ac.layers[0].stateMachine.states;
+        foreach (UnityEditor.Animations.ChildAnimatorState state in states)
+        {
+            if (state.state.name == name)
+            {
+                return state.state.speed;
+            }
+        }
+        return 1f;
+    }
+
     private void PlayNextCombo()
     {
         //If the combo has finished
-        if (Time.time - lastInputTime >= GetAnimationClip(CurrAttack.animation_id).length - hardcodedOffset)
+        if (Time.time - lastInputTime >= GetAnimationClip(CurrAttack.animation_id).length / GetAnimatorStateSpeed(CurrAttack.name))
         {
             if (nextInput != "")
             {
