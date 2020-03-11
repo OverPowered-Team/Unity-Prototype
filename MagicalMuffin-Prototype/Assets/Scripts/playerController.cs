@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class playerController : MonoBehaviour
 {
-    public float speed = 0.05f;
+    public float speed = 1f;
     public float dashSpeed = 0.5f;
     public float maxDashTime = 1.0f;
     public float dashStopSpeed = 0.2f;
@@ -82,7 +82,7 @@ public class playerController : MonoBehaviour
             move = new Vector2(move.x * Mathf.Cos(angle) - move.y * Mathf.Sin(angle), move.x * Mathf.Sin(angle) + move.y * Mathf.Cos(angle));
 
 
-            Vector3 dst = new Vector3(transform.position.x + move.x * speed, transform.position.y, transform.position.z + move.y * speed);
+            Vector3 dst = new Vector3(transform.position.x + move.x * speed * Time.deltaTime, transform.position.y, transform.position.z + move.y * speed * Time.deltaTime);
             transform.LookAt(dst, Vector3.up);
             transform.position = dst;
 
