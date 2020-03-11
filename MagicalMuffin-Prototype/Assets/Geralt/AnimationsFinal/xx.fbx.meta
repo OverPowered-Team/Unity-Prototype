@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 52df829b41d1ed84ca7727ad62b6f380
+guid: 6dc2fe97389abe842ad1e7955528a6f2
 ModelImporter:
-  serializedVersion: 28
+  serializedVersion: 19300
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: _xy
+    second: xx
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -35,11 +35,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: _xy
+      name: xx
       takeName: mixamo.com
       internalID: -203655887218126122
-      firstFrame: 5
-      lastFrame: 24
+      firstFrame: 19.4
+      lastFrame: 39.3
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -118,6 +118,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
   avatarSetup: 0
