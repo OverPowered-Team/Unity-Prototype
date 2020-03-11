@@ -65,12 +65,14 @@ public class GeraltAttacks : MonoBehaviour
     private void PlayNextCombo()
     {
         //If the combo has finished
-        if (Time.time - lastInputTime >= anim.GetCurrentAnimatorStateInfo(0).length)
+        if (Time.time - lastInputTime >= GetAnimationClip(CurrAttack.animation_id).length)
         {
             //
-            //anim.CrossFade("_", extraInputWindow);
+            anim.CrossFade("_", extraInputWindow);
+            Debug.Log("Cross fade");
             if (nextInput != "")
             {
+                Debug.Log("Animation");
                 //INFO: Check if the input given matches any of the inputs of the next attacks
                 Attack nextAttack = FindNextAttack(CurrAttack, nextInput);
                 if (nextAttack != null)
@@ -126,6 +128,18 @@ public class GeraltAttacks : MonoBehaviour
         {
             return currAttack;
         }
+    }
+
+    private AnimationClip GetAnimationClip(string clipName)
+    {
+        foreach (AnimationClip clip in anim.runtimeAnimatorController.animationClips)
+        {
+            if (clip.name == clipName)
+            {
+                return clip;
+            }
+        }
+        return null;
     }
 
     //INFO: Repeatable 1 attack combos
