@@ -1,15 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public enum PlayerState
 {
     IDLE,
-    MOVING,
-    ATTACKING,
+    MOVE,
+    ATTACK,
     ATTACK_RETURN,//Transition between attack and MOVE or IDLE where you can still continue the combo
-    DASHING
+    DASH
 }
 
 public class playerController : MonoBehaviour
@@ -67,42 +65,42 @@ public class playerController : MonoBehaviour
                     if (CheckAttackInput())
                     {
                         _playerCombo.UpdateAttack();
-                        currState = PlayerState.ATTACKING;
+                        currState = PlayerState.ATTACK;
                     }
                     if (CheckDashInput())
                     {
                         StartDash();
-                        currState = PlayerState.DASHING;
+                        currState = PlayerState.DASH;
                     }
                     if (move != Vector2.zero)
                     {
                         Move(move);
-                        currState = PlayerState.MOVING;
+                        currState = PlayerState.MOVE;
                     }
                     break;
-                case PlayerState.MOVING:
+                case PlayerState.MOVE:
                     if (move == Vector2.zero)
                     {
-                        //TODO: Trigger idle animation
+                        _animator.Play("idle");
                         currState = PlayerState.IDLE;
                     }
                     else
                     {
                         Move(move);
-                        currState = PlayerState.MOVING;
+                        currState = PlayerState.MOVE;
                     }
                     if (CheckAttackInput())
                     {
                         _playerCombo.UpdateAttack();
-                        currState = PlayerState.ATTACKING;
+                        currState = PlayerState.ATTACK;
                     }
                     if (CheckDashInput())
                     {
                         StartDash();
-                        currState = PlayerState.DASHING;
+                        currState = PlayerState.DASH;
                     }
                     break;
-                case PlayerState.DASHING:
+                case PlayerState.DASH:
                     if (!ContinueDash())
                     {
                         if (move == Vector2.zero)
@@ -111,23 +109,48 @@ public class playerController : MonoBehaviour
                         }
                         else
                         {
-                            currState = PlayerState.MOVING;
+                            currState = PlayerState.MOVE;
                         }
                     }
                     break;
-                case PlayerState.ATTACKING:
+                case PlayerState.ATTACK:
                     _playerCombo.UpdateAttack();
                     if (CheckDashInput())
                     {
                         StartDash();
                         _playerCombo.CancelCombo();
-                        currState = PlayerState.DASHING;
+                        currState = PlayerState.DASH;
                     }
                     break;
                 case PlayerState.ATTACK_RETURN:
-                    //If it finishes the cross fade, go back to idle or moving
+                    if (_playerCombo.lastAttackFinishTime + _playerCombo.extraInputWindow < Time.time)
+                    {
+                        float remainingTransition = _playerCombo.extraInputWindow - (Time.time - _playerCombo.lastAttackFinishTime);
+                        if (move == Vector2.zero)
+                        {
+                            _animator.CrossFade("idle", remainingTransition);
+                        }
+                        else
+                        {
+                            _animator.CrossFade("Movement", remainingTransition);
+                        }
+                    }
+                    else
+                    {
+                        if (move == Vector2.zero)
+                        {
+                            _animator.Play("idle");
+                            currState = PlayerState.IDLE;
+                        }
+                        else
+                        {
+                            _animator.Play("Movement");
+                            currState = PlayerState.MOVE;
+                        }
+                    }
                     break;
             }
+            SendMovementParameters(move);
         }
     }
 
@@ -171,7 +194,7 @@ public class playerController : MonoBehaviour
         //Get angle between cam and player
         if (move != Vector2.zero || move == null)
         {
-            BlendAnim(move);
+            SendMovementParameters(move);
 
             Vector2 cam_pos = new Vector2(cam_tansform.transform.position.x, cam_tansform.transform.position.z);
             float temp = Vector2.Dot(cam_pos, move);
@@ -224,7 +247,7 @@ public class playerController : MonoBehaviour
         }
     }
 
-    private void BlendAnim(Vector2 value)
+    private void SendMovementParameters(Vector2 value)
     {
         _animator.SetFloat("VelX",value.x);
         _animator.SetFloat("VelY", value.y);

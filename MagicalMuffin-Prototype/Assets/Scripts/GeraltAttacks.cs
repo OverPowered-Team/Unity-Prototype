@@ -17,7 +17,7 @@ public class GeraltAttacks : MonoBehaviour
     private string nextInput = "";
 
     private playerController _playerController;
-    private float lastAttackFinishTime;
+    [HideInInspector] public float lastAttackFinishTime;
 
     Dictionary<UnityEngine.InputSystem.Controls.ButtonControl, string> buttonString;
 
@@ -106,8 +106,17 @@ public class GeraltAttacks : MonoBehaviour
             }
             else
             {
-                //TODO: Cross fade to idle or moving depending on what are you pressing
-                anim.CrossFade("_", extraInputWindow);
+                lastAttackFinishTime = Time.time;
+
+                Vector2 move = _playerController.gamepad.leftStick.ReadValue();
+                if (move == Vector2.zero)
+                {
+                    anim.CrossFade("idle", extraInputWindow);
+                }
+                else
+                {
+                    anim.CrossFade("Movement", extraInputWindow);
+                }
                 _playerController.currState = PlayerState.ATTACK_RETURN;
             }
         }
