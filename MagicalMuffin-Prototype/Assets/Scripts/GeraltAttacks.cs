@@ -11,8 +11,7 @@ public class GeraltAttacks : MonoBehaviour
 
     public AttackList attacks;
 
-    private AuxButton xButton;
-    private AuxButton yButton;
+    
 
     private Attack entryPoint;//This is not really an attack, it's the idle that goes to x and y
 
@@ -30,18 +29,19 @@ public class GeraltAttacks : MonoBehaviour
 
     Gamepad gamepad = null;
 
+    Dictionary<UnityEngine.InputSystem.Controls.ButtonControl, string> dic = new Dictionary<UnityEngine.InputSystem.Controls.ButtonControl, string>();
+
     private void Start()
     {
         anim = GetComponent<Animator>();
 
-        //Dictionary<UnityEngine.InputSystem.Controls.ButtonControl, string> dic = new Dictionary<UnityEngine.InputSystem.Controls.ButtonControl, string>();
-        //dic.Add(gamepad.buttonSouth,)
+        dic.Add(gamepad.buttonSouth, "a");
+        dic.Add(gamepad.buttonWest, "x");
+        dic.Add(gamepad.buttonNorth, "y");
+        dic.Add(gamepad.buttonWest, "b");
 
 
-        xButton = new AuxButton();
-        xButton.name = "x";
-        yButton = new AuxButton();
-        yButton.name = "y";
+
 
         entryPoint = attacks.attacks.Find(attack => attack.name == "_");//_ is idle
         CurrAttack = entryPoint;
@@ -51,13 +51,13 @@ public class GeraltAttacks : MonoBehaviour
     private void Update()
     {
         state = GamePad.GetState(playerIndex);
-        xButton.UpdateValue(state.Buttons.X);
-        yButton.UpdateValue(state.Buttons.Y);
+
+
 
         //Debug.Log(Time.time - lastInputTime);
 
-        RegisterNewInput(xButton);
-        RegisterNewInput(yButton);
+        RegisterNewInput(gamepad.buttonWest);
+        RegisterNewInput(gamepad.buttonNorth);
         InputOnIdle();
         PlayNextCombo();
         ComboTimeout();
@@ -128,11 +128,11 @@ public class GeraltAttacks : MonoBehaviour
         }
     }
 
-    private void RegisterNewInput(AuxButton button)
+    private void RegisterNewInput(UnityEngine.InputSystem.Controls.ButtonControl button)
     {
-        if (button.state == KEY_STATE.KEY_DOWN)
+        if (button.wasPressedThisFrame)
         {
-            nextInput = button.name;
+            nextInput = dic[button];
         }
     }
 
