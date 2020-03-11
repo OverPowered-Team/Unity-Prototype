@@ -40,9 +40,6 @@ public class GeraltAttacks : MonoBehaviour
         dic.Add(gamepad.buttonNorth, "y");
         dic.Add(gamepad.buttonWest, "b");
 
-
-
-
         entryPoint = attacks.attacks.Find(attack => attack.name == "_");//_ is idle
         CurrAttack = entryPoint;
         lastInputTime = Time.time;
