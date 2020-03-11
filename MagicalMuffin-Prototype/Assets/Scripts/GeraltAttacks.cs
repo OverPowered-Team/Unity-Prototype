@@ -73,10 +73,20 @@ public class GeraltAttacks : MonoBehaviour
         return 1f;
     }
 
+    public bool DoingAttack()
+    {
+        return CurrAttack.name != "_";//TODO: Or run
+    }
+
+    public bool FinishedAttack()
+    {
+        return Time.time - lastInputTime >= GetAnimationClip(CurrAttack.animation_id).length / GetAnimatorStateSpeed(CurrAttack.name);
+    }
+
     private void PlayNextCombo()
     {
         //If the combo has finished
-        if (Time.time - lastInputTime >= GetAnimationClip(CurrAttack.animation_id).length / GetAnimatorStateSpeed(CurrAttack.name))
+        if (FinishedAttack())
         {
             if (nextInput != "")
             {

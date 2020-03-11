@@ -21,12 +21,14 @@ public class playerController : MonoBehaviour
     private Transform cam_tansform;
     private Animator _animator;
     private PlayerInput _playerinput;
+    private GeraltAttacks _playerCombos;
 
     public int playerIdx = 0;
 
     void Awake()
     {
         cam_tansform = Camera.main.transform;
+        _playerCombos = GetComponent<GeraltAttacks>();
     }
 
     void Start()
@@ -59,10 +61,15 @@ public class playerController : MonoBehaviour
     {
         if ((gamepad != null || GetController()) && _animator != null)
         {
-            //Jump();
+            Jump();
+            //TODO: Also cancel the current combo
             Vector2 move = gamepad.leftStick.ReadValue();
-            //Move(move);
-            //Dash(move);
+            if (!_playerCombos.DoingAttack() || _playerCombos.FinishedAttack())
+            {
+                Move(move);
+            }
+            Dash(move);
+            //TODO: Cancel the current combo
         }
     }
 
