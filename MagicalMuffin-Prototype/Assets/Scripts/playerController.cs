@@ -123,7 +123,7 @@ public class playerController : MonoBehaviour
                     }
                     break;
                 case PlayerState.ATTACK_RETURN:
-                    if (_playerCombo.lastAttackFinishTime + _playerCombo.extraInputWindow < Time.time)
+                    if (_playerCombo.lastAttackFinishTime + _playerCombo.extraInputWindow >= Time.time)
                     {
                         float remainingTransition = _playerCombo.extraInputWindow - (Time.time - _playerCombo.lastAttackFinishTime);
                         if (move == Vector2.zero)
