@@ -20132,7 +20132,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 4107d148d2a7b3549b8d50bf8a082502,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4107d148d2a7b3549b8d50bf8a082502, type: 3}
@@ -20164,6 +20164,7 @@ MonoBehaviour:
       input: x
       nextAttacks:
       - _xy
+      - _xx
     - name: _xy
       animation_id: _xy
       damage: 7
@@ -20201,8 +20202,25 @@ MonoBehaviour:
       startDamageTime: 0
       endDamageTime: 1
       input: x
+      nextAttacks:
+      - _xxx
+    - name: _xxx
+      animation_id: _xxx
+      damage: 6
+      startDamageTime: 0
+      endDamageTime: 1
+      input: x
+      nextAttacks:
+      - _xxxx
+    - name: _xxxx
+      animation_id: _xxxx
+      damage: 6
+      startDamageTime: 0
+      endDamageTime: 1
+      input: x
       nextAttacks: []
   extraInputWindow: 0.3
+  lastAttackFinishTime: 0
 --- !u!95 &2014817515
 Animator:
   serializedVersion: 3
@@ -20213,7 +20231,7 @@ Animator:
   m_GameObject: {fileID: 2014817513}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 4b243878a57b61b4cafa2dd45bb4f636, type: 3}
-  m_Controller: {fileID: 9100000, guid: 02fda78e6f3bdff4292d4a70fa3d02e1, type: 2}
+  m_Controller: {fileID: 9100000, guid: fbd4c050418e0ac4a872b7abeec3d21a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -21318,6 +21336,106 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326277, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: fbd4c050418e0ac4a872b7abeec3d21a, type: 2}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[4].nextAttacks.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[5].nextAttacks.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[6].nextAttacks.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[0].nextAttacks.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[5].name
+      value: _xxx
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[5].animation_id
+      value: _xxx
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[5].damage
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[5].endDamageTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[5].input
+      value: x
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[4].nextAttacks.Array.data[0]
+      value: _xxx
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[5].nextAttacks.Array.data[0]
+      value: _xxxx
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[6].name
+      value: _xxxx
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[6].animation_id
+      value: _xxxx
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[6].damage
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[6].endDamageTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[6].input
+      value: x
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[6].nextAttacks.Array.data[0]
+      value: _xxxx
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[0].nextAttacks.Array.data[1]
+      value: xx
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee28053a8ee23874f91696565f5abd9c, type: 3}
