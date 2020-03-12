@@ -21,7 +21,8 @@ public class GeraltAttacks : MonoBehaviour
 
     Dictionary<UnityEngine.InputSystem.Controls.ButtonControl, string> buttonString;
 
-    public GameObject sword_collider;
+    public GameObject swordScaleCollider;//Used for scaling the collider
+    public GameObject swordCollider;//Used for activating and desactivating
 
     private void Start()
     {
@@ -91,8 +92,11 @@ public class GeraltAttacks : MonoBehaviour
             Debug.Log("curr attack is null");
             currAttack = null;
         }
-        ActDesactCollider(currAttack != null && Time.time > lastAttackStartTime + 0.02  && lastAttackStartTime + GetAttackLength(currAttack) - 0.02 > Time.time);
-        ResizeCollider(currAttack != null && IsLastAttack(currAttack));
+        ActDesactCollider(
+            currAttack != null
+            && Time.time > lastAttackStartTime + 0.02
+            && Time.time < lastAttackStartTime + GetAttackLength(currAttack) - 0.02);
+        ResizeCollider(currAttack);
 
         RegisterNewInput(_playerController.gamepad.buttonWest);
         RegisterNewInput(_playerController.gamepad.buttonNorth);
@@ -234,16 +238,15 @@ public class GeraltAttacks : MonoBehaviour
     }
     private void ActDesactCollider(bool active)
     {
-        sword_collider.SetActive(active);
+        swordCollider.SetActive(active);
     }
 
-    private void ResizeCollider(bool last)
+    private void ResizeCollider(Attack attack)
     {
-        // Add in this first if the reliquie bool
-        if (last /*&& reliquie*/)
-            sword_collider.transform.localScale = new Vector3(0, 0, 25);
-        else
-            sword_collider.transform.localScale = new Vector3(0, 0, 19);
+        if (attack != null)
+        {
+            swordScaleCollider.transform.localScale = new Vector3(0, 0, attack.base_range.GetValue());
+        }
     }
     //INFO: Repeatable 1 attack combos
     //- Unity doesn't let us play the same animation after one has finished

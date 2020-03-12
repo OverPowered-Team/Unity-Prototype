@@ -17,6 +17,12 @@ public class Stat
     [SerializeField]
     float current_value;
 
+    public Stat (string name, float base_value)
+    {
+        this.name = name;
+        this.base_value = this.current_value = base_value;
+    }
+
     public void CalculateStat(List<Effect> effects)
     {
         float additive_value = 0;

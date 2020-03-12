@@ -124,7 +124,7 @@ public class Attack
     public string animation_id;
 
     public Stat base_damage;
-    public Stat base_range;
+    public Stat base_range = new Stat("Attack_Range", 13);
 
     public float startDamageTime;
     public float endDamageTime;

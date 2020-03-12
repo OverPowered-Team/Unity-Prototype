@@ -41,7 +41,7 @@ public class RelicBehaviour: MonoBehaviour {
     }
     public void OnTriggerEnter(Collider coll)
     {
-        if(coll.gameObject.tag == "Player")
+        if(coll.CompareTag("Geralt") ||coll.CompareTag("Yennefer"))
         {
             relic.OnPickUp(coll.gameObject.GetComponent<playerController>());
             GameObject.Find("Canvas").GetComponent<UIManager>().CreateRelicPopup((AttackRelic)relic, relic_type);

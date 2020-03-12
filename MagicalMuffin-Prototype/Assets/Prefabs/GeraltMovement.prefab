@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 173451052375575744}
   m_Layer: 0
   m_Name: GeraltMovement
-  m_TagString: Player
+  m_TagString: Geralt
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -170,7 +170,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 874166858774781641}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 5, y: 17.01, z: 5}
@@ -210,7 +210,14 @@ MonoBehaviour:
     attacks:
     - name: x
       animation_id: x
-      damage: 5
+      base_damage:
+        name: Attack_Damage
+        base_value: 0.5
+        current_value: 0.5
+      base_range:
+        name: Attack_Range
+        base_value: 13
+        current_value: 13
       startDamageTime: 0
       endDamageTime: 1
       input: x
@@ -219,7 +226,14 @@ MonoBehaviour:
       - xx
     - name: xy
       animation_id: xy
-      damage: 7
+      base_damage:
+        name: Attack_Damage
+        base_value: 0.7
+        current_value: 0.7
+      base_range:
+        name: Attack_Range
+        base_value: 13
+        current_value: 13
       startDamageTime: 0
       endDamageTime: 1
       input: y
@@ -227,14 +241,28 @@ MonoBehaviour:
       - xyx
     - name: xyx
       animation_id: xyx
-      damage: 10
+      base_damage:
+        name: Attack_Damage
+        base_value: 1
+        current_value: 1
+      base_range:
+        name: Attack_Range
+        base_value: 13
+        current_value: 13
       startDamageTime: 0
       endDamageTime: 1
       input: x
       nextAttacks: []
     - name: y
       animation_id: y
-      damage: 7
+      base_damage:
+        name: 
+        base_value: 0
+        current_value: 0
+      base_range:
+        name: Attack_Range
+        base_value: 13
+        current_value: 13
       startDamageTime: 0
       endDamageTime: 1
       input: y
@@ -242,7 +270,14 @@ MonoBehaviour:
       - yy
     - name: xx
       animation_id: xx
-      damage: 6
+      base_damage:
+        name: 
+        base_value: 0
+        current_value: 0
+      base_range:
+        name: Attack_Range
+        base_value: 13
+        current_value: 13
       startDamageTime: 0
       endDamageTime: 1
       input: x
@@ -251,7 +286,14 @@ MonoBehaviour:
       - xxy
     - name: xxx
       animation_id: xxx
-      damage: 6
+      base_damage:
+        name: 
+        base_value: 0
+        current_value: 0
+      base_range:
+        name: Attack_Range
+        base_value: 13
+        current_value: 13
       startDamageTime: 0
       endDamageTime: 1
       input: x
@@ -260,7 +302,14 @@ MonoBehaviour:
       - xxxy
     - name: xxxx
       animation_id: xxxx
-      damage: 6
+      base_damage:
+        name: 
+        base_value: 0
+        current_value: 0
+      base_range:
+        name: Attack_Range
+        base_value: 13
+        current_value: 13
       startDamageTime: 0
       endDamageTime: 1
       input: x
@@ -268,14 +317,28 @@ MonoBehaviour:
       - xxxxx
     - name: xxxxx
       animation_id: xxxxx
-      damage: 6
+      base_damage:
+        name: 
+        base_value: 0
+        current_value: 0
+      base_range:
+        name: Attack_Range
+        base_value: 13
+        current_value: 13
       startDamageTime: 0
       endDamageTime: 1
       input: x
       nextAttacks: []
     - name: yy
       animation_id: yy
-      damage: 6
+      base_damage:
+        name: 
+        base_value: 0
+        current_value: 0
+      base_range:
+        name: Attack_Range
+        base_value: 13
+        current_value: 13
       startDamageTime: 0
       endDamageTime: 1
       input: y
@@ -283,14 +346,28 @@ MonoBehaviour:
       - yyy
     - name: xxyx
       animation_id: xxyx
-      damage: 6
+      base_damage:
+        name: 
+        base_value: 0
+        current_value: 0
+      base_range:
+        name: Attack_Range
+        base_value: 13
+        current_value: 13
       startDamageTime: 0
       endDamageTime: 1
       input: x
       nextAttacks: []
     - name: xxxy
       animation_id: xxxy
-      damage: 6
+      base_damage:
+        name: 
+        base_value: 0
+        current_value: 0
+      base_range:
+        name: Attack_Range
+        base_value: 13
+        current_value: 13
       startDamageTime: 0
       endDamageTime: 1
       input: y
@@ -298,14 +375,28 @@ MonoBehaviour:
       - xxxyy
     - name: xxxyy
       animation_id: xxxyy
-      damage: 6
+      base_damage:
+        name: 
+        base_value: 0
+        current_value: 0
+      base_range:
+        name: Attack_Range
+        base_value: 13
+        current_value: 13
       startDamageTime: 0
       endDamageTime: 1
       input: y
       nextAttacks: []
     - name: xxy
       animation_id: xxy
-      damage: 6
+      base_damage:
+        name: 
+        base_value: 0
+        current_value: 0
+      base_range:
+        name: Attack_Range
+        base_value: 13
+        current_value: 13
       startDamageTime: 0
       endDamageTime: 1
       input: y
@@ -313,7 +404,14 @@ MonoBehaviour:
       - xxyx
     - name: yyy
       animation_id: yyy
-      damage: 6
+      base_damage:
+        name: 
+        base_value: 0
+        current_value: 0
+      base_range:
+        name: Attack_Range
+        base_value: 13
+        current_value: 13
       startDamageTime: 0
       endDamageTime: 1
       input: y
@@ -321,7 +419,14 @@ MonoBehaviour:
       - yyyy
     - name: yyyy
       animation_id: yyyy
-      damage: 6
+      base_damage:
+        name: 
+        base_value: 0
+        current_value: 0
+      base_range:
+        name: Attack_Range
+        base_value: 13
+        current_value: 13
       startDamageTime: 0
       endDamageTime: 1
       input: y
@@ -329,7 +434,14 @@ MonoBehaviour:
       - yyyyy
     - name: yyyyy
       animation_id: yyyyy
-      damage: 6
+      base_damage:
+        name: 
+        base_value: 0
+        current_value: 0
+      base_range:
+        name: Attack_Range
+        base_value: 13
+        current_value: 13
       startDamageTime: 0
       endDamageTime: 1
       input: y
@@ -337,7 +449,8 @@ MonoBehaviour:
       - yyyyy
   extraInputWindow: 0.3
   lastAttackFinishTime: 0
-  sword_collider: {fileID: 9151392741094168020}
+  swordScaleCollider: {fileID: 9151392741094168020}
+  swordCollider: {fileID: 9151392741850620155}
 --- !u!114 &9151392740301326279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -350,11 +463,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d47db80b51e8ac54baf02d0bea9d390a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  strength:
+    name: 
+    base_value: 0
+    current_value: 0
   playerIdx: 0
   currState: 0
   speed: 7.5
   dashSpeed: 17.5
   maxDashTime: 0.3
+  _playerCombos: {fileID: 0}
 --- !u!114 &9151392740301326276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1571,6 +1689,143 @@ Transform:
   m_Father: {fileID: 1853542087598808101}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 15.862119, y: 75.330215, z: 6.560348}
+--- !u!1 &8566151906427416294
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8792515787167373253}
+  - component: {fileID: 7967289003246464776}
+  m_Layer: 0
+  m_Name: Trail
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8792515787167373253
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8566151906427416294}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.988}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 9151392741094168021}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!96 &7967289003246464776
+TrailRenderer:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8566151906427416294}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: ec2eb95a66c2374498c8a98312a9c109, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Time: 0.5
+  m_Parameters:
+    serializedVersion: 3
+    widthMultiplier: 0.125
+    widthCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: -0.52561325
+        outSlope: -0.52561325
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.15331805
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    colorGradient:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 0}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    numCornerVertices: 0
+    numCapVertices: 0
+    alignment: 0
+    textureMode: 0
+    shadowBias: 0.5
+    generateLightingData: 0
+  m_MinVertexDistance: 0.05
+  m_Autodestruct: 0
+  m_Emitting: 1
 --- !u!1 &8762336179500036209
 GameObject:
   m_ObjectHideFlags: 0
@@ -1642,7 +1897,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9151392741094168021}
   m_Layer: 0
-  m_Name: SwordCollider
+  m_Name: SwordScaleCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1657,9 +1912,10 @@ Transform:
   m_GameObject: {fileID: 9151392741094168020}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 19}
+  m_LocalScale: {x: 1, y: 1, z: 13}
   m_Children:
   - {fileID: 9151392741850620152}
+  - {fileID: 8792515787167373253}
   m_Father: {fileID: 3192884253188205497}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1689,8 +1945,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9151392741830860333}
   m_LocalRotation: {x: 0.7071069, y: -0.00000011920925, z: 0.000000044798593, w: 0.7071067}
-  m_LocalPosition: {x: 0, y: 0.000031048643, z: -8.880008}
-  m_LocalScale: {x: 1, y: 10, z: 1}
+  m_LocalPosition: {x: -0, y: 0, z: -5.94}
+  m_LocalScale: {x: 1, y: 7, z: 1}
   m_Children: []
   m_Father: {fileID: 3192884253188205497}
   m_RootOrder: 2
@@ -1721,7 +1977,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 703f7b69d3e90504a848c15440e0a7dc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
