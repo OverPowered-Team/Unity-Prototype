@@ -122,10 +122,9 @@ public class EnemyRanger : MonoBehaviour
 
     IEnumerator Shot()
     {
-
-        //Instantiate(BulletShell, transform.position, Quaternion.identity, transform/*GameObject.FindGameObjectWithTag("EnemyFolder").transform*/);
         BulletShell.SetActive(true);
-        BulletShell.transform.position = BulletPos.transform.position;
+        Instantiate(BulletShell, new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z) , Quaternion.identity, transform/*GameObject.FindGameObjectWithTag("EnemyFolder").transform*/);
+        //BulletShell.transform.position = BulletPos.transform.position;
 
         yield return new WaitForSeconds(2.5f);
         can_shot = true;

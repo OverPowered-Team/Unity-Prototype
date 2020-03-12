@@ -42,15 +42,16 @@ public class GeraltStats : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if(collision.transform.tag == "MutantChargedJump")
-        {
-            GetHit(30);
-        }
-        if (collision.transform.tag == "MutantAttack")
+        if (other.transform.tag == "MutantAttack")
         {
             GetHit(15);
         }
+        if (other.transform.tag == "MutantChargedJump")
+        {
+            GetHit(30);
+        }
     }
+
 }
