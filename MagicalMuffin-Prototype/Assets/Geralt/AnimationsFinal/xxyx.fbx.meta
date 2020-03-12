@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 52df829b41d1ed84ca7727ad62b6f380
+guid: 1b6fd7da34aefc14e8967e3860d8144f
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: xy
+    second: xxyx
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -17,7 +17,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
-    motionNodeName: mixamorig:Hips
+    motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
@@ -35,17 +35,17 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: xy
+      name: xxyx
       takeName: mixamo.com
-      internalID: -203655887218126122
-      firstFrame: 5
-      lastFrame: 24
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 64
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
-      hasAdditiveReferencePose: 0
+      hasAdditiveReferencePose: 1
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
@@ -62,7 +62,7 @@ ModelImporter:
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+      additiveReferencePoseFrame: 29
     isReadable: 0
   meshes:
     lODScreenPercentages: []
