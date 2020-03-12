@@ -166,9 +166,7 @@ public class EnemyGhoul : MonoBehaviour
                     EnemyManager.EnemiesAlive.Remove(item);
                     break;
                 }
-
             }
-
         }
         //if (collision.transform.tag == "Geralt")
         //    Kicker = Geralt.transform;
