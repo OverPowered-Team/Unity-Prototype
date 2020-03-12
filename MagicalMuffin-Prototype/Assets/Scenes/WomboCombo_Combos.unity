@@ -6668,6 +6668,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 724784143}
   m_Mesh: {fileID: 4300000, guid: 040eb3333b0fd9a419169ea71f3a778e, type: 3}
+--- !u!1 &729298865 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9151392741094168020, guid: ee28053a8ee23874f91696565f5abd9c,
+    type: 3}
+  m_PrefabInstance: {fileID: 9151392740893295266}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &729320601
 GameObject:
   m_ObjectHideFlags: 0
@@ -21725,7 +21731,7 @@ PrefabInstance:
         type: 3}
       propertyPath: sword_collider
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 729298865}
     - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
         type: 3}
       propertyPath: attacks.attacks.Array.data[5].name
@@ -22079,12 +22085,12 @@ PrefabInstance:
     - target: {fileID: 9151392740301326279, guid: ee28053a8ee23874f91696565f5abd9c,
         type: 3}
       propertyPath: maxDashTime
-      value: 0.12
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 9151392740301326279, guid: ee28053a8ee23874f91696565f5abd9c,
         type: 3}
       propertyPath: dashSpeed
-      value: 30
+      value: 17.5
       objectReference: {fileID: 0}
     - target: {fileID: 9151392741094168020, guid: ee28053a8ee23874f91696565f5abd9c,
         type: 3}

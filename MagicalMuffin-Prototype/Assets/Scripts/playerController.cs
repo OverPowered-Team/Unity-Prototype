@@ -189,7 +189,6 @@ public class playerController : MonoBehaviour
 
     private void StartDash(Vector2 move)
     {
-        Debug.Break();
         if (move == Vector2.zero)
         {
             dashDir = transform.forward;
