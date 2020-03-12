@@ -25,8 +25,6 @@ public class Bullet : MonoBehaviour
             transform.LookAt(GameObject.FindGameObjectWithTag("Yennefer").transform);
             transform.SetParent(EnemyFolder.transform);
         }
-
-
     }
 
     void Update()

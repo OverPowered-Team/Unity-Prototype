@@ -51,6 +51,7 @@ public class playerController : MonoBehaviour
 
     void Update()
     {
+
         if ((gamepad != null || GetController()) && _animator != null)
         {
             Vector2 move = gamepad.leftStick.ReadValue();

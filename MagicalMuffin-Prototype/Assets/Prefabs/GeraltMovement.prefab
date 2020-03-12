@@ -139,6 +139,7 @@ GameObject:
   - component: {fileID: 9151392740301326278}
   - component: {fileID: 9151392740301326279}
   - component: {fileID: 9151392740301326276}
+  - component: {fileID: 173451052375575744}
   m_Layer: 0
   m_Name: GeraltMovement
   m_TagString: Player
@@ -200,7 +201,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 874166858774781641}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 4b243878a57b61b4cafa2dd45bb4f636, type: 3}
+  m_Avatar: {fileID: 9000000, guid: 801604e30ec827a4da8610e894addae0, type: 3}
   m_Controller: {fileID: 9100000, guid: 02fda78e6f3bdff4292d4a70fa3d02e1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -264,6 +265,7 @@ MonoBehaviour:
       input: x
       nextAttacks:
       - xxx
+      - xxy
     - name: xxx
       animation_id: xxx
       damage: 6
@@ -318,6 +320,38 @@ MonoBehaviour:
       endDamageTime: 1
       input: y
       nextAttacks: []
+    - name: xxy
+      animation_id: xxy
+      damage: 6
+      startDamageTime: 0
+      endDamageTime: 1
+      input: y
+      nextAttacks:
+      - xxyx
+    - name: yyy
+      animation_id: yyy
+      damage: 6
+      startDamageTime: 0
+      endDamageTime: 1
+      input: y
+      nextAttacks:
+      - yyyy
+    - name: yyyy
+      animation_id: yyyy
+      damage: 6
+      startDamageTime: 0
+      endDamageTime: 1
+      input: y
+      nextAttacks:
+      - yyyyy
+    - name: yyyyy
+      animation_id: yyyyy
+      damage: 6
+      startDamageTime: 0
+      endDamageTime: 1
+      input: y
+      nextAttacks:
+      - yyyyy
   extraInputWindow: 0.3
   lastAttackFinishTime: 0
   sword_collider: {fileID: 9151392741094168020}
@@ -336,8 +370,8 @@ MonoBehaviour:
   playerIdx: 0
   currState: 0
   speed: 7.5
-  dashSpeed: 30
-  maxDashTime: 0.12
+  dashSpeed: 17.5
+  maxDashTime: 0.3
 --- !u!114 &9151392740301326276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -369,6 +403,20 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &173451052375575744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874166858774781641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3a5f0e474ac0bc40a4cdf4da0542c12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HpBar: {fileID: 0}
+  FillImage: {fileID: 0}
 --- !u!1 &941618973343114128
 GameObject:
   m_ObjectHideFlags: 0
