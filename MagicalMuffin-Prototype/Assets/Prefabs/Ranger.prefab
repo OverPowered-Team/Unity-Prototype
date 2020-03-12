@@ -115,7 +115,8 @@ MonoBehaviour:
   attack_yennefer: 0
   speed: 5
   range: 5
-  BulletPos: {fileID: 0}
+  BulletPos: {fileID: 8981546930920186711, guid: cf4c9333b66436d4189ca6ed231a2c62,
+    type: 3}
 --- !u!95 &7933998713483055072
 Animator:
   serializedVersion: 3
@@ -335,7 +336,7 @@ PrefabInstance:
     - target: {fileID: -2824118146506105572, guid: 960ac6d90058ce74495cd055ffe2dc81,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -2322225799281468331, guid: 960ac6d90058ce74495cd055ffe2dc81,
         type: 3}
