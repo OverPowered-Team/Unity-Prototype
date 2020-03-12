@@ -125,6 +125,7 @@ public class playerController : MonoBehaviour
                     }
                     break;
                 case PlayerState.ATTACK:
+                    RotateCharacter(move);
                     _playerCombos.UpdateAttack();
                     if (CheckDashInput())
                     {
@@ -187,6 +188,19 @@ public class playerController : MonoBehaviour
     {
         return (gamepad.buttonWest.wasPressedThisFrame
             || gamepad.buttonNorth.wasPressedThisFrame);
+    }
+
+    private void RotateCharacter(Vector2 move)
+    {
+        //Get angle between cam and player
+        if (move != Vector2.zero && move != null)
+        {
+            Vector3 dst = transform.position + GetInputRelativeToCamera(move);
+            if (!float.IsNaN(dst.x) && !float.IsNaN(dst.z))
+            {
+                transform.LookAt(dst, Vector3.up);
+            }
+        }
     }
 
     private bool GetController()
