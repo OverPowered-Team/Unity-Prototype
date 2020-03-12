@@ -5152,6 +5152,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 874166858774781641, guid: ee28053a8ee23874f91696565f5abd9c,
         type: 3}
       propertyPath: m_Name
@@ -5161,6 +5169,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Yennefer
+      objectReference: {fileID: 0}
+    - target: {fileID: 874166858774781641, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4213948650187287770, guid: ee28053a8ee23874f91696565f5abd9c,
         type: 3}
@@ -5217,6 +5230,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326277, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: m_WarningMessage
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326277, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 801604e30ec827a4da8610e894addae0, type: 3}
     m_RemovedComponents:
     - {fileID: 173451052375575744, guid: ee28053a8ee23874f91696565f5abd9c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ee28053a8ee23874f91696565f5abd9c, type: 3}
@@ -22027,6 +22050,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 173451052375575744, guid: ee28053a8ee23874f91696565f5abd9c,
         type: 3}
       propertyPath: HpBar
@@ -22046,6 +22077,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Geralt
+      objectReference: {fileID: 0}
+    - target: {fileID: 874166858774781641, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4213948650187287770, guid: ee28053a8ee23874f91696565f5abd9c,
         type: 3}
@@ -22102,10 +22138,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9151392740301326277, guid: ee28053a8ee23874f91696565f5abd9c,
-        type: 3}
-      propertyPath: m_Avatar
-      value: 
-      objectReference: {fileID: 9000000, guid: 1b6fd7da34aefc14e8967e3860d8144f, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee28053a8ee23874f91696565f5abd9c, type: 3}
