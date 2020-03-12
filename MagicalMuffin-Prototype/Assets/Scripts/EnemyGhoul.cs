@@ -127,9 +127,7 @@ public class EnemyGhoul : MonoBehaviour
                     EnemyManager.EnemiesAlive.Remove(item);
                     break;
                 }
-
             }
-
         }
     }
 

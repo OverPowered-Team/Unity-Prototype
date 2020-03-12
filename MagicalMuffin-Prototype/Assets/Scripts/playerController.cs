@@ -167,7 +167,7 @@ public class playerController : MonoBehaviour
 
     private bool CheckDashInput()
     {
-        return gamepad.buttonEast.wasPressedThisFrame;
+        return gamepad.rightTrigger.wasPressedThisFrame;
     }
 
     private bool CheckAttackInput()
@@ -189,13 +189,14 @@ public class playerController : MonoBehaviour
 
     private void StartDash(Vector2 move)
     {
+        Debug.Break();
         if (move == Vector2.zero)
         {
             dashDir = transform.forward;
         }
         else
         {
-            dashDir = GetInputRelativeToCamera(move);
+            dashDir = GetInputRelativeToCamera(move.normalized);
         }
         currentDashTime = 0.0f;
         _animator.Play("dash");
@@ -223,8 +224,11 @@ public class playerController : MonoBehaviour
         {
             SendMovementParameters(move);
             Vector3 dst = transform.position + GetInputRelativeToCamera(move) * speed * Time.deltaTime;
-            transform.LookAt(dst, Vector3.up);
-            transform.position = dst;
+            if (!float.IsNaN(dst.x) && !float.IsNaN(dst.z))
+            {
+                transform.LookAt(dst, Vector3.up);
+                transform.position = dst;
+            }
         }
     }
 
