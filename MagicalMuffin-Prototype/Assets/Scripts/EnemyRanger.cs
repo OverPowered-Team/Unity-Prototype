@@ -4,34 +4,42 @@ using UnityEngine;
 
 public class EnemyRanger : MonoBehaviour
 {
-    GameObject player1;
-    GameObject player2;
+    GameObject Geralt;
+    GameObject Yennefer;
     public GameObject BulletShell;
-    public bool attack_player1 = false;
-    public bool attack_player2 = false;
+    public bool attack_geralt = false;
+    public bool attack_yennefer = false;
     public float speed = 10;
     public float range = 10;
     float constraintY = 0;
     bool can_shot = false;
-    float distance_player1;
-    float distance_player2;
+    float distance_geralt;
+    float distance_yennefer;
+    Animator anim;
+    GameObject FollowTarget;
+    public GameObject BulletPos;
 
     void Start()
     {
-        player1 = GameObject.FindGameObjectWithTag("Geralt");
-        player2 = GameObject.FindGameObjectWithTag("Yennefer");
-        distance_player1 = Mathf.Sqrt(Mathf.Pow((player1.transform.position.x - transform.position.x), 2) + Mathf.Pow((player1.transform.position.z - transform.position.z), 2));
-        distance_player2 = Mathf.Sqrt(Mathf.Pow((player2.transform.position.x - transform.position.x), 2) + Mathf.Pow((player2.transform.position.z - transform.position.z), 2));
+        BulletShell.SetActive(false);
+        anim = GetComponentInChildren<Animator>();
 
-        if (distance_player1 < distance_player2)
+        Geralt = GameObject.FindGameObjectWithTag("Geralt");
+        Yennefer = GameObject.FindGameObjectWithTag("Yennefer");
+        distance_geralt = Mathf.Sqrt(Mathf.Pow((Geralt.transform.position.x - transform.position.x), 2) + Mathf.Pow((Geralt.transform.position.z - transform.position.z), 2));
+        distance_yennefer = Mathf.Sqrt(Mathf.Pow((Yennefer.transform.position.x - transform.position.x), 2) + Mathf.Pow((Yennefer.transform.position.z - transform.position.z), 2));
+
+        if (distance_geralt < distance_yennefer)
         {
-            attack_player1 = true;
-            attack_player2 = false;
+            attack_geralt = true;
+            attack_yennefer = false;
+            FollowTarget = Geralt;
         }
         else
         {
-            attack_player2 = true;
-            attack_player1 = false;
+            attack_yennefer = true;
+            attack_geralt = false;
+            FollowTarget = Yennefer;
         }
         constraintY = transform.position.y;
 
@@ -41,32 +49,56 @@ public class EnemyRanger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        distance_player1 = Mathf.Sqrt(Mathf.Pow((player1.transform.position.x - transform.position.x), 2) + Mathf.Pow((player1.transform.position.z - transform.position.z), 2));
-        distance_player2 = Mathf.Sqrt(Mathf.Pow((player2.transform.position.x - transform.position.x), 2) + Mathf.Pow((player2.transform.position.z - transform.position.z), 2));
+        distance_geralt = Mathf.Sqrt(Mathf.Pow((Geralt.transform.position.x - transform.position.x), 2) + Mathf.Pow((Geralt.transform.position.z - transform.position.z), 2));
+        distance_yennefer = Mathf.Sqrt(Mathf.Pow((Yennefer.transform.position.x - transform.position.x), 2) + Mathf.Pow((Yennefer.transform.position.z - transform.position.z), 2));
 
-        if (attack_player1 && distance_player1 >= range)
+
+        transform.LookAt(FollowTarget.transform);
+
+
+        if (attack_geralt && distance_geralt >= range)
         {
-            transform.LookAt(player1.transform);
-            transform.position = Vector3.MoveTowards(transform.position, player1.transform.position, speed * Time.deltaTime);
+            ArcherBehaviour(Geralt);
         }
-        else if(distance_player1 <= range && can_shot)
+        else if(distance_geralt <= range && can_shot)
         {
-            transform.LookAt(player1.transform);
-            StartCoroutine("Shot");
-            can_shot = false;
+            ArcherAttackBehaviour(Geralt);
         }
-        if (attack_player2 && distance_player2 >= range)
+        if (attack_yennefer && distance_yennefer >= range)
         {
-            transform.LookAt(player2.transform);
-            transform.position = Vector3.MoveTowards(transform.position, player2.transform.position, speed * Time.deltaTime);
+            ArcherBehaviour(Yennefer);
         }
-        else if(distance_player2 <= range && can_shot)
+        else if (distance_yennefer <= range)
         {
-            transform.LookAt(player2.transform);
-            StartCoroutine("Shot");
-            can_shot = false;
+            ArcherAttackBehaviour(Yennefer);
         }
+
+
+
         transform.position = new Vector3(transform.position.x, constraintY, transform.position.z);
+    }
+
+    void ArcherBehaviour(GameObject target)
+    {
+        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
+        anim.SetBool("AttackInRange", false);
+        anim.SetBool("NoAmmo", false);
+
+    }
+
+    void ArcherAttackBehaviour(GameObject target)
+    {
+        if(can_shot)
+        {
+            StartCoroutine("Shot");
+            can_shot = false;
+            anim.SetBool("AttackInRange", true);
+        }
+        else
+        {
+            anim.SetBool("NoAmmo", true);
+        }
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -87,10 +119,16 @@ public class EnemyRanger : MonoBehaviour
         }
     }
 
+
     IEnumerator Shot()
     {
-        Instantiate(BulletShell, transform.position, Quaternion.identity, transform/*GameObject.FindGameObjectWithTag("EnemyFolder").transform*/);
+
+        //Instantiate(BulletShell, transform.position, Quaternion.identity, transform/*GameObject.FindGameObjectWithTag("EnemyFolder").transform*/);
+        BulletShell.SetActive(true);
+        BulletShell.transform.position = BulletPos.transform.position;
+
         yield return new WaitForSeconds(2.5f);
         can_shot = true;
+        anim.SetBool("NoAmmo", false);
     }
 }

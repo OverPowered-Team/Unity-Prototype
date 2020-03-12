@@ -14,12 +14,12 @@ public class Bullet : MonoBehaviour
         constrainY = transform.position.y;
         parentRanger = GetComponentInParent<EnemyRanger>();
 
-        if (parentRanger.attack_player1)
+        if (parentRanger.attack_geralt)
         {
             transform.LookAt(GameObject.FindGameObjectWithTag("Geralt").transform);
             transform.SetParent(EnemyFolder.transform);
         }
-        if (parentRanger.attack_player2)
+        if (parentRanger.attack_yennefer)
         {
             transform.LookAt(GameObject.FindGameObjectWithTag("Yennefer").transform);
             transform.SetParent(EnemyFolder.transform);
