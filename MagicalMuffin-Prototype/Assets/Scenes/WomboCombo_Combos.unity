@@ -21937,6 +21937,16 @@ PrefabInstance:
       propertyPath: attacks.attacks.Array.data[5].nextAttacks.Array.data[1]
       value: xxxy
       objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326279, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: maxDashTime
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326279, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: dashSpeed
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 9151392741094168020, guid: ee28053a8ee23874f91696565f5abd9c,
         type: 3}
       propertyPath: m_Name
