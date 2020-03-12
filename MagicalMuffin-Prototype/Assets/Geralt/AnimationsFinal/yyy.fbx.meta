@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 61e4656a2566d6f4095fbd06d7aa08cd
+guid: e2b16d39f64d0bc429ad09c0e9d73f67
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable:
@@ -383,7 +383,7 @@ ModelImporter:
     second: //RootNode
   - first:
       74: 7400000
-    second: y
+    second: yyy
   - first:
       95: 9500000
     second: //RootNode
@@ -402,12 +402,7 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'Default Take' has import animation warnings
-      that might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'B-thigh_L' has scale animation that will
-      be discarded.\n\t'B-shin_L' has scale animation that will be discarded.\n\t'B-foot_L'
-      has scale animation that will be discarded.\n\t'B-shin_R' has scale animation
-      that will be discarded.\n\t'B-foot_R' has scale animation that will be discarded.\n"
+    animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -421,18 +416,18 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: y
+      name: yyy
       takeName: Default Take
       internalID: 0
       firstFrame: 0
-      lastFrame: 39
+      lastFrame: 49
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
