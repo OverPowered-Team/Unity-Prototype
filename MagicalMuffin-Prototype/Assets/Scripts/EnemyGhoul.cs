@@ -91,7 +91,12 @@ public class EnemyGhoul : MonoBehaviour
             if (do_damage)
             {
                 if (target.tag == "Yennefer")
-                    Yennefer.GetComponent<YenneferStats>().GetHit(ghoul_damge);
+                {
+                    YenneferStats yenneferStats;
+                    yenneferStats = Yennefer.GetComponent<YenneferStats>();
+                    yenneferStats.GetHit(ghoul_damge);
+
+                }
                 if (target.tag == "Geralt")
                     Geralt.GetComponent<GeraltStats>().GetHit(ghoul_damge);
 
