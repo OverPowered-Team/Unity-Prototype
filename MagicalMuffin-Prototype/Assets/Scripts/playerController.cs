@@ -137,6 +137,7 @@ public class playerController : MonoBehaviour
                     }
                     else
                     {
+                        Debug.Log("Finished transition");
                         if (move == Vector2.zero)
                         {
                             _animator.Play("idle");
@@ -148,6 +149,7 @@ public class playerController : MonoBehaviour
                             currState = PlayerState.MOVE;
                         }
                     }
+                    //TODO: Can do dash in the middle of this
                     break;
             }
             SendMovementParameters(move);
@@ -251,6 +253,5 @@ public class playerController : MonoBehaviour
     {
         _animator.SetFloat("VelX",value.x);
         _animator.SetFloat("VelY", value.y);
-        Debug.Log(value);
     }
 }
