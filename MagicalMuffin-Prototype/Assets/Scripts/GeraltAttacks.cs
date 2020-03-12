@@ -21,6 +21,8 @@ public class GeraltAttacks : MonoBehaviour
 
     Dictionary<UnityEngine.InputSystem.Controls.ButtonControl, string> buttonString;
 
+    public GameObject sword_collider;
+
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -90,6 +92,8 @@ public class GeraltAttacks : MonoBehaviour
             Debug.Log("curr attack is null");
             currAttack = null;
         }
+        ActDesactCollider(currAttack != null && Time.time > lastAttackStartTime + 0.02  && lastAttackStartTime + GetAttackLength(currAttack) - 0.02 > Time.time);
+        ResizeCollider(currAttack != null && IsLastAttack(currAttack));
 
         RegisterNewInput(_playerController.gamepad.buttonWest);
         RegisterNewInput(_playerController.gamepad.buttonNorth);
@@ -194,6 +198,20 @@ public class GeraltAttacks : MonoBehaviour
             }
         }
         return true;
+    }
+
+    private void ActDesactCollider(bool active)
+    {
+        sword_collider.SetActive(active);
+    }
+
+    private void ResizeCollider(bool last)
+    {
+        // Add in this first if the reliquie bool
+        if (last /*&& reliquie*/)
+            sword_collider.transform.localScale = new Vector3(0, 0, 25);
+        else
+            sword_collider.transform.localScale = new Vector3(0, 0, 19);
     }
 
     //INFO: Repeatable 1 attack combos
