@@ -1,138 +1,166 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using XInputDotNetPure;
+using UnityEngine.InputSystem;
 
 public class GeraltAttacks : MonoBehaviour
 {
-    public PlayerIndex playerIndex;
-    private GamePadState state;
-
     public AttackList attacks;
 
-    private AuxButton xButton;
-    private AuxButton yButton;
-
-    private Attack entryPoint;//This is not really an attack, it's the idle that goes to x and y
-
     private Animator anim;
+    private List<Attack> startingCombos;
 
-    private Attack currAttack;
-    private float lastInputTime = 0f;
-    public float extraInputWindow = 1f;//In seconds.
+    private Attack currAttack = null;
+    private float lastAttackStartTime = 0f;
+    [Tooltip("In seconds")]
+    public float extraInputWindow;
     private string nextInput = "";
 
-    private float hardcodedOffset = 0.2f;
-    //There seems to be some errors when comparing the animation length and the time passed in an animation.
-    //And the result is that the length is a little bit longer.
-    //So we substract this offset to avoid it getting stuck on the last frame of the animation.
+    private playerController _playerController;
+    [HideInInspector] public float lastAttackFinishTime;
+
+    Dictionary<UnityEngine.InputSystem.Controls.ButtonControl, string> buttonString;
+
+    public GameObject sword_collider;
 
     private void Start()
     {
         anim = GetComponent<Animator>();
+        _playerController = GetComponent<playerController>();
+        
+        buttonString = new Dictionary<UnityEngine.InputSystem.Controls.ButtonControl, string>();
+        buttonString.Add(_playerController.gamepad.buttonSouth, "a");
+        buttonString.Add(_playerController.gamepad.buttonWest,  "x");
+        buttonString.Add(_playerController.gamepad.buttonNorth, "y");
+        buttonString.Add(_playerController.gamepad.buttonEast,  "b");
 
-        xButton = new AuxButton();
-        xButton.name = "x";
-        yButton = new AuxButton();
-        yButton.name = "y";
+        startingCombos = new List<Attack>();
+        startingCombos.Add(attacks.attacks.Find(attack => attack.name == "x"));
+        startingCombos.Add(attacks.attacks.Find(attack => attack.name == "y"));
 
-        entryPoint = attacks.attacks.Find(attack => attack.name == "_");//_ is idle
-        CurrAttack = entryPoint;
-        lastInputTime = Time.time;
+        lastAttackStartTime = Time.time;
     }
 
-    private void Update()
+    float GetAnimatorStateSpeed(string name)
     {
-        state = GamePad.GetState(playerIndex);
-        xButton.UpdateValue(state.Buttons.X);
-        yButton.UpdateValue(state.Buttons.Y);
-
-        //Debug.Log(Time.time - lastInputTime);
-
-        RegisterNewInput(xButton);
-        RegisterNewInput(yButton);
-        InputOnIdle();
-        PlayNextCombo();
-        ComboTimeout();
-    }
-
-    //INFO: Idle is the exception among "attacks", it doesn't wait to finish its animation to start the next attack
-    private void InputOnIdle()
-    {
-        if (CurrAttack.name == "_" && nextInput != "")
+        UnityEditor.Animations.AnimatorController ac = anim.runtimeAnimatorController as UnityEditor.Animations.AnimatorController;
+        UnityEditor.Animations.ChildAnimatorState[] states = ac.layers[0].stateMachine.states;
+        foreach (UnityEditor.Animations.ChildAnimatorState state in states)
         {
-            CurrAttack = attacks.attacks.Find(attack => attack.name == "_" + nextInput);
-            lastInputTime = Time.time;
-            nextInput = "";
+            if (state.state.name == name)
+            {
+                return state.state.speed;
+            }
+        }
+        return 1f;
+    }
+
+    private bool FinishedAttack()
+    {
+        if (currAttack != null)
+        {
+            return Time.time - lastAttackStartTime >= GetAnimationClip(currAttack.animation_id).length / GetAnimatorStateSpeed(currAttack.name);
+        }
+        else
+        {
+            return true;
+        }
+        
+    }
+
+    public void CancelCombo()
+    {
+        currAttack = null;
+    }
+
+    private float GetAttackLength(Attack attack)
+    {
+        if (attack == null)
+        {
+            return 0f;
+        }
+        else
+        {
+            return GetAnimationClip(attack.animation_id).length / GetAnimatorStateSpeed(attack.name);
         }
     }
 
-    private void PlayNextCombo()
+    public void UpdateAttack()
+    {
+        if (Time.time - (lastAttackStartTime + GetAttackLength(currAttack)) > extraInputWindow)
+        {
+            Debug.Log("curr attack is null");
+            currAttack = null;
+        }
+        ActDesactCollider(currAttack != null && Time.time > lastAttackStartTime + 0.02  && lastAttackStartTime + GetAttackLength(currAttack) - 0.02 > Time.time);
+        ResizeCollider(currAttack != null && IsLastAttack(currAttack));
+
+        RegisterNewInput(_playerController.gamepad.buttonWest);
+        RegisterNewInput(_playerController.gamepad.buttonNorth);
+        PlayNextCombo();
+    }
+
+    public void PlayNextCombo()
     {
         //If the combo has finished
-        if (Time.time - lastInputTime >= GetAnimationClip(CurrAttack.animation_id).length - hardcodedOffset)
+        if (FinishedAttack())
         {
+            lastAttackFinishTime = Time.time;
             if (nextInput != "")
             {
                 //INFO: Check if the input given matches any of the inputs of the next attacks
-                Attack nextAttack = FindNextAttack(CurrAttack, nextInput);
+                Attack nextAttack = FindNextAttack(currAttack, nextInput);
                 if (nextAttack != null)
                 {
-                    CurrAttack = nextAttack;
-                    lastInputTime = Time.time;
+                    currAttack = nextAttack;
                 }
                 else
                 {
-                    CurrAttack = attacks.attacks.Find(attack => attack.name == "_" + nextInput);
-                    lastInputTime = Time.time;
-                    Debug.Log("Next input: " + nextInput);
+                    currAttack = attacks.attacks.Find(attack => attack.name == nextInput);
                 }
+                anim.Play(currAttack.animation_id);
+                lastAttackStartTime = Time.time;
                 nextInput = "";
-                //Debug.Log("CURRENT ATTACK: " + currAttack.name);
             }
             else
             {
-                anim.CrossFade("_", extraInputWindow);
+                Vector2 move = _playerController.gamepad.leftStick.ReadValue();
+                if (move == Vector2.zero)
+                {
+                    anim.CrossFade("idle", extraInputWindow);
+                }
+                else
+                {
+                    anim.CrossFade("Movement", extraInputWindow);
+                }
+                _playerController.currState = PlayerState.ATTACK_RETURN;
             }
         }
     }
 
-    //INFO: Reset combo window input time passes (just a little bit (extraInputWindow) after the animation finishes)
-    private void ComboTimeout()
+    public void RegisterNewInput(UnityEngine.InputSystem.Controls.ButtonControl button)
     {
-        if (Time.time - lastInputTime > anim.GetCurrentAnimatorStateInfo(0).length + extraInputWindow)
+        if (button.wasPressedThisFrame)
         {
-            CurrAttack = attacks.attacks.Find(attack => attack.name == "_");
-            lastInputTime = Time.time;
-        }
-    }
-
-    private void RegisterNewInput(AuxButton button)
-    {
-        if (button.state == KEY_STATE.KEY_DOWN)
-        {
-            nextInput = button.name;
+            nextInput = buttonString[button];
         }
     }
 
     //INFO: Returns null if there isn't an attack that follows with the given input
     private Attack FindNextAttack(Attack currAttack, string input)
     {
-        //INFO: If we decide that the names of the attacks aren't the combination of their buttons, this should go through all the "currAttack.nextAttack" list and see if any of them matches our "input"
-        return attacks.attacks.Find(attack => attack.name == currAttack.name + input);
-    }
+        string attackName;
 
-    public Attack CurrAttack
-    {
-        set
+        if (currAttack == null)
         {
-            currAttack = value;
-            anim.Play(value.animation_id);
+            attackName = input;
         }
-        get
+        else
         {
-            return currAttack;
+            attackName = currAttack.name + input;
         }
+
+        return attacks.attacks.Find(attack => attack.name == attackName);
     }
 
     private AnimationClip GetAnimationClip(string clipName)
@@ -145,6 +173,45 @@ public class GeraltAttacks : MonoBehaviour
             }
         }
         return null;
+    }
+
+    private bool IsLastAttack(Attack currAttack)
+    {
+        foreach (Attack attack in attacks.attacks)
+        {
+            if (attack.name.Length > currAttack.name.Length)
+            {
+                for (int i = 0; i < currAttack.name.Length + 1; ++i)
+                {
+                    if (i < currAttack.name.Length)
+                    {
+                        if (currAttack.name[i] != attack.name[i])
+                        {
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    private void ActDesactCollider(bool active)
+    {
+        sword_collider.SetActive(active);
+    }
+
+    private void ResizeCollider(bool last)
+    {
+        // Add in this first if the reliquie bool
+        if (last /*&& reliquie*/)
+            sword_collider.transform.localScale = new Vector3(0, 0, 25);
+        else
+            sword_collider.transform.localScale = new Vector3(0, 0, 19);
     }
 
     //INFO: Repeatable 1 attack combos
