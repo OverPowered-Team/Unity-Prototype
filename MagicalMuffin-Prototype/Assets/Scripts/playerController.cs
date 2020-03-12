@@ -12,30 +12,27 @@ public enum PlayerState
 
 public class playerController : MonoBehaviour
 {
-    public float speed = 7.5f;
-    public float dashSpeed = 140f;
-    public float maxDashTime = 1.0f;
-    public float dashStopSpeed = 0.2f;
-
-    public float fall_mult = 2.5f;
-    public float jump_mult = 2f;
-    private float currentDashTime;
+    //Input
     [HideInInspector] public Gamepad gamepad = null;
+    public int playerIdx = 0;
 
-    private float gravity = -9.8f;
-    private float jump_dist = -10;
-    private float count;
+    //FSM
+    [HideInInspector] public PlayerState currState = PlayerState.IDLE;
+
+    //Movement
+    public float speed;
+
+    //Dash
+    public float dashSpeed;
+    public float maxDashTime;
+    private float currentDashTime = 0f;
+    private Vector3 dashDir;
+
+    //Components
     private Transform cam_tansform;
     private Animator _animator;
     private PlayerInput _playerInput;
     private GeraltAttacks _playerCombo;
-
-    private Vector3 dashDir;
-    //INFO: You cannot change the direction in the middle of the dash
-    //It's quite fast so you won't almost notice
-
-    public int playerIdx = 0;
-    [HideInInspector] public PlayerState currState = PlayerState.IDLE;
 
     void Awake()
     {
@@ -47,7 +44,6 @@ public class playerController : MonoBehaviour
     {
         _playerInput = GetComponent<PlayerInput>();
         _animator = GetComponent<Animator>();
-        count = jump_dist;
         currentDashTime = maxDashTime;
 
         GetController();
@@ -75,6 +71,7 @@ public class playerController : MonoBehaviour
                     if (move != Vector2.zero)
                     {
                         Move(move);
+                        _animator.Play("Movement");
                         currState = PlayerState.MOVE;
                     }
                     break;
@@ -87,7 +84,6 @@ public class playerController : MonoBehaviour
                     else
                     {
                         Move(move);
-                        currState = PlayerState.MOVE;
                     }
                     if (CheckAttackInput())
                     {
@@ -105,10 +101,12 @@ public class playerController : MonoBehaviour
                     {
                         if (move == Vector2.zero)
                         {
+                            _animator.Play("idle");
                             currState = PlayerState.IDLE;
                         }
                         else
                         {
+                            _animator.Play("Movement");
                             currState = PlayerState.MOVE;
                         }
                     }
@@ -133,6 +131,7 @@ public class playerController : MonoBehaviour
                         else
                         {
                             _animator.CrossFade("Movement", remainingTransition);
+                            Move(move);
                         }
                     }
                     else
@@ -146,6 +145,7 @@ public class playerController : MonoBehaviour
                         else
                         {
                             _animator.Play("Movement");
+                            Move(move);
                             currState = PlayerState.MOVE;
                         }
                     }
@@ -154,11 +154,14 @@ public class playerController : MonoBehaviour
                         _playerCombo.UpdateAttack();
                         currState = PlayerState.ATTACK;
                     }
-                    //TODO: Move if you're moving the joystick
-                    //TODO: Can do dash in the middle of this
+                    if (CheckDashInput())
+                    {
+                        StartDash();
+                        currState = PlayerState.DASH;
+                    }
                     break;
             }
-            SendMovementParameters(move);
+            //SendMovementParameters(move);
         }
     }
 
@@ -184,17 +187,11 @@ public class playerController : MonoBehaviour
         return false;
     }
 
-    float GetPosbyTime(float time)
-    {
-        return -0.5f * gravity * Mathf.Sqrt(time);
-    }
-
     private void StartDash()
     {
         dashDir = transform.forward;
         currentDashTime = 0.0f;
-        _animator.Play("_b");
-        //_animator.SetBool("roll", true);//TODO: Remove. Not needed since we force it to play
+        _animator.Play("dash");
     }
 
     private void Move(Vector2 move)
@@ -224,34 +221,13 @@ public class playerController : MonoBehaviour
     {
         if (currentDashTime < maxDashTime)
         {
-            Vector3 currDash = dashDir * dashSpeed * Time.deltaTime;
-            transform.position += currDash;
-            currentDashTime += dashStopSpeed;
+            transform.position += dashDir * dashSpeed * Time.deltaTime;
+            currentDashTime += Time.deltaTime;
             return true;
         }
         else
         {
-            _animator.SetBool("roll", false);
             return false;
-        }
-    }
-
-    private void Jump()
-    {
-        if (gamepad.buttonSouth.wasPressedThisFrame && jump_dist == count)
-        {
-            jump_dist = -count;
-        }
-        if (jump_dist <= -count && jump_dist > 0f)
-        {
-
-            transform.position += Vector3.up;
-            jump_dist -= 1f;
-        }
-        else if (jump_dist <= 0f && jump_dist > count)
-        {
-            transform.position -= Vector3.up;
-            jump_dist -= 1f;
         }
     }
 
