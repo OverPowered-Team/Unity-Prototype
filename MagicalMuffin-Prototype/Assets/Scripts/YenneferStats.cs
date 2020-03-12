@@ -53,5 +53,9 @@ public class YenneferStats : MonoBehaviour
         {
             GetHit(30);
         }
+        if (other.transform.tag == "Arrow")
+        {
+            GetHit(10);
+        }
     }
 }

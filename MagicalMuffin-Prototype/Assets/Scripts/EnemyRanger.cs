@@ -17,11 +17,12 @@ public class EnemyRanger : MonoBehaviour
     float distance_yennefer;
     Animator anim;
     GameObject FollowTarget;
-    public GameObject BulletPos;
+    float arrow_attack_timer;
+    bool prepare_arrow;
+    Vector2 constraintRotation;
 
     void Start()
     {
-        BulletShell.SetActive(false);
         anim = GetComponentInChildren<Animator>();
 
         Geralt = GameObject.FindGameObjectWithTag("Geralt");
@@ -44,6 +45,10 @@ public class EnemyRanger : MonoBehaviour
         constraintY = transform.position.y;
 
         can_shot = true;
+
+
+        // Constraint Rotation X and Y
+        constraintRotation = new Vector2(transform.rotation.x, transform.rotation.z);
     }
 
     // Update is called once per frame
@@ -76,6 +81,8 @@ public class EnemyRanger : MonoBehaviour
 
 
         transform.position = new Vector3(transform.position.x, constraintY, transform.position.z);
+        transform.rotation = new Quaternion(constraintRotation.x, transform.rotation.y, constraintRotation.y, transform.rotation.w);
+
     }
 
     void ArcherBehaviour(GameObject target)
@@ -90,15 +97,30 @@ public class EnemyRanger : MonoBehaviour
     {
         if(can_shot)
         {
-            StartCoroutine("Shot");
             can_shot = false;
             anim.SetBool("AttackInRange", true);
+            prepare_arrow = true;
+
         }
         else
         {
             anim.SetBool("NoAmmo", true);
         }
 
+        if(prepare_arrow)
+        {
+            float timer = Time.time - arrow_attack_timer;
+            if (timer > anim.GetCurrentAnimatorStateInfo(0).length && anim.GetCurrentAnimatorStateInfo(0).IsName("Shot"))
+            {
+                arrow_attack_timer = Time.time;
+                Instantiate(BulletShell, new Vector3(transform.position.x, transform.position.y + 0.3f, transform.position.z), Quaternion.identity, transform/*GameObject.FindGameObjectWithTag("EnemyFolder").transform*/);
+
+                can_shot = true;
+                anim.SetBool("NoAmmo", false);
+
+                prepare_arrow = false;
+            }
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -123,8 +145,7 @@ public class EnemyRanger : MonoBehaviour
     IEnumerator Shot()
     {
         BulletShell.SetActive(true);
-        Instantiate(BulletShell, new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z) , Quaternion.identity, transform/*GameObject.FindGameObjectWithTag("EnemyFolder").transform*/);
-        //BulletShell.transform.position = BulletPos.transform.position;
+        Instantiate(BulletShell, new Vector3(transform.position.x, transform.position.y - 2, transform.position.z) , Quaternion.identity, transform/*GameObject.FindGameObjectWithTag("EnemyFolder").transform*/);
 
         yield return new WaitForSeconds(2.5f);
         can_shot = true;

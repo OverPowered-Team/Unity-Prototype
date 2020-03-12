@@ -30,6 +30,19 @@ Transform:
   m_Father: {fileID: 7364707301137190749}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7498110631558982442
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6155273845148230066}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.04613344, y: 0.039952736, z: 0.7504024}
+  m_Center: {x: 0, y: 0.006658817, z: 0.06959206}
 --- !u!114 &250286265586197519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42,6 +55,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dc93283ce4ecf046bc13600ce18cd0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 10
 --- !u!1 &7364707301137190748
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,13 +124,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fadcba0497c95b04abc27e62b93233c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BulletShell: {fileID: 6155273845148230066}
+  BulletShell: {fileID: 7012158975804363557, guid: 6272f9d3c28307a44b9c65acda728441,
+    type: 3}
   attack_geralt: 0
   attack_yennefer: 0
   speed: 5
   range: 5
-  BulletPos: {fileID: 8981546930920186711, guid: cf4c9333b66436d4189ca6ed231a2c62,
-    type: 3}
 --- !u!95 &7933998713483055072
 Animator:
   serializedVersion: 3
@@ -216,7 +229,7 @@ PrefabInstance:
     - target: {fileID: -4479812710795790148, guid: 960ac6d90058ce74495cd055ffe2dc81,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.428
+      value: 1.189
       objectReference: {fileID: 0}
     - target: {fileID: -4479812710795790148, guid: 960ac6d90058ce74495cd055ffe2dc81,
         type: 3}
@@ -251,7 +264,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 960ac6d90058ce74495cd055ffe2dc81,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.867
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 960ac6d90058ce74495cd055ffe2dc81,
         type: 3}

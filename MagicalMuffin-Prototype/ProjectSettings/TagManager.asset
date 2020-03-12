@@ -8,10 +8,11 @@ TagManager:
   - Bullet
   - EnemyFolder
   - Ghoul
-  - Yennefer
-  - Geralt
-  - MutantChargedJump
   - MutantAttack
+  - MutantChargedJump
+  - Geralt
+  - Yennefer
+  - Arrow
   layers:
   - Default
   - TransparentFX

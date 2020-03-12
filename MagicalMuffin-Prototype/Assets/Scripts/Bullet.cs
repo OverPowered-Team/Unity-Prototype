@@ -5,21 +5,22 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     float constrainY = 0;
-    float speed = 7;
+    public float speed = 7;
     EnemyRanger parentRanger;
     GameObject EnemyFolder;
+
     void Start()
     {
         EnemyFolder = GameObject.FindGameObjectWithTag("EnemyFolder");
         constrainY = transform.position.y;
         parentRanger = GetComponentInParent<EnemyRanger>();
 
-        if (parentRanger.attack_geralt)
+        if (parentRanger.attack_geralt && parentRanger != null)
         {
             transform.LookAt(GameObject.FindGameObjectWithTag("Geralt").transform);
             transform.SetParent(EnemyFolder.transform);
         }
-        if (parentRanger.attack_yennefer)
+        if (parentRanger.attack_yennefer && parentRanger != null)
         {
             transform.LookAt(GameObject.FindGameObjectWithTag("Yennefer").transform);
             transform.SetParent(EnemyFolder.transform);
