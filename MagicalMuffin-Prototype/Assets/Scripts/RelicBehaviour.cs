@@ -44,6 +44,7 @@ public class RelicBehaviour: MonoBehaviour {
         if(coll.gameObject.tag == "Player")
         {
             relic.OnPickUp(coll.gameObject.GetComponent<playerController>());
+            GameObject.Find("Canvas").GetComponent<UIManager>().CreateRelicPopup((AttackRelic)relic, relic_type);
             Destroy(this.gameObject);
         }
     }
@@ -69,15 +70,18 @@ public class Relic
 }
 public class AttackRelic: Relic
 {
+    public string attack_name;
+
     public override void OnPickUp(playerController player)
     {
         List<string> attack_pool = player._playerCombos.GetFinalAttacks();
         int random_index = Random.Range(0, attack_pool.Count);
+        attack_name = attack_pool[random_index];
 
         foreach (Relic_Effect effect in relic_effects)
         {
             AttackEffect test_effect = new AttackEffect();
-            test_effect.SetAttackIdentifier(attack_pool[random_index]);
+            test_effect.SetAttackIdentifier(attack_name);
 
             switch (effect)
             {
@@ -96,7 +100,7 @@ public class AttackRelic: Relic
             effects.Add(test_effect);
         }
         //test_effect.AddFlatModifer(0.5f, "Attack_Range");
-        description = description.Replace("_combo_", attack_pool[random_index]);
+        //description = description.Replace("_combo_", attack_name);
 
         base.OnPickUp(player);
     }
