@@ -71,10 +71,23 @@ public class GeraltAttacks : MonoBehaviour
         currAttack = null;
     }
 
+    private float GetAttackLength(Attack attack)
+    {
+        if (attack == null)
+        {
+            return 0f;
+        }
+        else
+        {
+            return GetAnimationClip(attack.animation_id).length / GetAnimatorStateSpeed(attack.name);
+        }
+    }
+
     public void UpdateAttack()
     {
-        if (Time.time - lastAttackFinishTime > extraInputWindow)
+        if (Time.time - (lastAttackStartTime + GetAttackLength(currAttack)) > extraInputWindow)
         {
+            Debug.Log("curr attack is null");
             currAttack = null;
         }
 
