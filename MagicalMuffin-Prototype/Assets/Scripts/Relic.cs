@@ -7,14 +7,8 @@ public class Relic {
     string name;
     string description;
 
-
     public Relic()
     {
 
     }
-
-}
-
-public class AttackRelic: Relic {
-    
 }

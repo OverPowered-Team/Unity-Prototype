@@ -62,8 +62,7 @@ public class GeraltAttacks : MonoBehaviour
         else
         {
             return true;
-        }
-        
+        }  
     }
 
     public void CancelCombo()
@@ -197,6 +196,26 @@ public class GeraltAttacks : MonoBehaviour
         return true;
     }
 
+    public void OnAddAttackEffect(string attack_name)
+    {
+        Attack affected_attack = attacks.attacks.Find(attack => attack.name == attack_name);
+
+        //Should probably make a list of stats and iterate through them
+        affected_attack.base_damage.CalculateStat(_playerController.effects);
+        affected_attack.base_range.CalculateStat(_playerController.effects);
+    }
+
+    public void OnHit()
+    {
+        foreach (AttackEffect effect in _playerController.effects)
+        {
+            if(effect.GetAttackIdentifier() == currAttack.name)
+            {
+                effect.on_hit_delegate();
+                break;
+            }
+        }
+    }
     //INFO: Repeatable 1 attack combos
     //- Unity doesn't let us play the same animation after one has finished
     //- If for example, _x didn't have a combo, and we were to press x after the animation has ended and it's in the inputWindowTime, it wouldn't play it again

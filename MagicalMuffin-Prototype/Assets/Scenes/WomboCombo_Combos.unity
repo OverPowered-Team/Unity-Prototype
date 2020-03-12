@@ -20532,7 +20532,14 @@ MonoBehaviour:
     attacks:
     - name: _x
       animation_id: _x
-      damage: 5
+      base_damage:
+        name: Attack_Damage
+        base_value: 0.5
+        current_value: 0
+      base_range:
+        name: Attack_Range
+        base_value: 1
+        current_value: 0
       startDamageTime: 0
       endDamageTime: 1
       input: x
@@ -20540,7 +20547,14 @@ MonoBehaviour:
       - _xy
     - name: _xy
       animation_id: _xy
-      damage: 7
+      base_damage:
+        name: Attack_Damage
+        base_value: 0.7
+        current_value: 0
+      base_range:
+        name: Attack_Range
+        base_value: 1
+        current_value: 0
       startDamageTime: 0
       endDamageTime: 1
       input: y
@@ -20548,14 +20562,28 @@ MonoBehaviour:
       - _xyx
     - name: _xyx
       animation_id: _xyx
-      damage: 10
+      base_damage:
+        name: Attack_Damage
+        base_value: 1
+        current_value: 0
+      base_range:
+        name: Attack_Range
+        base_value: 1
+        current_value: 0
       startDamageTime: 0
       endDamageTime: 1
       input: x
       nextAttacks: []
     - name: _
       animation_id: _
-      damage: 0
+      base_damage:
+        name: 
+        base_value: 0
+        current_value: 0
+      base_range:
+        name: 
+        base_value: 0
+        current_value: 0
       startDamageTime: 0
       endDamageTime: 0
       input: 
@@ -20564,19 +20592,34 @@ MonoBehaviour:
       - _y
     - name: _y
       animation_id: _y
-      damage: 7
+      base_damage:
+        name: 
+        base_value: 0
+        current_value: 0
+      base_range:
+        name: 
+        base_value: 0
+        current_value: 0
       startDamageTime: 0
       endDamageTime: 1
       input: y
       nextAttacks: []
     - name: _xx
       animation_id: _xx
-      damage: 6
+      base_damage:
+        name: 
+        base_value: 0
+        current_value: 0
+      base_range:
+        name: 
+        base_value: 0
+        current_value: 0
       startDamageTime: 0
       endDamageTime: 1
       input: x
       nextAttacks: []
   extraInputWindow: 0.3
+  lastAttackFinishTime: 0
 --- !u!95 &2014817515
 Animator:
   serializedVersion: 3
@@ -21698,6 +21741,96 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[1].base_damage.name
+      value: Attack_Damage
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[0].base_damage.name
+      value: Attack_Damage
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[2].base_damage.name
+      value: Attack_Damage
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[0].base_damage.base_value
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[1].base_damage.base_value
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[2].base_damage.base_value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[0].base_range.name
+      value: Attack_Range
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[2].base_range.name
+      value: Attack_Range
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[1].base_range.name
+      value: Attack_Range
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[0].base_range.base_value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[1].base_range.base_value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[2].base_range.base_value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[0].base_damage.current_value
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[0].base_range.current_value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[1].base_damage.current_value
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[2].base_damage.current_value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[1].base_range.current_value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[2].base_range.current_value
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee28053a8ee23874f91696565f5abd9c, type: 3}

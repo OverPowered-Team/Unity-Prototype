@@ -34,7 +34,6 @@ public class EnemyMutant : MonoBehaviour
 
     void Update()
     {
-
         if (attack_player1)
         {
             transform.LookAt(player1.transform);
