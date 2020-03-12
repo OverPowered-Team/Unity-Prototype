@@ -220,7 +220,7 @@ public class playerController : MonoBehaviour
     private void Move(Vector2 move)
     {
         //Get angle between cam and player
-        if (move != Vector2.zero || move == null)
+        if (move != Vector2.zero && move != null)
         {
             SendMovementParameters(move);
             Vector3 dst = transform.position + GetInputRelativeToCamera(move) * speed * Time.deltaTime;
