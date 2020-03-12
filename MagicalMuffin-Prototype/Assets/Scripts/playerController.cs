@@ -14,16 +14,8 @@ public enum PlayerState
 
 public class playerController : MonoBehaviour
 {
-    public float speed = 7.5f;
-    public float dashSpeed = 140f;
-    public float maxDashTime = 1.0f;
-    public float dashStopSpeed = 0.2f;
-
     public Stat strength;
 
-    public float fall_mult = 2.5f;
-    public float jump_mult = 2f;
-    private float currentDashTime;
     //Input
     [HideInInspector] public Gamepad gamepad = null;
     public int playerIdx = 0;
@@ -46,15 +38,9 @@ public class playerController : MonoBehaviour
     private PlayerInput _playerInput;
     public GeraltAttacks _playerCombos;
 
-    private Vector3 dashDir;
-    //INFO: You cannot change the direction in the middle of the dash
-    //It's quite fast so you won't almost notice
-
     public List<Effect> effects;
     public List<Relic> relics;
 
-    public int playerIdx = 0;
-    [HideInInspector] public PlayerState currState = PlayerState.IDLE;
 
     void Awake()
     {
@@ -143,7 +129,7 @@ public class playerController : MonoBehaviour
                     if (CheckDashInput())
                     {
                         StartDash(move);
-                        _playerCombo.CancelCombo();
+                        _playerCombos.CancelCombo();
                         currState = PlayerState.DASH;
                     }
                     break;
@@ -178,7 +164,7 @@ public class playerController : MonoBehaviour
                     }
                     if (CheckAttackInput())
                     {
-                        _playerCombo.UpdateAttack();
+                        _playerCombos.UpdateAttack();
                         currState = PlayerState.ATTACK;
                     }
                     if (CheckDashInput())
