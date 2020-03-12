@@ -60,7 +60,7 @@ public class EnemyRanger : MonoBehaviour
         {
             ArcherBehaviour(Geralt);
         }
-        else if(distance_geralt <= range && can_shot)
+        else if(distance_geralt <= range)
         {
             ArcherAttackBehaviour(Geralt);
         }

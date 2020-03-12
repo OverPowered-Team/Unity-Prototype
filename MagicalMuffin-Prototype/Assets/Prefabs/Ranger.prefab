@@ -115,6 +115,7 @@ MonoBehaviour:
   attack_yennefer: 0
   speed: 5
   range: 5
+  BulletPos: {fileID: 0}
 --- !u!95 &7933998713483055072
 Animator:
   serializedVersion: 3

@@ -45,7 +45,7 @@ public class EnemyMutant : MonoBehaviour
             attack_yennefer = false;
             PosJump = Geralt.transform.position;
         }
-        else
+        else if(distance_geralt >= distance_yennefer)
         {
             attack_yennefer = true;
             attack_geralt = false;
@@ -53,9 +53,7 @@ public class EnemyMutant : MonoBehaviour
         }
         constraintY = transform.position.y;
 
-         
-        can_jump = true;
-
+        
         // Constraint Rotation X and Y
         constraintRotation = new Vector2(transform.rotation.x, transform.rotation.z);
         
@@ -74,15 +72,9 @@ public class EnemyMutant : MonoBehaviour
             MutantBehaviour(Yennefer);
         }
 
-
         // Constrains
         transform.position = new Vector3(transform.position.x, constraintY, transform.position.z);
         transform.rotation = new Quaternion(constraintRotation.x, transform.rotation.y, constraintRotation.y, transform.rotation.w);
-
-
-
-
-        //playerX discance > Y Retarget(here enemy will compare player distances, the lowest one will win "attack_playerZ = true")
     }
 
     void MutantBehaviour(GameObject target)
