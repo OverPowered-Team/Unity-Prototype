@@ -157,6 +157,8 @@ public class EnemyGhoul : MonoBehaviour
         if (collision.transform.tag == "Geralt" || collision.transform.tag == "Yennefer")
         {
             GetHit();
+
+
             foreach (var item in EnemyManager.EnemiesAlive)
             {
                 if (item != null)

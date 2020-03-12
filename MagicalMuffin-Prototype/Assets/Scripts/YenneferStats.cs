@@ -42,4 +42,16 @@ public class YenneferStats : MonoBehaviour
 
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.tag == "MutantAttack")
+        {
+            GetHit(15);
+        }
+        if (other.transform.tag == "MutantChargedJump")
+        {
+            GetHit(30);
+        }
+    }
 }
