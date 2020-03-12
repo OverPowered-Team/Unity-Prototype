@@ -8352,6 +8352,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 843363947}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &847476527 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9151392741094168020, guid: ee28053a8ee23874f91696565f5abd9c,
+    type: 3}
+  m_PrefabInstance: {fileID: 9151392740893295266}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &857620706
 GameObject:
   m_ObjectHideFlags: 0
@@ -21725,7 +21731,7 @@ PrefabInstance:
         type: 3}
       propertyPath: sword_collider
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 847476527}
     - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
         type: 3}
       propertyPath: attacks.attacks.Array.data[5].name
@@ -21953,11 +21959,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
         type: 3}
-      propertyPath: attacks.attacks.Array.data[4].nextAttacks.Array.data[1]
-      value: xxy
-      objectReference: {fileID: 0}
-    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
-        type: 3}
       propertyPath: attacks.attacks.Array.data[12].name
       value: xxy
       objectReference: {fileID: 0}
@@ -21985,6 +21986,11 @@ PrefabInstance:
         type: 3}
       propertyPath: attacks.attacks.Array.data[12].nextAttacks.Array.data[0]
       value: xxyx
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: attacks.attacks.Array.data[4].nextAttacks.Array.data[1]
+      value: xxy
       objectReference: {fileID: 0}
     - target: {fileID: 9151392740301326278, guid: ee28053a8ee23874f91696565f5abd9c,
         type: 3}
@@ -22075,16 +22081,6 @@ PrefabInstance:
         type: 3}
       propertyPath: attacks.attacks.Array.data[15].nextAttacks.Array.data[0]
       value: yyyyy
-      objectReference: {fileID: 0}
-    - target: {fileID: 9151392740301326279, guid: ee28053a8ee23874f91696565f5abd9c,
-        type: 3}
-      propertyPath: maxDashTime
-      value: 0.12
-      objectReference: {fileID: 0}
-    - target: {fileID: 9151392740301326279, guid: ee28053a8ee23874f91696565f5abd9c,
-        type: 3}
-      propertyPath: dashSpeed
-      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 9151392741094168020, guid: ee28053a8ee23874f91696565f5abd9c,
         type: 3}
