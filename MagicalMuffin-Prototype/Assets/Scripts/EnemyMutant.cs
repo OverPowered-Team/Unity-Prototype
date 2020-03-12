@@ -22,11 +22,17 @@ public class EnemyMutant : MonoBehaviour
     bool can_jump;
     bool charged_jump;
     float timer_charging_jump;
+    float collider_attack_timer;
 
     Vector3 PosJump;
+    public BoxCollider ChargedJumpCollider;
+    public BoxCollider BasicAttackCollider;
 
     void Start()
     {
+        ChargedJumpCollider.enabled = false;
+        BasicAttackCollider.enabled = false;
+
         anim = GetComponentInChildren<Animator>();
         Geralt = GameObject.FindGameObjectWithTag("Geralt");
         Yennefer = GameObject.FindGameObjectWithTag("Yennefer");
@@ -66,7 +72,6 @@ public class EnemyMutant : MonoBehaviour
         if (attack_yennefer)
         {
             MutantBehaviour(Yennefer);
-          
         }
 
 
@@ -93,7 +98,7 @@ public class EnemyMutant : MonoBehaviour
 
             can_jump = true;
 
-            if (timer_charging_jump >= 2 /*&& charged_jump*/)
+            if (timer_charging_jump >= 2)
             {
                 timer_charging_jump = 0;
                 PosJump = target.transform.position;
@@ -116,9 +121,19 @@ public class EnemyMutant : MonoBehaviour
             {
                 anim.SetBool("AttackInRange", true);
 
+
+                float timer = Time.time - collider_attack_timer;
+
                 if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
                 {
+                    BasicAttackCollider.enabled = false;
                     LerpRotation(target);
+                    collider_attack_timer = Time.time;
+                }
+                else if (timer > anim.GetCurrentAnimatorStateInfo(0).length/2.5f && anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+                {
+                    collider_attack_timer = Time.time;
+                    BasicAttackCollider.enabled = true;
                 }
             }
             else
@@ -140,6 +155,7 @@ public class EnemyMutant : MonoBehaviour
         if(can_jump && charged_jump)
         {
             transform.position = Vector3.MoveTowards(transform.position, PosJump, speed *2* Time.deltaTime);
+            ChargedJumpCollider.enabled = true;
 
             float distance_PosJump = Mathf.Sqrt(Mathf.Pow((PosJump.x - transform.position.x), 2) + Mathf.Pow((PosJump.z - transform.position.z), 2));
             if (distance_PosJump <= 1)
@@ -147,6 +163,7 @@ public class EnemyMutant : MonoBehaviour
                 can_jump = false;
                 charged_jump = false;
                 anim.SetBool("JumpInRange", false);
+                ChargedJumpCollider.enabled = false;
 
             }
         }

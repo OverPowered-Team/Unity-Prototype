@@ -10,6 +10,8 @@ TagManager:
   - Ghoul
   - Yennefer
   - Geralt
+  - MutantChargedJump
+  - MutantAttack
   layers:
   - Default
   - TransparentFX

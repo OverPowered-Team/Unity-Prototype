@@ -32,13 +32,25 @@ public class GeraltStats : MonoBehaviour
         StartCoroutine("RestLife", value);
     }
 
+
     IEnumerator RestLife(int value)
     {
         for (int i = 0; i < value; i++)
         {
             yield return new WaitForSeconds(0.02f);
             hp_value --;
+        }
+    }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.transform.tag == "MutantChargedJump")
+        {
+            GetHit(30);
+        }
+        if (collision.transform.tag == "MutantAttack")
+        {
+            GetHit(15);
         }
     }
 }
