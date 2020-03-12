@@ -8,14 +8,14 @@ public class EnemyGhoul : MonoBehaviour
     //------------------------------------
     static public int ghoul_damge = 5;
     //------------------------------------
-    public int forceKnockBack = 0; //Cere, este valor es la fuerza con el que se lanza al enemigo, 1 es en el sitio y 10 es muy lejos
+    public int forceKnockBack = 0; // Cere, este valor es la fuerza con el que se lanza al enemigo, 1 es en el sitio y 10 es muy lejos
 
 
     GameObject Geralt;
     GameObject Yennefer;
     bool attack_player1 = false;
     bool attack_player2 = false;
-    public float speed = 10;
+    public float speed = 10f;
     float constraintY = 0;
 
     Animator anim;
@@ -39,7 +39,7 @@ public class EnemyGhoul : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         BloodFXParticles.gameObject.SetActive(false);
 
-        //Decide Target
+        // Decide Target
         Geralt = GameObject.FindGameObjectWithTag("Geralt");
         Yennefer = GameObject.FindGameObjectWithTag("Yennefer");
         float distance_player1 = Mathf.Sqrt(Mathf.Pow((Geralt.transform.position.x - transform.position.x), 2) + Mathf.Pow((Geralt.transform.position.z - transform.position.z), 2));
@@ -67,7 +67,7 @@ public class EnemyGhoul : MonoBehaviour
         if (attack_player2)
             GhoulBehaviour(Yennefer);
 
-        //ConstraintY
+        // ConstraintY
         transform.position = new Vector3(transform.position.x, constraintY, transform.position.z);
     }
 
@@ -75,17 +75,12 @@ public class EnemyGhoul : MonoBehaviour
     {
         transform.LookAt(target.transform);
 
-        //Calculate distance
+        // Calculate distance
         float distance_target = Mathf.Sqrt(Mathf.Pow((target.transform.position.x - transform.position.x), 2) + Mathf.Pow((target.transform.position.z - transform.position.z), 2));
 
         if (distance_target <= attack_distance)
         {
             anim.SetBool("AttackInRange", true);
-            //if (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-            //{
-            //    do_damage = true;
-            //    Debug.Log("DO DAMGEEEEEEEE");
-            //}
 
             if (Time.time - startAttackTime > anim.GetCurrentAnimatorStateInfo(0).length && anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
             {
@@ -105,13 +100,13 @@ public class EnemyGhoul : MonoBehaviour
         }
         else
         {
-            //Walkaround Pathfinding
+            // Walkaround Pathfinding
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
             anim.SetBool("AttackInRange", false);
 
         }
 
-        //Gethit
+        // Gethit
         if (knockback)
         {
             if(knockback_timer >= 0.3f)
@@ -139,7 +134,7 @@ public class EnemyGhoul : MonoBehaviour
     void GetHit()
     {
         
-        life -= 10; //Change this for var "player attack value"
+        life -= 10; // Change this for var "player attack value"
         BloodFXParticles.gameObject.SetActive(true);
         BloodFXParticles.Play();
         BloodFXParticles.Emit(1);
