@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Effect
 {
+    public string name;
+
     public delegate void OnHit();
     public OnHit on_hit_delegate;
 

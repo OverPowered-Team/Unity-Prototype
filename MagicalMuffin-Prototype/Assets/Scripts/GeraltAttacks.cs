@@ -216,6 +216,19 @@ public class GeraltAttacks : MonoBehaviour
             }
         }
     }
+
+    public List<string> GetFinalAttacks()
+    {
+        List<string> final_attacks = new List<string>();
+
+        foreach (Attack attack in attacks.attacks)
+        {
+            if (IsLastAttack(attack))
+                final_attacks.Add(attack.name);
+        }
+
+        return final_attacks;
+    }
     //INFO: Repeatable 1 attack combos
     //- Unity doesn't let us play the same animation after one has finished
     //- If for example, _x didn't have a combo, and we were to press x after the animation has ended and it's in the inputWindowTime, it wouldn't play it again

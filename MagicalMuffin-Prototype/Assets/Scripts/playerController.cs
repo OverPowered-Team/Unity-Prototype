@@ -32,7 +32,7 @@ public class playerController : MonoBehaviour
     private Transform cam_tansform;
     private Animator _animator;
     private PlayerInput _playerInput;
-    private GeraltAttacks _playerCombos;
+    public GeraltAttacks _playerCombos;
 
     private Vector3 dashDir;
     //INFO: You cannot change the direction in the middle of the dash
@@ -65,21 +65,7 @@ public class playerController : MonoBehaviour
     }
 
     void Update()
-    {
-        if(gamepad.buttonSouth.wasPressedThisFrame)
-        {
-            Debug.Log("Adding effect");
-            //Testing
-            AttackEffect test_effect = new AttackEffect();
-            test_effect.SetAttackIdentifier("x");
-            test_effect.AddFlatModifer(0.1f, "Attack_Damage");
-            test_effect.AddFlatModifer(0.5f, "Attack_Range");
-            test_effect.on_hit_delegate = EffectFunctions.ApplyBurnOnHit;
-
-            AddEffect(test_effect);
-        }
-        
-
+    { 
         if ((gamepad != null || GetController()) && _animator != null)
         {
             Vector2 move = gamepad.leftStick.ReadValue();
@@ -277,11 +263,13 @@ public class playerController : MonoBehaviour
     {
         _animator.SetFloat("VelX", value.x);
         _animator.SetFloat("VelY", value.y);
-        Debug.Log(value);
+        //Debug.Log(value);
     }
 
     void AddEffect(Effect new_effect)
     {
+        Debug.Log("Adding effect" + new_effect.name);
+
         effects.Add(new_effect);
 
         //RecalculateStats(); 
@@ -290,6 +278,15 @@ public class playerController : MonoBehaviour
         {
             _playerCombos.OnAddAttackEffect(((AttackEffect)new_effect).GetAttackIdentifier());
         }
+    }
 
+    public void PickUpRelic(Relic new_relic)
+    {
+        Debug.Log("Picked up relic " + new_relic.relic_name + ": " + new_relic.description);
+        relics.Add(new_relic);
+        foreach (Effect effect in new_relic.effects)
+        {
+            AddEffect(effect);
+        }  
     }
 }
