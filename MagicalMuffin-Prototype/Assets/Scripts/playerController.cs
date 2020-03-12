@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
+using System.Collections.Generic;
 
 public enum PlayerState
 {
@@ -12,6 +14,16 @@ public enum PlayerState
 
 public class playerController : MonoBehaviour
 {
+    public float speed = 7.5f;
+    public float dashSpeed = 140f;
+    public float maxDashTime = 1.0f;
+    public float dashStopSpeed = 0.2f;
+
+    public Stat strength;
+
+    public float fall_mult = 2.5f;
+    public float jump_mult = 2f;
+    private float currentDashTime;
     //Input
     [HideInInspector] public Gamepad gamepad = null;
     public int playerIdx = 0;
@@ -32,12 +44,26 @@ public class playerController : MonoBehaviour
     private Transform cam_tansform;
     private Animator _animator;
     private PlayerInput _playerInput;
-    private GeraltAttacks _playerCombo;
+    public GeraltAttacks _playerCombos;
+
+    private Vector3 dashDir;
+    //INFO: You cannot change the direction in the middle of the dash
+    //It's quite fast so you won't almost notice
+
+    public List<Effect> effects;
+    public List<Relic> relics;
+
+    public int playerIdx = 0;
+    [HideInInspector] public PlayerState currState = PlayerState.IDLE;
 
     void Awake()
     {
         cam_tansform = Camera.main.transform;
-        _playerCombo = GetComponent<GeraltAttacks>();
+        _playerCombos = GetComponent<GeraltAttacks>();
+
+        effects = new List<Effect>();
+        relics = new List<Relic>();
+        strength.SetBaseStat(10);
     }
 
     void Start()
@@ -50,7 +76,7 @@ public class playerController : MonoBehaviour
     }
 
     void Update()
-    {
+    { 
         if ((gamepad != null || GetController()) && _animator != null)
         {
             Vector2 move = gamepad.leftStick.ReadValue();
@@ -66,8 +92,9 @@ public class playerController : MonoBehaviour
                     }
                     if (CheckAttackInput())
                     {
-                        _playerCombo.UpdateAttack();
+                        _playerCombos.UpdateAttack();
                         currState = PlayerState.ATTACK;
+                        _playerCombos.OnHit();
                     }
                     if (CheckDashInput())
                     {
@@ -87,7 +114,7 @@ public class playerController : MonoBehaviour
                     }
                     if (CheckAttackInput())
                     {
-                        _playerCombo.UpdateAttack();
+                        _playerCombos.UpdateAttack();
                         currState = PlayerState.ATTACK;
                     }
                     if (CheckDashInput())
@@ -112,7 +139,7 @@ public class playerController : MonoBehaviour
                     }
                     break;
                 case PlayerState.ATTACK:
-                    _playerCombo.UpdateAttack();
+                    _playerCombos.UpdateAttack();
                     if (CheckDashInput())
                     {
                         StartDash(move);
@@ -121,9 +148,9 @@ public class playerController : MonoBehaviour
                     }
                     break;
                 case PlayerState.ATTACK_RETURN:
-                    if (_playerCombo.lastAttackFinishTime + _playerCombo.extraInputWindow >= Time.time)
+                    if (_playerCombos.lastAttackFinishTime + _playerCombos.extraInputWindow >= Time.time)
                     {
-                        float remainingTransition = _playerCombo.extraInputWindow - (Time.time - _playerCombo.lastAttackFinishTime);
+                        float remainingTransition = _playerCombos.extraInputWindow - (Time.time - _playerCombos.lastAttackFinishTime);
                         if (move == Vector2.zero)
                         {
                             _animator.CrossFade("idle", remainingTransition);
@@ -248,7 +275,32 @@ public class playerController : MonoBehaviour
 
     private void SendMovementParameters(Vector2 value)
     {
-        _animator.SetFloat("VelX",value.x);
+        _animator.SetFloat("VelX", value.x);
         _animator.SetFloat("VelY", value.y);
+        //Debug.Log(value);
+    }
+
+    void AddEffect(Effect new_effect)
+    {
+        Debug.Log("Adding effect" + new_effect.name);
+
+        effects.Add(new_effect);
+
+        //RecalculateStats(); 
+
+        if (new_effect is AttackEffect)
+        {
+            _playerCombos.OnAddAttackEffect(((AttackEffect)new_effect).GetAttackIdentifier());
+        }
+    }
+
+    public void PickUpRelic(Relic new_relic)
+    {
+        Debug.Log("Picked up relic " + new_relic.relic_name + ": " + new_relic.description);
+        relics.Add(new_relic);
+        foreach (Effect effect in new_relic.effects)
+        {
+            AddEffect(effect);
+        }  
     }
 }
