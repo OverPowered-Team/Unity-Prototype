@@ -23,12 +23,18 @@ public class playerController : MonoBehaviour
     private PlayerInput _playerinput;
     private GeraltAttacks _playerCombos;
 
+    private List<Effect> effects;
+    private List<Relic> relics;
+
     public int playerIdx = 0;
 
     void Awake()
     {
         cam_tansform = Camera.main.transform;
         _playerCombos = GetComponent<GeraltAttacks>();
+
+        effects = new List<Effect>();
+        relics = new List<Relic>();
     }
 
     void Start()
