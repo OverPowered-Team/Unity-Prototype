@@ -24,11 +24,23 @@ public class playerController : MonoBehaviour
     public float fall_mult = 2.5f;
     public float jump_mult = 2f;
     private float currentDashTime;
+    //Input
     [HideInInspector] public Gamepad gamepad = null;
+    public int playerIdx = 0;
 
-    private float gravity = -9.8f;
-    private float jump_dist = -10;
-    private float count;
+    //FSM
+    [HideInInspector] public PlayerState currState = PlayerState.IDLE;
+
+    //Movement
+    public float speed;
+
+    //Dash
+    public float dashSpeed;
+    public float maxDashTime;
+    private float currentDashTime = 0f;
+    private Vector3 dashDir;
+
+    //Components
     private Transform cam_tansform;
     private Animator _animator;
     private PlayerInput _playerInput;
@@ -58,7 +70,6 @@ public class playerController : MonoBehaviour
     {
         _playerInput = GetComponent<PlayerInput>();
         _animator = GetComponent<Animator>();
-        count = jump_dist;
         currentDashTime = maxDashTime;
 
         GetController();
@@ -73,6 +84,12 @@ public class playerController : MonoBehaviour
             switch (currState)
             {
                 case PlayerState.IDLE:
+                    if (move != Vector2.zero)
+                    {
+                        Move(move);
+                        _animator.Play("Movement");
+                        currState = PlayerState.MOVE;
+                    }
                     if (CheckAttackInput())
                     {
                         _playerCombos.UpdateAttack();
@@ -81,13 +98,8 @@ public class playerController : MonoBehaviour
                     }
                     if (CheckDashInput())
                     {
-                        StartDash();
+                        StartDash(move);
                         currState = PlayerState.DASH;
-                    }
-                    if (move != Vector2.zero)
-                    {
-                        Move(move);
-                        currState = PlayerState.MOVE;
                     }
                     break;
                 case PlayerState.MOVE:
@@ -99,7 +111,6 @@ public class playerController : MonoBehaviour
                     else
                     {
                         Move(move);
-                        currState = PlayerState.MOVE;
                     }
                     if (CheckAttackInput())
                     {
@@ -108,7 +119,7 @@ public class playerController : MonoBehaviour
                     }
                     if (CheckDashInput())
                     {
-                        StartDash();
+                        StartDash(move);
                         currState = PlayerState.DASH;
                     }
                     break;
@@ -117,10 +128,12 @@ public class playerController : MonoBehaviour
                     {
                         if (move == Vector2.zero)
                         {
+                            _animator.Play("idle");
                             currState = PlayerState.IDLE;
                         }
                         else
                         {
+                            _animator.Play("Movement");
                             currState = PlayerState.MOVE;
                         }
                     }
@@ -129,8 +142,8 @@ public class playerController : MonoBehaviour
                     _playerCombos.UpdateAttack();
                     if (CheckDashInput())
                     {
-                        StartDash();
-                        _playerCombos.CancelCombo();
+                        StartDash(move);
+                        _playerCombo.CancelCombo();
                         currState = PlayerState.DASH;
                     }
                     break;
@@ -145,10 +158,12 @@ public class playerController : MonoBehaviour
                         else
                         {
                             _animator.CrossFade("Movement", remainingTransition);
+                            Move(move);
                         }
                     }
                     else
                     {
+                        Debug.Log("Finished transition");
                         if (move == Vector2.zero)
                         {
                             _animator.Play("idle");
@@ -157,18 +172,29 @@ public class playerController : MonoBehaviour
                         else
                         {
                             _animator.Play("Movement");
+                            Move(move);
                             currState = PlayerState.MOVE;
                         }
                     }
+                    if (CheckAttackInput())
+                    {
+                        _playerCombo.UpdateAttack();
+                        currState = PlayerState.ATTACK;
+                    }
+                    if (CheckDashInput())
+                    {
+                        StartDash(move);
+                        currState = PlayerState.DASH;
+                    }
                     break;
             }
-            SendMovementParameters(move);
+            //SendMovementParameters(move);
         }
     }
 
     private bool CheckDashInput()
     {
-        return gamepad.buttonEast.wasPressedThisFrame;
+        return gamepad.rightTrigger.wasPressedThisFrame;
     }
 
     private bool CheckAttackInput()
@@ -188,38 +214,47 @@ public class playerController : MonoBehaviour
         return false;
     }
 
-    float GetPosbyTime(float time)
+    private void StartDash(Vector2 move)
     {
-        return -0.5f * gravity * Mathf.Sqrt(time);
+        if (move == Vector2.zero)
+        {
+            dashDir = transform.forward;
+        }
+        else
+        {
+            dashDir = GetInputRelativeToCamera(move.normalized);
+        }
+        currentDashTime = 0.0f;
+        _animator.Play("dash");
     }
 
-    private void StartDash()
+    private Vector3 GetInputRelativeToCamera(Vector2 joystickInput)
     {
-        dashDir = transform.forward;
-        currentDashTime = 0.0f;
-        _animator.Play("_b");
-        //_animator.SetBool("roll", true);//TODO: Remove. Not needed since we force it to play
+        Vector2 cam_pos = new Vector2(cam_tansform.transform.position.x, cam_tansform.transform.position.z);
+        float temp = Vector2.Dot(cam_pos, joystickInput);
+        float cam_pos_mag = cam_pos.SqrMagnitude();
+        float dir_mag = joystickInput.SqrMagnitude();
+        float angle = Mathf.Acos(temp / (cam_pos_mag * dir_mag));
+
+        //Rotate the direction move of the joystick vector
+        return new Vector3(
+            joystickInput.x * Mathf.Cos(angle) - joystickInput.y * Mathf.Sin(angle),
+            0f,
+            joystickInput.x * Mathf.Sin(angle) + joystickInput.y * Mathf.Cos(angle));
     }
 
     private void Move(Vector2 move)
     {
         //Get angle between cam and player
-        if (move != Vector2.zero || move == null)
+        if (move != Vector2.zero && move != null)
         {
             SendMovementParameters(move);
-
-            Vector2 cam_pos = new Vector2(cam_tansform.transform.position.x, cam_tansform.transform.position.z);
-            float temp = Vector2.Dot(cam_pos, move);
-            float cam_pos_mag = cam_pos.SqrMagnitude();
-            float dir_mag = move.SqrMagnitude();
-            float angle = Mathf.Acos(temp / (cam_pos_mag * dir_mag));
-
-            //Rotate the direction move of the joystick vector
-            move = new Vector2(move.x * Mathf.Cos(angle) - move.y * Mathf.Sin(angle), move.x * Mathf.Sin(angle) + move.y * Mathf.Cos(angle));
-
-            Vector3 dst = new Vector3(transform.position.x + move.x * speed * Time.deltaTime, transform.position.y, transform.position.z + move.y * speed * Time.deltaTime);
-            transform.LookAt(dst, Vector3.up);
-            transform.position = dst;
+            Vector3 dst = transform.position + GetInputRelativeToCamera(move) * speed * Time.deltaTime;
+            if (!float.IsNaN(dst.x) && !float.IsNaN(dst.z))
+            {
+                transform.LookAt(dst, Vector3.up);
+                transform.position = dst;
+            }
         }
     }
 
@@ -228,34 +263,13 @@ public class playerController : MonoBehaviour
     {
         if (currentDashTime < maxDashTime)
         {
-            Vector3 currDash = dashDir * dashSpeed * Time.deltaTime;
-            transform.position += currDash;
-            currentDashTime += dashStopSpeed;
+            transform.position += dashDir * dashSpeed * Time.deltaTime;
+            currentDashTime += Time.deltaTime;
             return true;
         }
         else
         {
-            _animator.SetBool("roll", false);
             return false;
-        }
-    }
-
-    private void Jump()
-    {
-        if (gamepad.buttonSouth.wasPressedThisFrame && jump_dist == count)
-        {
-            jump_dist = -count;
-        }
-        if (jump_dist <= -count && jump_dist > 0f)
-        {
-
-            transform.position += Vector3.up;
-            jump_dist -= 1f;
-        }
-        else if (jump_dist <= 0f && jump_dist > count)
-        {
-            transform.position -= Vector3.up;
-            jump_dist -= 1f;
         }
     }
 

@@ -5,23 +5,24 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     float constrainY = 0;
-    float speed = 7;
+    public float speed = 7;
     EnemyRanger parentRanger;
     GameObject EnemyFolder;
+
     void Start()
     {
         EnemyFolder = GameObject.FindGameObjectWithTag("EnemyFolder");
         constrainY = transform.position.y;
         parentRanger = GetComponentInParent<EnemyRanger>();
 
-        if (parentRanger.attack_player1)
+        if (parentRanger.attack_geralt && parentRanger != null)
         {
-            transform.LookAt(GameObject.FindGameObjectWithTag("Player").transform);
+            transform.LookAt(GameObject.FindGameObjectWithTag("Geralt").transform);
             transform.SetParent(EnemyFolder.transform);
         }
-        if (parentRanger.attack_player2)
+        if (parentRanger.attack_yennefer && parentRanger != null)
         {
-            transform.LookAt(GameObject.FindGameObjectWithTag("Player2").transform);
+            transform.LookAt(GameObject.FindGameObjectWithTag("Yennefer").transform);
             transform.SetParent(EnemyFolder.transform);
         }
     }
@@ -30,5 +31,9 @@ public class Bullet : MonoBehaviour
     {
        
         transform.position += transform.forward * speed * Time.deltaTime;
+
+        transform.position = new Vector3(transform.position.x, constrainY, transform.position.z);
+
+        transform.rotation = new Quaternion(0, transform.rotation.y, transform.rotation.z, transform.rotation.w);
     }
 }

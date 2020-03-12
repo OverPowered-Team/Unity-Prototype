@@ -4,67 +4,193 @@ using UnityEngine;
 
 public class EnemyMutant : MonoBehaviour
 {
-    GameObject player1;
-    GameObject player2;
-    bool attack_player1 = false;
-    bool attack_player2 = false;
-    public float speed = 10;
+    GameObject Geralt;
+    GameObject Yennefer;
+    bool attack_geralt = false;
+    bool attack_yennefer = false;
+    public float speed = 10f;
+
     float constraintY = 0;
+    Vector2 constraintRotation;
+    public float attack_distance = 2f;
+
+    Animator anim;
+    bool attack_rotation;
+    float timer_attack_rotation;
+
+    public float chargedjump_distance = 12f;
+    bool can_jump;
+    bool charged_jump;
+    float timer_charging_jump;
+    float collider_attack_timer;
+
+    Vector3 PosJump;
+    public BoxCollider ChargedJumpCollider;
+    public BoxCollider BasicAttackCollider;
 
     void Start()
     {
-        player1 = GameObject.FindGameObjectWithTag("Player");
-        player2 = GameObject.FindGameObjectWithTag("Player2");
-        float distance_player1 = Mathf.Sqrt(Mathf.Pow((player1.transform.position.x - transform.position.x), 2) + Mathf.Pow((player1.transform.position.z - transform.position.z), 2));
-        float distance_player2 = Mathf.Sqrt(Mathf.Pow((player2.transform.position.x - transform.position.x), 2) + Mathf.Pow((player2.transform.position.z - transform.position.z), 2));
+        ChargedJumpCollider.enabled = false;
+        BasicAttackCollider.enabled = false;
 
-        if (distance_player1 < distance_player2)
+        anim = GetComponentInChildren<Animator>();
+        Geralt = GameObject.FindGameObjectWithTag("Geralt");
+        Yennefer = GameObject.FindGameObjectWithTag("Yennefer");
+        float distance_geralt = Mathf.Sqrt(Mathf.Pow((Geralt.transform.position.x - transform.position.x), 2) + Mathf.Pow((Geralt.transform.position.z - transform.position.z), 2));
+        float distance_yennefer = Mathf.Sqrt(Mathf.Pow((Yennefer.transform.position.x - transform.position.x), 2) + Mathf.Pow((Yennefer.transform.position.z - transform.position.z), 2));
+
+        if (distance_geralt < distance_yennefer)
         {
-            attack_player1 = true;
-            attack_player2 = false;
+            attack_geralt = true;
+            attack_yennefer = false;
+            PosJump = Geralt.transform.position;
         }
-        else
+        else if(distance_geralt >= distance_yennefer)
         {
-            attack_player2 = true;
-            attack_player1 = false;
+            attack_yennefer = true;
+            attack_geralt = false;
+            PosJump = Yennefer.transform.position;
         }
         constraintY = transform.position.y;
 
+        
+        // Constraint Rotation X and Y
+        constraintRotation = new Vector2(transform.rotation.x, transform.rotation.z);
+        
     }
 
     void Update()
     {
-        if (attack_player1)
-        {
-            transform.LookAt(player1.transform);
-            transform.position = Vector3.MoveTowards(transform.position, player1.transform.position, speed * Time.deltaTime);
-        }
-        if (attack_player2)
-        {
-            transform.LookAt(player2.transform);
-            transform.position = Vector3.MoveTowards(transform.position, player2.transform.position, speed * Time.deltaTime);
-        }
-        transform.position = new Vector3(transform.position.x, constraintY, transform.position.z);
 
-        //Todo: if playerX discance > Y Retarget(here enemy will compare player distances, the lowest one will win "attack_playerZ = true")
+        if (attack_geralt)
+        {
+            MutantBehaviour(Geralt);
+           
+        }
+        if (attack_yennefer)
+        {
+            MutantBehaviour(Yennefer);
+        }
+
+        // Constrains
+        transform.position = new Vector3(transform.position.x, constraintY, transform.position.z);
+        transform.rotation = new Quaternion(constraintRotation.x, transform.rotation.y, constraintRotation.y, transform.rotation.w);
     }
 
+    void MutantBehaviour(GameObject target)
+    {
+
+        // Calculate distance
+        float distance = Mathf.Sqrt(Mathf.Pow((target.transform.position.x - transform.position.x), 2) + Mathf.Pow((target.transform.position.z - transform.position.z), 2));
+
+        // Charged Jump 
+        if(distance >= chargedjump_distance)
+        {
+            //ReTarget();
+
+            can_jump = true;
+
+            if (timer_charging_jump >= 2)
+            {
+                timer_charging_jump = 0;
+                PosJump = target.transform.position;
+                charged_jump = true;
+            }
+            else
+            {
+                timer_charging_jump += Time.deltaTime;
+                //TODO Particles
+                anim.SetBool("JumpInRange", true);
+                LerpRotation(target);
+
+            }
+        }
+
+        // Attack and Movement
+        else if(!can_jump)
+        {
+            if (distance <= attack_distance)
+            {
+                anim.SetBool("AttackInRange", true);
+
+
+                float timer = Time.time - collider_attack_timer;
+
+                if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+                {
+                    BasicAttackCollider.enabled = false;
+                    LerpRotation(target);
+                    collider_attack_timer = Time.time;
+                }
+                else if (timer > anim.GetCurrentAnimatorStateInfo(0).length/2.5f && anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+                {
+                    collider_attack_timer = Time.time;
+                    BasicAttackCollider.enabled = true;
+                }
+            }
+            else
+            {
+                anim.SetBool("AttackInRange", false);
+
+                if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+                {
+                    LerpRotation(target);
+
+                    // Move Towards
+                    transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
+                }
+            }
+        }
+
+
+        // Mutant Ultra Jump
+        if(can_jump && charged_jump)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, PosJump, speed *2* Time.deltaTime);
+            ChargedJumpCollider.enabled = true;
+
+            float distance_PosJump = Mathf.Sqrt(Mathf.Pow((PosJump.x - transform.position.x), 2) + Mathf.Pow((PosJump.z - transform.position.z), 2));
+            if (distance_PosJump <= 1)
+            {
+                can_jump = false;
+                charged_jump = false;
+                anim.SetBool("JumpInRange", false);
+                ChargedJumpCollider.enabled = false;
+
+            }
+        }
+
+    }
+
+    void ReTarget()
+    {
+        attack_geralt = !attack_geralt;
+        attack_yennefer = !attack_yennefer;
+    }
+
+    void LerpRotation(GameObject target)
+    {
+        // Look at Lerp
+        Vector3 relativePos = target.transform.position - transform.position;
+        Quaternion toRotation = Quaternion.LookRotation(relativePos);
+        transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, 5 * Time.deltaTime);
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.tag == "Player" || collision.transform.tag == "Player2")
+        if (collision.transform.tag == "Geralt" || collision.transform.tag == "Yennefer")
         {
             foreach (var item in EnemyManager.EnemiesAlive)
             {
                 if (item != null)
                 {
-                    EnemyManager.EnemiesAlive.Remove(item);
+                   // EnemyManager.EnemiesAlive.Remove(item);
                     break;
                 }
 
             }
 
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
         }
     }
 }

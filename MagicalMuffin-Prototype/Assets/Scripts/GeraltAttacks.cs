@@ -11,7 +11,7 @@ public class GeraltAttacks : MonoBehaviour
     private List<Attack> startingCombos;
 
     private Attack currAttack = null;
-    private float lastInputTime = 0f;
+    private float lastAttackStartTime = 0f;
     [Tooltip("In seconds")]
     public float extraInputWindow;
     private string nextInput = "";
@@ -20,6 +20,8 @@ public class GeraltAttacks : MonoBehaviour
     [HideInInspector] public float lastAttackFinishTime;
 
     Dictionary<UnityEngine.InputSystem.Controls.ButtonControl, string> buttonString;
+
+    public GameObject sword_collider;
 
     private void Start()
     {
@@ -36,7 +38,7 @@ public class GeraltAttacks : MonoBehaviour
         startingCombos.Add(attacks.attacks.Find(attack => attack.name == "x"));
         startingCombos.Add(attacks.attacks.Find(attack => attack.name == "y"));
 
-        lastInputTime = Time.time;
+        lastAttackStartTime = Time.time;
     }
 
     float GetAnimatorStateSpeed(string name)
@@ -55,9 +57,9 @@ public class GeraltAttacks : MonoBehaviour
 
     private bool FinishedAttack()
     {
-        if (CurrAttack != null)
+        if (currAttack != null)
         {
-            return Time.time - lastInputTime >= GetAnimationClip(CurrAttack.animation_id).length / GetAnimatorStateSpeed(CurrAttack.name);
+            return Time.time - lastAttackStartTime >= GetAnimationClip(currAttack.animation_id).length / GetAnimatorStateSpeed(currAttack.name);
         }
         else
         {
@@ -70,12 +72,27 @@ public class GeraltAttacks : MonoBehaviour
         currAttack = null;
     }
 
+    private float GetAttackLength(Attack attack)
+    {
+        if (attack == null)
+        {
+            return 0f;
+        }
+        else
+        {
+            return GetAnimationClip(attack.animation_id).length / GetAnimatorStateSpeed(attack.name);
+        }
+    }
+
     public void UpdateAttack()
     {
-        if (lastAttackFinishTime - Time.time > extraInputWindow)
+        if (Time.time - (lastAttackStartTime + GetAttackLength(currAttack)) > extraInputWindow)
         {
-            CurrAttack = null;
+            Debug.Log("curr attack is null");
+            currAttack = null;
         }
+        ActDesactCollider(currAttack != null && Time.time > lastAttackStartTime + 0.02  && lastAttackStartTime + GetAttackLength(currAttack) - 0.02 > Time.time);
+        ResizeCollider(currAttack != null && IsLastAttack(currAttack));
 
         RegisterNewInput(_playerController.gamepad.buttonWest);
         RegisterNewInput(_playerController.gamepad.buttonNorth);
@@ -87,26 +104,25 @@ public class GeraltAttacks : MonoBehaviour
         //If the combo has finished
         if (FinishedAttack())
         {
+            lastAttackFinishTime = Time.time;
             if (nextInput != "")
             {
                 //INFO: Check if the input given matches any of the inputs of the next attacks
-                Attack nextAttack = FindNextAttack(CurrAttack, nextInput);
+                Attack nextAttack = FindNextAttack(currAttack, nextInput);
                 if (nextAttack != null)
                 {
-                    CurrAttack = nextAttack;
-                    lastInputTime = Time.time;
+                    currAttack = nextAttack;
                 }
                 else
                 {
-                    CurrAttack = attacks.attacks.Find(attack => attack.name == nextInput);
-                    lastInputTime = Time.time;
+                    currAttack = attacks.attacks.Find(attack => attack.name == nextInput);
                 }
+                anim.Play(currAttack.animation_id);
+                lastAttackStartTime = Time.time;
                 nextInput = "";
             }
             else
             {
-                lastAttackFinishTime = Time.time;
-
                 Vector2 move = _playerController.gamepad.leftStick.ReadValue();
                 if (move == Vector2.zero)
                 {
@@ -134,7 +150,7 @@ public class GeraltAttacks : MonoBehaviour
     {
         string attackName;
 
-        if (CurrAttack == null)
+        if (currAttack == null)
         {
             attackName = input;
         }
@@ -144,19 +160,6 @@ public class GeraltAttacks : MonoBehaviour
         }
 
         return attacks.attacks.Find(attack => attack.name == attackName);
-    }
-
-    public Attack CurrAttack
-    {
-        set
-        {
-            currAttack = value;
-            anim.Play(value.animation_id);
-        }
-        get
-        {
-            return currAttack;
-        }
     }
 
     private AnimationClip GetAnimationClip(string clipName)
@@ -228,6 +231,19 @@ public class GeraltAttacks : MonoBehaviour
         }
 
         return final_attacks;
+    }
+    private void ActDesactCollider(bool active)
+    {
+        sword_collider.SetActive(active);
+    }
+
+    private void ResizeCollider(bool last)
+    {
+        // Add in this first if the reliquie bool
+        if (last /*&& reliquie*/)
+            sword_collider.transform.localScale = new Vector3(0, 0, 25);
+        else
+            sword_collider.transform.localScale = new Vector3(0, 0, 19);
     }
     //INFO: Repeatable 1 attack combos
     //- Unity doesn't let us play the same animation after one has finished
