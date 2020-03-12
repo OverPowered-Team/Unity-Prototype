@@ -216,8 +216,8 @@ public class playerController : MonoBehaviour
             Vector3 dst = new Vector3(transform.position.x + move.x * speed * Time.deltaTime, transform.position.y, transform.position.z + move.y * speed * Time.deltaTime);
             transform.LookAt(dst, Vector3.up);
 
-            
-            transform.position = dst;
+            if (!float.IsNaN(dst.x) && !float.IsNaN(dst.y))
+                transform.position = dst;
         }
     }
 
