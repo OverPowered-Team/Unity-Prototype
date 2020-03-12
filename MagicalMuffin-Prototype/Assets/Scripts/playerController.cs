@@ -200,7 +200,7 @@ public class playerController : MonoBehaviour
     private void Move(Vector2 move)
     {
         //Get angle between cam and player
-        if (move != Vector2.zero || move == null)
+        if (move != Vector2.zero && move != null)
         {
             SendMovementParameters(move);
 
@@ -215,6 +215,8 @@ public class playerController : MonoBehaviour
             
             Vector3 dst = new Vector3(transform.position.x + move.x * speed * Time.deltaTime, transform.position.y, transform.position.z + move.y * speed * Time.deltaTime);
             transform.LookAt(dst, Vector3.up);
+
+            
             transform.position = dst;
         }
     }
