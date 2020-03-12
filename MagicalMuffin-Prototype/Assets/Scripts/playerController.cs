@@ -149,6 +149,12 @@ public class playerController : MonoBehaviour
                             currState = PlayerState.MOVE;
                         }
                     }
+                    if (CheckAttackInput())
+                    {
+                        _playerCombo.UpdateAttack();
+                        currState = PlayerState.ATTACK;
+                    }
+                    //TODO: Move if you're moving the joystick
                     //TODO: Can do dash in the middle of this
                     break;
             }
