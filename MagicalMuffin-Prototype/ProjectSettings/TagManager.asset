@@ -13,6 +13,8 @@ TagManager:
   - Geralt
   - Yennefer
   - Arrow
+  - GeraldHit
+  - YenneferHit
   layers:
   - Default
   - TransparentFX

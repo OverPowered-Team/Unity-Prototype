@@ -14,7 +14,7 @@ public enum Relic_Effect
    FIRE,
    POISON,
    EARTH,
-   HEALING
+   RANGE
 }
 public class RelicBehaviour: MonoBehaviour {
 
@@ -93,13 +93,13 @@ public class AttackRelic: Relic
                 case Relic_Effect.EARTH:
                     test_effect.AddFlatModifer(0.1f, "Attack_Damage");
                     break;
-                case Relic_Effect.HEALING:
+                case Relic_Effect.RANGE:
+                    test_effect.AddFlatModifer(1.5f, "Attack_Range");
                     break;
             }
 
             effects.Add(test_effect);
         }
-        //test_effect.AddFlatModifer(0.5f, "Attack_Range");
         //description = description.Replace("_combo_", attack_name);
 
         base.OnPickUp(player);

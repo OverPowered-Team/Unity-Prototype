@@ -245,9 +245,16 @@ public class GeraltAttacks : MonoBehaviour
     {
         if (attack != null)
         {
-            swordScaleCollider.transform.localScale = new Vector3(0, 0, attack.base_range.GetValue());
+            swordScaleCollider.transform.localScale = new Vector3(5, 5, attack.base_range.GetValue());
         }
     }
+
+    public Attack GetCurrentAttack()
+    {
+        return currAttack;
+    }
+
+
     //INFO: Repeatable 1 attack combos
     //- Unity doesn't let us play the same animation after one has finished
     //- If for example, _x didn't have a combo, and we were to press x after the animation has ended and it's in the inputWindowTime, it wouldn't play it again

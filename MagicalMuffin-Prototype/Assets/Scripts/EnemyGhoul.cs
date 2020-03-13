@@ -20,7 +20,7 @@ public class EnemyGhoul : MonoBehaviour
 
     Animator anim;
     public float attack_distance = 2;
-    public int life = 30;
+    public float life = 30;
     Gamepad gamepad = null;
 
     float knockback_timer = 0;
@@ -136,10 +136,9 @@ public class EnemyGhoul : MonoBehaviour
         }
     }
 
-    void GetHit()
+    void GetHit(float damage)
     {
-        
-        life -= 10; // Change this for var "player attack value"
+        life -= damage; // Change this for var "player attack value"
         BloodFXParticles.gameObject.SetActive(true);
         BloodFXParticles.Play();
         BloodFXParticles.Emit(1);
@@ -152,11 +151,13 @@ public class EnemyGhoul : MonoBehaviour
     }
 
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collider)
     {
-        if (collision.transform.tag == "Geralt" || collision.transform.tag == "Yennefer")
+        if (collider.transform.tag == "GeraltHit" || collider.transform.tag == "YenneferHit")
         {
-            GetHit();
+            float damage_recived = collider.gameObject.GetComponentsInParent<playerController>()[0].GetStrength().GetValue() * collider.gameObject.GetComponentsInParent<GeraltAttacks>()[0].GetCurrentAttack().base_damage.GetValue();
+            collider.gameObject.GetComponentsInParent<GeraltAttacks>()[0].OnHit();
+            GetHit(damage_recived);
 
 
             foreach (var item in EnemyManager.EnemiesAlive)

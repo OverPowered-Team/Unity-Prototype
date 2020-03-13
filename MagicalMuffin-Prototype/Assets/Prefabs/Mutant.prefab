@@ -204,6 +204,8 @@ MonoBehaviour:
   chargedjump_distance: 12
   ChargedJumpCollider: {fileID: 8168073554367465718}
   BasicAttackCollider: {fileID: 2089775792304046615}
+  life: 50
+  BloodFXParticles: {fileID: 1906796737347012416}
 --- !u!54 &1794225963
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -284,6 +286,12 @@ PrefabInstance:
 --- !u!4 &1906796737362191420 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 443210, guid: 99daf499ec95fe34da0d946115e86c8d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1906796737362536310}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &1906796737347012416 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 19882038, guid: 99daf499ec95fe34da0d946115e86c8d,
     type: 3}
   m_PrefabInstance: {fileID: 1906796737362536310}
   m_PrefabAsset: {fileID: 0}

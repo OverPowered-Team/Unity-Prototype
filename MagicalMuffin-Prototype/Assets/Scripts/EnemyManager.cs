@@ -9,6 +9,9 @@ public class EnemyManager : MonoBehaviour
     public List<GameObject> Spawners = new List<GameObject>();
     public List<GameObject> ParticleSpawners = new List<GameObject>();
 
+    public GameObject[] relics_pool;
+    public Transform relic_spawn;
+
     public GameObject EnemyGhoul;
     public GameObject EnemyRange;
     public GameObject EnemyMiniBoss;
@@ -32,7 +35,7 @@ public class EnemyManager : MonoBehaviour
 
     void Update()
     {
-        if(next_round)
+        if (next_round)
         {
             StartCoroutine("Round");
             next_round = false;
@@ -40,12 +43,18 @@ public class EnemyManager : MonoBehaviour
 
         if(EnemiesAlive.Count <= 0 && finishedSpawning)
         {
+            SpawnRelic();
             round++;
             next_round = true;
             finishedSpawning = false;
         }
     }
 
+    void SpawnRelic()
+    {
+        int random_index = Random.Range(0, relics_pool.Length);
+        Instantiate(relics_pool[random_index], relic_spawn);
+    }
     void SpawnGhoul(GameObject spawnPosition)
     {
         Instantiate(EnemyGhoul, spawnPosition.transform.position, Quaternion.identity,EnemyFolder.transform);
