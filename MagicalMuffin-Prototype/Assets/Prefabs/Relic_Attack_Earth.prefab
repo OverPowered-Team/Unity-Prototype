@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 536222834359613670}
   - component: {fileID: 536222834359613669}
   - component: {fileID: 536222834359613668}
+  - component: {fileID: 3168142252943305236}
   m_Layer: 0
   m_Name: Relic_Attack_Earth
   m_TagString: Untagged
@@ -41,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 536222834359613675}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &536222834359613670
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -60,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a89243a767e3b904999a682c009d5940, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -110,3 +111,18 @@ MonoBehaviour:
   description: does double damage.
   relic_type: 1
   relic_effects: 02000000
+--- !u!114 &3168142252943305236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 536222834359613675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c2769be732af314799ef9152c0fc89a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  easeType: 4
+  targetPosition: 1
+  time: 1

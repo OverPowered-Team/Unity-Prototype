@@ -24,6 +24,8 @@ public class GeraltAttacks : MonoBehaviour
     public GameObject swordScaleCollider;//Used for scaling the collider
     public GameObject swordCollider;//Used for activating and desactivating
 
+    private AudioSource audioSource;
+
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -40,6 +42,8 @@ public class GeraltAttacks : MonoBehaviour
         startingCombos.Add(attacks.attacks.Find(attack => attack.name == "y"));
 
         lastAttackStartTime = Time.time;
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     float GetAnimatorStateSpeed(string name)
@@ -111,6 +115,7 @@ public class GeraltAttacks : MonoBehaviour
             lastAttackFinishTime = Time.time;
             if (nextInput != "")
             {
+                audioSource.Play();
                 //INFO: Check if the input given matches any of the inputs of the next attacks
                 Attack nextAttack = FindNextAttack(currAttack, nextInput);
                 if (nextAttack != null)
@@ -245,7 +250,7 @@ public class GeraltAttacks : MonoBehaviour
     {
         if (attack != null)
         {
-            swordScaleCollider.transform.localScale = new Vector3(5, 5, attack.base_range.GetValue());
+            swordScaleCollider.transform.localScale = new Vector3(1, 1, attack.base_range.GetValue());
         }
     }
 

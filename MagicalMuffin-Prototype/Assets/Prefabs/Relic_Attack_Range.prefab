@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2354537775873652534}
   - component: {fileID: 2354537775873652533}
   - component: {fileID: 2354537775873652532}
+  - component: {fileID: -1700116079122716120}
   m_Layer: 0
   m_Name: Relic_Attack_Range
   m_TagString: Untagged
@@ -41,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2354537775873652539}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &2354537775873652534
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -60,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a89243a767e3b904999a682c009d5940, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -110,3 +111,18 @@ MonoBehaviour:
   description: increases your range.
   relic_type: 1
   relic_effects: 03000000
+--- !u!114 &-1700116079122716120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2354537775873652539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c2769be732af314799ef9152c0fc89a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  easeType: 4
+  targetPosition: 1
+  time: 1

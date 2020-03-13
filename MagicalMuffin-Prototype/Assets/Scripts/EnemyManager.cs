@@ -26,7 +26,7 @@ public class EnemyManager : MonoBehaviour
     private bool startedTimeBetwenRounds = false;
     private float startTimeBetweenRounds;
 
-    private float spawnOffset;
+    private float spawnOffset = 5f;
 
     void Start()
     {
@@ -72,22 +72,19 @@ public class EnemyManager : MonoBehaviour
         Instantiate(relics_pool[random_index], relic_spawn);
     }
 
-    void SpawnGhoul(GameObject spawnPosition)
+    void SpawnGhoul(Vector3 spawnPosition)
     {
-        GameObject enemy = Instantiate(EnemyGhoul, spawnPosition.transform.position, Quaternion.identity,EnemyFolder.transform);
-        EnemiesAlive.Add(enemy);
+        EnemiesAlive.Add(Instantiate(EnemyGhoul, spawnPosition, Quaternion.identity, EnemyFolder.transform));
     }
 
-    void SpawnRange(GameObject spawnPosition)
+    void SpawnRange(Vector3 spawnPosition)
     {
-        GameObject enemy = Instantiate(EnemyRange, spawnPosition.transform.position, Quaternion.identity, EnemyFolder.transform);
-        EnemiesAlive.Add(enemy);
+        EnemiesAlive.Add(Instantiate(EnemyRange, spawnPosition, Quaternion.identity, EnemyFolder.transform));
     }
 
-    void SpawnMiniBoss(GameObject spawnPosition)
+    void SpawnMiniBoss(Vector3 spawnPosition)
     {
-        GameObject enemy = Instantiate(EnemyMiniBoss, spawnPosition.transform.position, Quaternion.identity, EnemyFolder.transform);
-        EnemiesAlive.Add(enemy);
+        EnemiesAlive.Add(Instantiate(EnemyMiniBoss, spawnPosition, Quaternion.identity, EnemyFolder.transform));
     }
 
     IEnumerator Round()
@@ -104,21 +101,21 @@ public class EnemyManager : MonoBehaviour
         int ghoulNum = (int)Mathf.Floor((float)round * 2f);
         for (int i = 0; i < ghoulNum; ++i)
         {
-            SpawnGhoul(randomSpawn[Random.Range(0, randomSpawn.Length)]);
+            SpawnGhoul(randomSpawn[Random.Range(0, randomSpawn.Length)].transform.position + new Vector3(Random.Range(-spawnOffset, spawnOffset), 0f, Random.Range(-spawnOffset, spawnOffset)));
         }
 
         //Number of ranged
         int rangedNum = (int)Mathf.Floor(((float)round - 1f) * 0.5f);
         for (int i = 0; i < rangedNum; ++i)
         {
-            SpawnRange(randomSpawn[Random.Range(0, randomSpawn.Length)]);
+            SpawnRange(randomSpawn[Random.Range(0, randomSpawn.Length)].transform.position + new Vector3(Random.Range(-spawnOffset, spawnOffset), 0f, Random.Range(-spawnOffset, spawnOffset)));
         }
 
         //Number of mutant
         int mutantNum = (int)Mathf.Floor((float)round * 0.20f);
         for (int i = 0; i < mutantNum; ++i)
         {
-            SpawnMiniBoss(randomSpawn[Random.Range(0, randomSpawn.Length)]);
+            SpawnMiniBoss(randomSpawn[Random.Range(0, randomSpawn.Length)].transform.position + new Vector3(Random.Range(-spawnOffset, spawnOffset), 0f, Random.Range(-spawnOffset, spawnOffset)));
         }
         yield return new WaitForSeconds(0.75f);
 
