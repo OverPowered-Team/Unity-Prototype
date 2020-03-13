@@ -3,7 +3,14 @@ guid: 427e67948c7be8e4bb347b0be3298db9
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - EnemyGhoul: {fileID: 8218190257962187325, guid: 0893f795c32446845966526138f2a9c0,
+      type: 3}
+  - EnemyRange: {fileID: 7364707301137190748, guid: 7514b442ceb909842b35f1845179e815,
+      type: 3}
+  - EnemyMiniBoss: {fileID: 8218190257962187325, guid: 5be879726cd60b046be49db3151e88ed,
+      type: 3}
+  - EnemyFolder: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
