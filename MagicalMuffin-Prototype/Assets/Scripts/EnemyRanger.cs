@@ -131,34 +131,34 @@ public class EnemyRanger : MonoBehaviour
 
     void GetHit(float damage)
     {
-        life -= damage; // Change this for var "player attack value"
+        life -= damage;
         BloodFXParticles.gameObject.SetActive(true);
         BloodFXParticles.Play();
         BloodFXParticles.Emit(1);
-        if (life <= 0)
-        {
-            gameObject.SetActive(false);
-        }
         anim.SetBool("GetHit", true);
         knockback = true;
+        if (life <= 0)
+        {
+            EnemyManager.EnemiesAlive.Remove(this.gameObject);
+            Destroy(this.gameObject);
+        }
     }
 
     private void OnTriggerEnter(Collider collider)
     {
         if (collider.transform.tag == "GeraltHit" || collider.transform.tag == "YenneferHit")
         {
-            float damage_recived = collider.gameObject.GetComponentsInParent<playerController>()[0].GetStrength().GetValue() * collider.gameObject.GetComponentsInParent<GeraltAttacks>()[0].GetCurrentAttack().base_damage.GetValue();
-            collider.gameObject.GetComponentsInParent<GeraltAttacks>()[0].OnHit();
+            playerController player = collider.gameObject.GetComponentInParent<playerController>();
+            GeraltAttacks playerCombos = collider.gameObject.GetComponentInParent<GeraltAttacks>();
+
+            float damage_recived = player.GetStrength().GetValue() * playerCombos.GetCurrentAttack().base_damage.GetValue();
+
+            playerCombos.OnHit();
             GetHit(damage_recived);
 
-
-            foreach (var item in EnemyManager.EnemiesAlive)
+            if (life <= 0)
             {
-                if (item != null)
-                {
-                    EnemyManager.EnemiesAlive.Remove(item);
-                    break;
-                }
+                EnemyManager.EnemiesAlive.Remove(this.gameObject);
             }
         }
         //if (collision.transform.tag == "Geralt")

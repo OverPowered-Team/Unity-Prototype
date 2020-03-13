@@ -41,6 +41,8 @@ public class EnemyManager : MonoBehaviour
             next_round = false;
         }
 
+        Debug.Log(EnemiesAlive.Count);
+
         if(EnemiesAlive.Count <= 0 && finishedSpawning)
         {
             SpawnRelic();
@@ -57,22 +59,20 @@ public class EnemyManager : MonoBehaviour
     }
     void SpawnGhoul(GameObject spawnPosition)
     {
-        Instantiate(EnemyGhoul, spawnPosition.transform.position, Quaternion.identity,EnemyFolder.transform);
-        EnemiesAlive.Add(EnemyGhoul);
+        GameObject enemy = Instantiate(EnemyGhoul, spawnPosition.transform.position, Quaternion.identity,EnemyFolder.transform);
+        EnemiesAlive.Add(enemy);
     }
 
     void SpawnRange(GameObject spawnPosition)
     {
-        Instantiate(EnemyRange, spawnPosition.transform.position, Quaternion.identity, EnemyFolder.transform);
-        EnemiesAlive.Add(EnemyRange);
-        EnemyRange.SetActive(true);
-
+        GameObject enemy = Instantiate(EnemyRange, spawnPosition.transform.position, Quaternion.identity, EnemyFolder.transform);
+        EnemiesAlive.Add(enemy);
     }
 
     void SpawnMiniBoss(GameObject spawnPosition)
     {
-        Instantiate(EnemyMiniBoss, spawnPosition.transform.position, Quaternion.identity, EnemyFolder.transform);
-        EnemiesAlive.Add(EnemyRange);
+        GameObject enemy = Instantiate(EnemyMiniBoss, spawnPosition.transform.position, Quaternion.identity, EnemyFolder.transform);
+        EnemiesAlive.Add(enemy);
     }
 
     IEnumerator Round()
