@@ -24,6 +24,7 @@ public class EnemyRanger : MonoBehaviour
     public float life = 50;
     bool knockback = false;
     public ParticleSystem BloodFXParticles;
+    public ParticleSystem FireFXParticles;
     private AudioSource audioSource;
 
     void Start()
@@ -148,6 +149,11 @@ public class EnemyRanger : MonoBehaviour
         }
     }
 
+    public void OnFire()
+    {
+        FireFXParticles.gameObject.SetActive(true);
+    }
+
     private void OnTriggerEnter(Collider collider)
     {
         if (collider.transform.tag == "GeraldHit" || collider.transform.tag == "YenneferHit")
@@ -157,7 +163,7 @@ public class EnemyRanger : MonoBehaviour
 
             float damage_recived = player.GetStrength().GetValue() * playerCombos.GetCurrentAttack().base_damage.GetValue();
 
-            playerCombos.OnHit();
+            playerCombos.OnHit(this.gameObject);
             GetHit(damage_recived);
 
             if (life <= 0)

@@ -319,13 +319,13 @@ public class GeraltAttacks : MonoBehaviour
         affected_attack.base_range.CalculateStat(_playerController.effects);
     }
 
-    public void OnHit()
+    public void OnHit(GameObject enemy)
     {
         foreach (AttackEffect effect in _playerController.effects)
         {
             if(effect.GetAttackIdentifier() == currAttack.name)
             {
-                effect.on_hit_delegate();
+                effect.on_hit_delegate(enemy);
                 break;
             }
         }

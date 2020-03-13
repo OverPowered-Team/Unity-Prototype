@@ -33,8 +33,8 @@ public class EnemyGhoul : MonoBehaviour
     Vector3 KickInFront;
     private AudioSource audioSource;
 
-
     public ParticleSystem BloodFXParticles;
+    public ParticleSystem FireFXParticles;
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -154,6 +154,11 @@ public class EnemyGhoul : MonoBehaviour
         }
     }
 
+    public void OnFire()
+    {
+        FireFXParticles.gameObject.SetActive(true);
+    }
+
 
     private void OnTriggerEnter(Collider collider)
     {
@@ -164,7 +169,7 @@ public class EnemyGhoul : MonoBehaviour
 
             float damage_recived = player.GetStrength().GetValue() * playerCombos.GetCurrentAttack().base_damage.GetValue();
 
-            playerCombos.OnHit();
+            playerCombos.OnHit(gameObject);
             GetHit(damage_recived);
         }
         //if (collision.transform.tag == "Geralt")

@@ -6,7 +6,7 @@ public class Effect
 {
     public string name;
 
-    public delegate void OnHit();
+    public delegate void OnHit(GameObject enemy);
     public OnHit on_hit_delegate;
 
     List<Modifier> additive_modifiers;

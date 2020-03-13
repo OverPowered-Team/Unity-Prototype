@@ -82,7 +82,6 @@ public class playerController : MonoBehaviour
                     {
                         _playerCombos.UpdateAttack();
                         currState = PlayerState.ATTACK;
-                        _playerCombos.OnHit();
                     }
                     if (CheckDashInput())
                     {
