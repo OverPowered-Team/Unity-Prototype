@@ -21,10 +21,16 @@ public class GeraltAttacks : MonoBehaviour
 
     Dictionary<UnityEngine.InputSystem.Controls.ButtonControl, string> buttonString;
 
+    public GameObject particleScale;
     public GameObject swordScaleCollider;//Used for scaling the collider
     public GameObject swordCollider;//Used for activating and desactivating
 
     private AudioSource audioSource;
+
+    public GameObject horizontalLayoutPrefab;
+    public GameObject combosPanel;
+    public GameObject currentComboUI;
+    public GameObject[] button_images;
 
     private void Start()
     {
@@ -44,6 +50,30 @@ public class GeraltAttacks : MonoBehaviour
         lastAttackStartTime = Time.time;
 
         audioSource = GetComponent<AudioSource>();
+
+        CreateCombosUI();
+    }
+
+    void CreateCombosUI()
+    {
+        //Find the last attacks
+        List<string> attack_pool = GetFinalAttacks();
+        foreach (string attack in attack_pool)
+        {
+            GameObject comboUI = Instantiate(horizontalLayoutPrefab, combosPanel.transform);
+            foreach (char attackButton in attack)
+            {
+                GameObject new_button;
+                if (attackButton == 'x')
+                {
+                    new_button = Instantiate(button_images[0], comboUI.transform);
+                }
+                else if (attackButton == 'y')
+                {
+                    new_button = Instantiate(button_images[1], comboUI.transform);
+                }
+            }
+        }
     }
 
     float GetAnimatorStateSpeed(string name)
@@ -151,6 +181,44 @@ public class GeraltAttacks : MonoBehaviour
         if (button.wasPressedThisFrame)
         {
             nextInput = buttonString[button];
+            UpdateCurrentComboUI();
+        }
+    }
+
+    private void UpdateCurrentComboUI()
+    {
+        foreach (Transform child in currentComboUI.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        Attack nextAttack = FindNextAttack(currAttack, nextInput);
+        if (nextAttack == null)
+        {
+            //Simply show the 1 button
+            if (nextInput[0] == 'x')
+            {
+                Instantiate(button_images[0], currentComboUI.transform);
+            }
+            else if (nextInput[0] == 'y')
+            {
+                Instantiate(button_images[1], currentComboUI.transform);
+            }
+        }
+        else
+        {
+            //Show the full combo that you're going to do
+            foreach (char attackButton in nextAttack.name)
+            {
+                if (attackButton == 'x')
+                {
+                    Instantiate(button_images[0], currentComboUI.transform);
+                }
+                else if (attackButton == 'y')
+                {
+                    Instantiate(button_images[1], currentComboUI.transform);
+                }
+            }
         }
     }
 
@@ -250,7 +318,8 @@ public class GeraltAttacks : MonoBehaviour
     {
         if (attack != null)
         {
-            swordScaleCollider.transform.localScale = new Vector3(1, 1, attack.base_range.GetValue());
+            swordScaleCollider.transform.localScale = new Vector3(1f, 1f, attack.base_range.GetValue());
+            particleScale.transform.localScale = new Vector3(1f, 1f, attack.base_range.GetValue() + 3);//INFO: + 3 to place the particle on the tip of the sword
         }
     }
 

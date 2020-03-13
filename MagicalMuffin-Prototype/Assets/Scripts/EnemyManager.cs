@@ -49,17 +49,16 @@ public class EnemyManager : MonoBehaviour
 
         Debug.Log(EnemiesAlive.Count);
 
-        if (EnemiesAlive.Count <= 0 && finishedSpawning)
+        if (EnemiesAlive.Count <= 0 && finishedSpawning && startedTimeBetwenRounds == false)
         {
             startedTimeBetwenRounds = true;
             startTimeBetweenRounds = Time.time;
+            SpawnRelic();
         }
 
-        if (startedTimeBetwenRounds && Time.time - startTimeBetweenRounds < timeBetweenRounds)
+        if (startedTimeBetwenRounds && Time.time - startTimeBetweenRounds > timeBetweenRounds)
         {
             startedTimeBetwenRounds = false;
-
-            SpawnRelic();
             round++;
             next_round = true;
             finishedSpawning = false;

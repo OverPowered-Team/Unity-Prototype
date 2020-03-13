@@ -36,11 +36,13 @@ public class playerController : MonoBehaviour
     private Transform cam_tansform;
     private Animator _animator;
     private PlayerInput _playerInput;
-    public GeraltAttacks _playerCombos;
+    [HideInInspector] public GeraltAttacks _playerCombos;
 
     public List<Effect> effects;
     public List<Relic> relics;
 
+    public GameObject hpUI;
+    public GameObject combosUI;
 
     void Awake()
     {
@@ -176,6 +178,22 @@ public class playerController : MonoBehaviour
                     break;
             }
             //SendMovementParameters(move);
+
+            UIControls();
+        }
+    }
+
+    private void UIControls()
+    {
+        if (gamepad.dpad.right.wasPressedThisFrame)
+        {
+            hpUI.SetActive(false);
+            combosUI.SetActive(true);
+        }
+        if (gamepad.dpad.left.wasPressedThisFrame)
+        {
+            hpUI.SetActive(true);
+            combosUI.SetActive(false);
         }
     }
 

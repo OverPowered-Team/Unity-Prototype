@@ -219,8 +219,8 @@ MonoBehaviour:
         current_value: 0.5
       base_range:
         name: Attack_Range
-        base_value: 13
-        current_value: 13
+        base_value: 10
+        current_value: 10
       startDamageTime: 0
       endDamageTime: 1
       input: x
@@ -235,8 +235,8 @@ MonoBehaviour:
         current_value: 0.7
       base_range:
         name: Attack_Range
-        base_value: 13
-        current_value: 13
+        base_value: 10
+        current_value: 10
       startDamageTime: 0
       endDamageTime: 1
       input: y
@@ -250,8 +250,8 @@ MonoBehaviour:
         current_value: 1
       base_range:
         name: Attack_Range
-        base_value: 15
-        current_value: 15
+        base_value: 12.5
+        current_value: 12.5
       startDamageTime: 0
       endDamageTime: 1
       input: x
@@ -264,8 +264,8 @@ MonoBehaviour:
         current_value: 0.7
       base_range:
         name: Attack_Range
-        base_value: 13
-        current_value: 13
+        base_value: 10
+        current_value: 10
       startDamageTime: 0
       endDamageTime: 1
       input: y
@@ -279,8 +279,8 @@ MonoBehaviour:
         current_value: 0.5
       base_range:
         name: Attack_Range
-        base_value: 13
-        current_value: 13
+        base_value: 10
+        current_value: 10
       startDamageTime: 0
       endDamageTime: 1
       input: x
@@ -295,8 +295,8 @@ MonoBehaviour:
         current_value: 0.6
       base_range:
         name: Attack_Range
-        base_value: 13
-        current_value: 13
+        base_value: 10
+        current_value: 10
       startDamageTime: 0
       endDamageTime: 1
       input: x
@@ -311,8 +311,8 @@ MonoBehaviour:
         current_value: 0.7
       base_range:
         name: Attack_Range
-        base_value: 13
-        current_value: 13
+        base_value: 10
+        current_value: 10
       startDamageTime: 0
       endDamageTime: 1
       input: x
@@ -326,8 +326,8 @@ MonoBehaviour:
         current_value: 1
       base_range:
         name: Attack_Range
-        base_value: 15
-        current_value: 15
+        base_value: 12.5
+        current_value: 12.5
       startDamageTime: 0
       endDamageTime: 1
       input: x
@@ -340,8 +340,8 @@ MonoBehaviour:
         current_value: 0.7
       base_range:
         name: Attack_Range
-        base_value: 13
-        current_value: 13
+        base_value: 10
+        current_value: 10
       startDamageTime: 0
       endDamageTime: 1
       input: y
@@ -355,8 +355,8 @@ MonoBehaviour:
         current_value: 1.4
       base_range:
         name: Attack_Range
-        base_value: 15
-        current_value: 15
+        base_value: 12.5
+        current_value: 12.5
       startDamageTime: 0
       endDamageTime: 1
       input: x
@@ -369,8 +369,8 @@ MonoBehaviour:
         current_value: 0.7
       base_range:
         name: Attack_Range
-        base_value: 13
-        current_value: 13
+        base_value: 10
+        current_value: 10
       startDamageTime: 0
       endDamageTime: 1
       input: y
@@ -384,8 +384,8 @@ MonoBehaviour:
         current_value: 1.4
       base_range:
         name: Attack_Range
-        base_value: 15
-        current_value: 15
+        base_value: 12.5
+        current_value: 12.5
       startDamageTime: 0
       endDamageTime: 1
       input: y
@@ -398,8 +398,8 @@ MonoBehaviour:
         current_value: 0.7
       base_range:
         name: Attack_Range
-        base_value: 13
-        current_value: 13
+        base_value: 10
+        current_value: 10
       startDamageTime: 0
       endDamageTime: 1
       input: y
@@ -413,8 +413,8 @@ MonoBehaviour:
         current_value: 0.7
       base_range:
         name: Attack_Range
-        base_value: 13
-        current_value: 13
+        base_value: 10
+        current_value: 10
       startDamageTime: 0
       endDamageTime: 1
       input: y
@@ -428,8 +428,8 @@ MonoBehaviour:
         current_value: 0.7
       base_range:
         name: Attack_Range
-        base_value: 13
-        current_value: 13
+        base_value: 10
+        current_value: 10
       startDamageTime: 0
       endDamageTime: 1
       input: y
@@ -443,8 +443,8 @@ MonoBehaviour:
         current_value: 1.4
       base_range:
         name: Attack_Range
-        base_value: 15
-        current_value: 15
+        base_value: 12.5
+        current_value: 12.5
       startDamageTime: 0
       endDamageTime: 1
       input: y
@@ -452,6 +452,7 @@ MonoBehaviour:
       - yyyyy
   extraInputWindow: 0.3
   lastAttackFinishTime: 0
+  particleScale: {fileID: 9151392741094168020}
   swordScaleCollider: {fileID: 7113349380562616842}
   swordCollider: {fileID: 4322151683845698857}
 --- !u!114 &9151392740301326279
