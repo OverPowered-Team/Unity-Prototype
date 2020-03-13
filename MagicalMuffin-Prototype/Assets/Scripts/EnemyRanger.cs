@@ -146,7 +146,7 @@ public class EnemyRanger : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.transform.tag == "GeraltHit" || collider.transform.tag == "YenneferHit")
+        if (collider.transform.tag == "GeraldHit" || collider.transform.tag == "YenneferHit")
         {
             playerController player = collider.gameObject.GetComponentInParent<playerController>();
             GeraltAttacks playerCombos = collider.gameObject.GetComponentInParent<GeraltAttacks>();

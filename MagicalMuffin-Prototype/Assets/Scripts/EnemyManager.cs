@@ -22,6 +22,12 @@ public class EnemyManager : MonoBehaviour
     bool finishedSpawning;
     int round = 0;
 
+    public float timeBetweenRounds;
+    private bool startedTimeBetwenRounds = false;
+    private float startTimeBetweenRounds;
+
+    private float spawnOffset;
+
     void Start()
     {
         round = 1;
@@ -43,8 +49,16 @@ public class EnemyManager : MonoBehaviour
 
         Debug.Log(EnemiesAlive.Count);
 
-        if(EnemiesAlive.Count <= 0 && finishedSpawning)
+        if (EnemiesAlive.Count <= 0 && finishedSpawning)
         {
+            startedTimeBetwenRounds = true;
+            startTimeBetweenRounds = Time.time;
+        }
+
+        if (startedTimeBetwenRounds && Time.time - startTimeBetweenRounds < timeBetweenRounds)
+        {
+            startedTimeBetwenRounds = false;
+
             SpawnRelic();
             round++;
             next_round = true;
@@ -57,6 +71,7 @@ public class EnemyManager : MonoBehaviour
         int random_index = Random.Range(0, relics_pool.Length);
         Instantiate(relics_pool[random_index], relic_spawn);
     }
+
     void SpawnGhoul(GameObject spawnPosition)
     {
         GameObject enemy = Instantiate(EnemyGhoul, spawnPosition.transform.position, Quaternion.identity,EnemyFolder.transform);

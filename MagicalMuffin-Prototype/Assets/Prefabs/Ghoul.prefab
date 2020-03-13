@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8218190257962187324}
   - component: {fileID: 8218190257962187320}
-  - component: {fileID: 8218190257962187322}
   - component: {fileID: 8218190257962187323}
   - component: {fileID: 4717637874808829394}
+  - component: {fileID: 2249711871734397663}
   m_Layer: 0
   m_Name: Ghoul
   m_TagString: Ghoul
@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8218190257962187325}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -18.8, y: 0.5, z: -1.66}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7241400819200209252}
@@ -44,19 +44,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8218190257962187325}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &8218190257962187322
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8218190257962187325}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8218190257962187323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,8 +75,22 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!136 &2249711871734397663
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8218190257962187325}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.75
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!1001 &5187839517237718194
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -107,7 +108,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 443210, guid: 99daf499ec95fe34da0d946115e86c8d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 443210, guid: 99daf499ec95fe34da0d946115e86c8d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1159,7 +1160,7 @@ PrefabInstance:
     - target: {fileID: 3534972736282846330, guid: f7ffa8ca25cc19848b597582481cd42c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.609
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3534972736282846330, guid: f7ffa8ca25cc19848b597582481cd42c,
         type: 3}
