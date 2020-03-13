@@ -31,9 +31,11 @@ public class EnemyMutant : MonoBehaviour
     public float life = 50;
     bool knockback = false;
     public ParticleSystem BloodFXParticles;
+    private AudioSource audioSource;
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         BloodFXParticles.gameObject.SetActive(false);
 
         ChargedJumpCollider.enabled = false;
@@ -190,6 +192,7 @@ public class EnemyMutant : MonoBehaviour
         BloodFXParticles.Emit(1);
         anim.SetBool("GetHit", true);
         knockback = true;
+        audioSource.Play();
         if (life <= 0)
         {
             EnemyManager.EnemiesAlive.Remove(this.gameObject);

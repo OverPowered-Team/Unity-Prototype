@@ -32,8 +32,30 @@ public class GeraltAttacks : MonoBehaviour
     public GameObject currentComboUI;
     public GameObject[] button_images;
 
+    //The most hardcoded thing ever because Unity doen't let us acess the state's in runtime...
+    //We pasted here the exact values found in the Animator window
+    private Dictionary<string, float> animationSpeeds;
+
     private void Start()
     {
+        animationSpeeds = new Dictionary<string, float>();
+        animationSpeeds["x"] = 2f;
+        animationSpeeds["xx"] = 2f;
+        animationSpeeds["xxy"] = 2f;
+        animationSpeeds["xxyx"] = 2f;
+        animationSpeeds["xxx"] = 2f;
+        animationSpeeds["xxxx"] = 2f;
+        animationSpeeds["xxxxx"] = 4f;
+        animationSpeeds["xxxy"] = 2f;
+        animationSpeeds["xxxyy"] = 2f;
+        animationSpeeds["xy"] = 3f;
+        animationSpeeds["xyx"] = 1.25f;
+        animationSpeeds["y"] = 2f;
+        animationSpeeds["yy"] = 2f;
+        animationSpeeds["yyy"] = 2f;
+        animationSpeeds["yyyy"] = 2f;
+        animationSpeeds["yyyyy"] = 1.5f;
+
         anim = GetComponent<Animator>();
         _playerController = GetComponent<playerController>();
         
@@ -78,16 +100,28 @@ public class GeraltAttacks : MonoBehaviour
 
     float GetAnimatorStateSpeed(string name)
     {
-        UnityEditor.Animations.AnimatorController ac = anim.runtimeAnimatorController as UnityEditor.Animations.AnimatorController;
-        UnityEditor.Animations.ChildAnimatorState[] states = ac.layers[0].stateMachine.states;
-        foreach (UnityEditor.Animations.ChildAnimatorState state in states)
+        //AnimatorOverrideController ac = anim.runtimeAnimatorController as AnimatorOverrideController;
+        //RuntimeAnimatorController ac = anim.runtimeAnimatorController as RuntimeAnimatorController;
+
+        //UnityEditor.Animations.AnimatorController ac = anim.runtimeAnimatorController as UnityEditor.Animations.AnimatorController;
+        //UnityEditor.Animations.ChildAnimatorState[] states = ac.layers[0].stateMachine.states;
+        //foreach (UnityEditor.Animations.ChildAnimatorState state in states)
+        //{
+        //    if (state.state.name == name)
+        //    {
+        //        return state.state.speed;
+        //    }
+        //}
+        //return 1f;
+
+        if (animationSpeeds.ContainsKey(name))
         {
-            if (state.state.name == name)
-            {
-                return state.state.speed;
-            }
+            return animationSpeeds[name];
         }
-        return 1f;
+        else
+        {
+            return 1f;
+        }
     }
 
     private bool FinishedAttack()
@@ -95,6 +129,7 @@ public class GeraltAttacks : MonoBehaviour
         if (currAttack != null)
         {
             return Time.time - lastAttackStartTime >= GetAnimationClip(currAttack.animation_id).length / GetAnimatorStateSpeed(currAttack.name);
+            //return Time.time - lastAttackStartTime >= GetAnimationClip(currAttack.animation_id).length / anim.GetCurrentAnimatorStateInfo(0).speed;
         }
         else
         {
@@ -123,7 +158,6 @@ public class GeraltAttacks : MonoBehaviour
     {
         if (Time.time - (lastAttackStartTime + GetAttackLength(currAttack)) > extraInputWindow)
         {
-            Debug.Log("curr attack is null");
             currAttack = null;
         }
         ActDesactCollider(

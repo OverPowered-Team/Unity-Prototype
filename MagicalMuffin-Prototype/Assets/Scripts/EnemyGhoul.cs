@@ -31,11 +31,13 @@ public class EnemyGhoul : MonoBehaviour
     Transform Kicker;
     bool kicked;
     Vector3 KickInFront;
+    private AudioSource audioSource;
 
 
     public ParticleSystem BloodFXParticles;
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         anim = GetComponentInChildren<Animator>();
         BloodFXParticles.gameObject.SetActive(false);
 
@@ -144,6 +146,7 @@ public class EnemyGhoul : MonoBehaviour
         BloodFXParticles.Emit(1);
         anim.SetBool("GetHit", true);
         knockback = true;
+        audioSource.Play();
         if (life <= 0)
         {
             EnemyManager.EnemiesAlive.Remove(this.gameObject);
@@ -154,10 +157,10 @@ public class EnemyGhoul : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.transform.tag == "GeraldHit" || collider.transform.tag == "YenneferHit")
+        if (collider.CompareTag("GeraldHit") || collider.CompareTag("YenneferHit"))
         {
-            playerController player = collider.gameObject.GetComponentInParent<playerController>();
-            GeraltAttacks playerCombos = collider.gameObject.GetComponentInParent<GeraltAttacks>();
+            playerController player = collider.transform.parent.GetComponentInParent<playerController>();
+            GeraltAttacks playerCombos = collider.transform.parent.GetComponentInParent<GeraltAttacks>();
 
             float damage_recived = player.GetStrength().GetValue() * playerCombos.GetCurrentAttack().base_damage.GetValue();
 

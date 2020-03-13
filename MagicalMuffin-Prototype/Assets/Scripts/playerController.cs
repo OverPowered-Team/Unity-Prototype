@@ -152,7 +152,6 @@ public class playerController : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log("Finished transition");
                         if (move == Vector2.zero)
                         {
                             _animator.Play("idle");
