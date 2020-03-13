@@ -247,8 +247,8 @@ MonoBehaviour:
         current_value: 1
       base_range:
         name: Attack_Range
-        base_value: 13
-        current_value: 13
+        base_value: 15
+        current_value: 15
       startDamageTime: 0
       endDamageTime: 1
       input: x
@@ -256,9 +256,9 @@ MonoBehaviour:
     - name: y
       animation_id: y
       base_damage:
-        name: 
-        base_value: 0
-        current_value: 0
+        name: Attack_Damage
+        base_value: 0.7
+        current_value: 0.7
       base_range:
         name: Attack_Range
         base_value: 13
@@ -271,9 +271,9 @@ MonoBehaviour:
     - name: xx
       animation_id: xx
       base_damage:
-        name: 
-        base_value: 0
-        current_value: 0
+        name: Attack_Damage
+        base_value: 0.5
+        current_value: 0.5
       base_range:
         name: Attack_Range
         base_value: 13
@@ -287,9 +287,9 @@ MonoBehaviour:
     - name: xxx
       animation_id: xxx
       base_damage:
-        name: 
-        base_value: 0
-        current_value: 0
+        name: Attack_Damage
+        base_value: 0.6
+        current_value: 0.6
       base_range:
         name: Attack_Range
         base_value: 13
@@ -303,9 +303,9 @@ MonoBehaviour:
     - name: xxxx
       animation_id: xxxx
       base_damage:
-        name: 
-        base_value: 0
-        current_value: 0
+        name: Attack_Damage
+        base_value: 0.7
+        current_value: 0.7
       base_range:
         name: Attack_Range
         base_value: 13
@@ -318,13 +318,13 @@ MonoBehaviour:
     - name: xxxxx
       animation_id: xxxxx
       base_damage:
-        name: 
-        base_value: 0
-        current_value: 0
+        name: Attack_Damage
+        base_value: 1
+        current_value: 1
       base_range:
         name: Attack_Range
-        base_value: 13
-        current_value: 13
+        base_value: 15
+        current_value: 15
       startDamageTime: 0
       endDamageTime: 1
       input: x
@@ -332,9 +332,9 @@ MonoBehaviour:
     - name: yy
       animation_id: yy
       base_damage:
-        name: 
-        base_value: 0
-        current_value: 0
+        name: Attack_Damage
+        base_value: 0.7
+        current_value: 0.7
       base_range:
         name: Attack_Range
         base_value: 13
@@ -347,13 +347,13 @@ MonoBehaviour:
     - name: xxyx
       animation_id: xxyx
       base_damage:
-        name: 
-        base_value: 0
-        current_value: 0
+        name: Attack_Damage
+        base_value: 1.4
+        current_value: 1.4
       base_range:
         name: Attack_Range
-        base_value: 13
-        current_value: 13
+        base_value: 15
+        current_value: 15
       startDamageTime: 0
       endDamageTime: 1
       input: x
@@ -361,9 +361,9 @@ MonoBehaviour:
     - name: xxxy
       animation_id: xxxy
       base_damage:
-        name: 
-        base_value: 0
-        current_value: 0
+        name: Attack_Damage
+        base_value: 0.7
+        current_value: 0.7
       base_range:
         name: Attack_Range
         base_value: 13
@@ -376,13 +376,13 @@ MonoBehaviour:
     - name: xxxyy
       animation_id: xxxyy
       base_damage:
-        name: 
-        base_value: 0
-        current_value: 0
+        name: Attack_Damage
+        base_value: 1.4
+        current_value: 1.4
       base_range:
         name: Attack_Range
-        base_value: 13
-        current_value: 13
+        base_value: 15
+        current_value: 15
       startDamageTime: 0
       endDamageTime: 1
       input: y
@@ -390,9 +390,9 @@ MonoBehaviour:
     - name: xxy
       animation_id: xxy
       base_damage:
-        name: 
-        base_value: 0
-        current_value: 0
+        name: Attack_Damage
+        base_value: 0.7
+        current_value: 0.7
       base_range:
         name: Attack_Range
         base_value: 13
@@ -405,9 +405,9 @@ MonoBehaviour:
     - name: yyy
       animation_id: yyy
       base_damage:
-        name: 
-        base_value: 0
-        current_value: 0
+        name: Attack_Damage
+        base_value: 0.7
+        current_value: 0.7
       base_range:
         name: Attack_Range
         base_value: 13
@@ -420,9 +420,9 @@ MonoBehaviour:
     - name: yyyy
       animation_id: yyyy
       base_damage:
-        name: 
-        base_value: 0
-        current_value: 0
+        name: Attack_Damage
+        base_value: 0.7
+        current_value: 0.7
       base_range:
         name: Attack_Range
         base_value: 13
@@ -435,13 +435,13 @@ MonoBehaviour:
     - name: yyyyy
       animation_id: yyyyy
       base_damage:
-        name: 
-        base_value: 0
-        current_value: 0
+        name: Attack_Damage
+        base_value: 1.4
+        current_value: 1.4
       base_range:
         name: Attack_Range
-        base_value: 13
-        current_value: 13
+        base_value: 15
+        current_value: 15
       startDamageTime: 0
       endDamageTime: 1
       input: y
