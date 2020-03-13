@@ -5277,6 +5277,11 @@ PrefabInstance:
       propertyPath: strength.current_value
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 9151392741850620155, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: m_TagString
+      value: YenneferHit
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 173451052375575744, guid: ee28053a8ee23874f91696565f5abd9c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ee28053a8ee23874f91696565f5abd9c, type: 3}
@@ -22112,6 +22117,11 @@ PrefabInstance:
         type: 3}
       propertyPath: strength.current_value
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151392741850620155, guid: ee28053a8ee23874f91696565f5abd9c,
+        type: 3}
+      propertyPath: m_TagString
+      value: GeraldHit
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee28053a8ee23874f91696565f5abd9c, type: 3}
