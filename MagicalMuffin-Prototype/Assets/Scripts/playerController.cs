@@ -303,4 +303,9 @@ public class playerController : MonoBehaviour
             AddEffect(effect);
         }  
     }
+
+    public Stat GetStrength()
+    {
+        return strength;
+    }
 }

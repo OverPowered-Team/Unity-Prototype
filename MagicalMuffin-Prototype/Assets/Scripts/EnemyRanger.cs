@@ -21,8 +21,14 @@ public class EnemyRanger : MonoBehaviour
     bool prepare_arrow;
     Vector2 constraintRotation;
 
+    public float life = 50;
+    bool knockback = false;
+    public ParticleSystem BloodFXParticles;
+
     void Start()
     {
+        BloodFXParticles.gameObject.SetActive(false);
+
         anim = GetComponentInChildren<Animator>();
 
         Geralt = GameObject.FindGameObjectWithTag("Geralt");
@@ -123,10 +129,29 @@ public class EnemyRanger : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    void GetHit(float damage)
     {
-        if (collision.transform.tag == "Geralt" || collision.transform.tag == "Yennefer")
+        life -= damage; // Change this for var "player attack value"
+        BloodFXParticles.gameObject.SetActive(true);
+        BloodFXParticles.Play();
+        BloodFXParticles.Emit(1);
+        if (life <= 0)
         {
+            gameObject.SetActive(false);
+        }
+        anim.SetBool("GetHit", true);
+        knockback = true;
+    }
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.transform.tag == "GeraltHit" || collider.transform.tag == "YenneferHit")
+        {
+            float damage_recived = collider.gameObject.GetComponentsInParent<playerController>()[0].GetStrength().GetValue() * collider.gameObject.GetComponentsInParent<GeraltAttacks>()[0].GetCurrentAttack().base_damage.GetValue();
+            collider.gameObject.GetComponentsInParent<GeraltAttacks>()[0].OnHit();
+            GetHit(damage_recived);
+
+
             foreach (var item in EnemyManager.EnemiesAlive)
             {
                 if (item != null)
@@ -134,12 +159,36 @@ public class EnemyRanger : MonoBehaviour
                     EnemyManager.EnemiesAlive.Remove(item);
                     break;
                 }
-
             }
-
-           gameObject.SetActive(false);
         }
+        //if (collision.transform.tag == "Geralt")
+        //    Kicker = Geralt.transform;
+        //if (collision.transform.tag == "Yennefer")
+        //{
+        //    Kicker = Yennefer.transform;
+        //    Debug.Log(Kicker.forward);
+        //}
+
+
     }
+
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.transform.tag == "Geralt" || collision.transform.tag == "Yennefer")
+    //    {
+    //        foreach (var item in EnemyManager.EnemiesAlive)
+    //        {
+    //            if (item != null)
+    //            {
+    //                EnemyManager.EnemiesAlive.Remove(item);
+    //                break;
+    //            }
+
+    //        }
+
+    //       gameObject.SetActive(false);
+    //    }
+    //}
 
 
     IEnumerator Shot()
