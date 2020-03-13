@@ -8,22 +8,30 @@ public class GeraltStats : MonoBehaviour
     public Slider HpBar;
     public Image FillImage;
     static public int hp_value = 100;
+    private playerController playerController;
+    public GameObject deathParticle;
 
-    void Start()
+    private void Start()
     {
-        
+        playerController = GetComponent<playerController>();
     }
 
     void Update()
     {
         if (hp_value < 0)
+        {
             hp_value = 0;
-
-        if(HpBar.value <= HpBar.maxValue/2)
+            playerController.enabled = false;//TAKING CONTROL FROM THE PLAYER = DYING
+            deathParticle.SetActive(true);
+        }
+        if(HpBar.value <= HpBar.maxValue / 2)
+        {
             FillImage.color = Color.yellow;
-        if (HpBar.value <= HpBar.maxValue/4)
+        }
+        if (HpBar.value <= HpBar.maxValue / 4)
+        {
             FillImage.color = Color.red;
-
+        }
         HpBar.value = hp_value;
     }
 
@@ -31,7 +39,6 @@ public class GeraltStats : MonoBehaviour
     {
         StartCoroutine("RestLife", value);
     }
-
 
     IEnumerator RestLife(int value)
     {

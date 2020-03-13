@@ -47,8 +47,6 @@ public class EnemyManager : MonoBehaviour
             next_round = false;
         }
 
-        Debug.Log(EnemiesAlive.Count);
-
         if (EnemiesAlive.Count <= 0 && finishedSpawning && startedTimeBetwenRounds == false)
         {
             startedTimeBetwenRounds = true;
