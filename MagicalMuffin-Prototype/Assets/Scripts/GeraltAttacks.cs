@@ -353,7 +353,7 @@ public class GeraltAttacks : MonoBehaviour
         if (attack != null)
         {
             swordScaleCollider.transform.localScale = new Vector3(1f, 1f, attack.base_range.GetValue());
-            particleScale.transform.localScale = new Vector3(1f, 1f, attack.base_range.GetValue() + 3);//INFO: + 3 to place the particle on the tip of the sword
+            //particleScale.transform.localScale = new Vector3(1f, 1f, attack.base_range.GetValue() + 3);//INFO: + 3 to place the particle on the tip of the sword
         }
     }
 
